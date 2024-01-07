@@ -1,6 +1,5 @@
 #ifndef S21_STRING
 #define S21_STRING
-
 #include <stdio.h>
 
 #define size_t unsigned long int
