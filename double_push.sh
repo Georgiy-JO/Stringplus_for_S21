@@ -1,4 +1,4 @@
-git commit -m'minor changies'
+#git commit -m'minor changies'
 git push origin feature/rk_jo_1
 echo ◑ ◔
 echo ╔═╗
