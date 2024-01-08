@@ -15,9 +15,9 @@ HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
 #object files
-OBJ_FILES = $(SRC_FILES:.c=.o)
+OBJ_FILES = $(OBJDIR)/$(SRC_FILES:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
-#OBJ_FILES_COV = $(SRC_FILES:.c=.o)
+OBJ_FILES_COV = $(COVOBJDIR)/$(SRC_FILES:.c=.o)
 
 # static libs: usual and for tests report
 LIBRARY = $(HEAD_FILE:.h=.a)
@@ -40,11 +40,18 @@ tester: $(LIBRARY) tester.o
 tester.o:tester.c
 	$(CC) $(GENLAGS) $(DFLAG) -c tester.c
 
+#Foulder_creators--------------------------------------------------------------------------------------------------------------------
+objdir:
+	mkdir $(OBJDIR)
+
+covobjdir:
+	mkdir $(COVOBJDIR)
+
 #Library_creation_+_tests-----------------------------------------------------------------------------------------------------------
 # build static lib
-s21_string.a: clear_o $(OBJ_FILES)
+s21_string.a: objdir $(OBJ_FILES)
 	ar rcs $(LIBRARY) $(OBJ_FILES)
-	rm -f *.o
+	rmdir -f $(OBJDIR)
 
 # build tests with usual lib
 $(TESTS): $(LIBRARY) $(TEST_OBJ)
@@ -64,9 +71,9 @@ test: $(TESTS)
 
 #Coverage_stages-------------------------------------------------------------------------------------------------------------------
 # build static lib for tests report
-s21_string.tst.a: clear_o $(OBJ_FILES_COV)
+s21_string.tst.a: covobjdir $(OBJ_FILES_COV)
 	ar rcs $(COVLIBRARY) $(OBJ_FILES_COV)
-	rm -f *.o	
+	rmdir -f $(COVOBJDIR)	
 
 # build tests for report
 $(TEST_COV): $(COVLIBRARY) $(TEST_OBJ)
@@ -78,7 +85,7 @@ test_cov: $(TEST_COV)
 	./$(TEST_COV)
 
 #object for test report
-$(OBJ_FILES_COV):%.o: %.c $(HEAD_FILE)
+$(OBJ_FILES_COV): %.c $(HEAD_FILE)
 	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) -c $< -o $@
 
 # coverage
@@ -109,10 +116,8 @@ clang_all:
 #------------------------------------------------------------------------------------------------------------------------------------
 
 clean:
-	rm -f $(TEST_COV) $(TEST_COV) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester 
-#tester-temp
-clear_o:
-	rm -f *.o
+	rm -f $(TEST_COV) $(TEST_COV) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt 
+	rm -f -r $(OBJDIR) $(COVOBJDIR)
 
 rebuild: clean all
 
