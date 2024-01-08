@@ -10,8 +10,7 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-FILES=
-SRC_FILES = $(SRC_FILES:=.c)
+SRC_FILES = 
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
