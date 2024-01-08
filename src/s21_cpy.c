@@ -2,12 +2,12 @@
 
 void *s21_memcpy(void *dest, const void *src, size_t n){
     char* destination=dest;
-    char* source=src;
+    char* source=(void *)src;
     for(unsigned long i=0;i<n;i++){
         //*(pointer+(sizeof(char)*i))=*(char*)(src+(sizeof(char)*i));
         *(destination+i)=*(source+i);
     }
-    *(destination+n)=NULL;
+    //*(destination+n)=C_ZERO;
     return dest;
 }
 
@@ -20,5 +20,6 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
     6)other zero-chars
     7)something neative
     8)memory allocation error
+    9)check VOID type
 
 */
