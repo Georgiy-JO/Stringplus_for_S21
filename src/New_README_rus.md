@@ -25,7 +25,7 @@
 | Nickname | Functions |   
 | ------ | ------ |
 | Riderkri(Georgy-JO) | strlen, memcpy |  
-| shadowmm(t1m0f3y) | memchr, memcmp, memset |    
+| shadowmm(t1m0f3y) | memchr, memcmp|    
 
 
 | № | Функция | Описание |
