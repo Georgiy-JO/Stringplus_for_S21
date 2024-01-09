@@ -25,16 +25,16 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
 
 */
 
-char *s21_strncpy(char *dest, const char *src, size_t n){
-    for(size_t i=0;i<n;i++){
-        *(dest+i)=*(src+i);
-    }
-    size_t delta=0, len=0;
-    -
+// char *s21_strncpy(char *dest, const char *src, size_t n){
+//     for(size_t i=0;i<n;i++){
+//         *(dest+i)=*(src+i);
+//     }
+//     size_t delta=0, len=0;
+//     -
 
 
-}
+// }
 
-void padding(char* place, size_t length){
+// void padding(char* place, size_t length){
 
-}
+// }
