@@ -10,15 +10,14 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-FILES=
-SRC_FILES = $(SRC_FILES:=.c)
+SRC_FILES = s21_len.c s21_cpy.c
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
 #object files
-OBJ_FILES = $(OBJDIR)/$(SRC_FILES:.c=.o)
+OBJ_FILES = $(SRC_FILES:.c=.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
-OBJ_FILES_COV = $(COVOBJDIR)/$(SRC_FILES:.c=.o)
+#OBJ_FILES_COV = $(SRC_FILES:.c=.o)
 
 # static libs: usual and for tests report
 LIBRARY = $(HEAD_FILE:.h=.a)
@@ -41,18 +40,11 @@ tester: $(LIBRARY) tester.o
 tester.o:tester.c
 	$(CC) $(GENLAGS) $(DFLAG) -c tester.c
 
-#Foulder_creators--------------------------------------------------------------------------------------------------------------------
-objdir:
-	mkdir $(OBJDIR)
-
-covobjdir:
-	mkdir $(COVOBJDIR)
-
 #Library_creation_+_tests-----------------------------------------------------------------------------------------------------------
 # build static lib
-s21_math.a: objdir $(OBJ_FILES)
+s21_string.a: clear_o $(OBJ_FILES)
 	ar rcs $(LIBRARY) $(OBJ_FILES)
-	rmdir -f $(OBJDIR)
+	rm -f *.o
 
 # build tests with usual lib
 $(TESTS): $(LIBRARY) $(TEST_OBJ)
@@ -60,7 +52,7 @@ $(TESTS): $(LIBRARY) $(TEST_OBJ)
 	rm -f *.o
 
 #object usual
-$(OBJ_FILES): %.c $(HEAD_FILE)
+$(OBJ_FILES):%.o: %.c $(HEAD_FILE)
 	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@
 
 $(TEST_OBJ):%.c
@@ -72,9 +64,9 @@ test: $(TESTS)
 
 #Coverage_stages-------------------------------------------------------------------------------------------------------------------
 # build static lib for tests report
-s21_math.tst.a: covobjdir $(OBJ_FILES_COV)
+s21_string.tst.a: clear_o $(OBJ_FILES_COV)
 	ar rcs $(COVLIBRARY) $(OBJ_FILES_COV)
-	rmdir -f $(COVOBJDIR)	
+	rm -f *.o	
 
 # build tests for report
 $(TEST_COV): $(COVLIBRARY) $(TEST_OBJ)
@@ -86,7 +78,7 @@ test_cov: $(TEST_COV)
 	./$(TEST_COV)
 
 #object for test report
-$(OBJ_FILES_COV): %.c $(HEAD_FILE)
+$(OBJ_FILES_COV):%.o: %.c $(HEAD_FILE)
 	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) -c $< -o $@
 
 # coverage
@@ -117,7 +109,10 @@ clang_all:
 #------------------------------------------------------------------------------------------------------------------------------------
 
 clean:
-	rm -f $(TEST_COV) $(TEST_COV) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt $(OBJDIR) $(COVOBJDIR)
+	rm -f $(TEST_COV) $(TEST_COV) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester 
+#tester-temp
+clear_o:
+	rm -f *.o
 
 rebuild: clean all
 
