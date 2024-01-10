@@ -31,6 +31,7 @@ int main(){
         case 3:             //s21_len
             printf("Input line or a-> test_ultimate.txt\n");
             fgets(input, LIMIT_1, stdin);
+            getchar();
             if(input[0]=='a')
                 //file_read_function("test_ultimate.txt");
                 printf("TEMP\n\n");
@@ -47,10 +48,9 @@ int main(){
             fgets(input2, LIMIT_1, stdin);
             printf("Input length of copying->\t");
             scanf("%ld",&n);
-
+            getchar();
             printf("\t%p-->%p-->%s\n",input, memcpy(input,input2,n), input);
             printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
-            getchar();
             break;
         case 5:             //s21_memset
             printf("Input line->\t");
@@ -61,10 +61,9 @@ int main(){
             //printf("----%d----", c);
             printf("Input length ->\t");
             scanf("%ld",&n);
-
+            getchar();
             printf("\t%p-->%p-->%s\n",input, memset(input,c,n), input);
             printf("\t%p-->%p-->%s\n\n",input3, s21_memset(input3,c,n), input3);
-            getchar();
             break;
         case 6:             //s21_strncpy
             printf("Input line1->\t");
@@ -74,10 +73,9 @@ int main(){
             fgets(input2, LIMIT_1, stdin);
             printf("Input length of copying->\t");
             scanf("%ld",&n);
-
-            printf("\t%p-->%p-->%s\n",input, strncpy(input,input2,n), input);
-            //printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
             getchar();
+            printf("\t%p-->%p-->%s\n",input, strncpy(input,input2,n), input);
+            printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
             break;
 
 

@@ -6,7 +6,6 @@ size_t s21_strlen(const char *str){
     for(;str[length]!=C_ZERO;length++);
     return length;
 }
-
 /*posible thin places:
     1)too long
     2)NULL line
