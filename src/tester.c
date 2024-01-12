@@ -15,9 +15,9 @@ int main(){
     input[0]='2';
     for(int i=1;input[0]!='1' && commands!=1;i++){
         if(i%10==0)
-            printf("1-> exit, 2-> rechoose function, 3-> s21_len, 4-> s21_memcpy,\n5-> s21_memset, 6-> s21_strncpy\n\n");
+            printf("1-> exit, 2-> rechoose function, 3-> s21_len, 4-> s21_memcpy,\n5-> s21_memset, 6-> s21_strncpy\n7-> s21_memchr\n8-> s21_memcmp\n");
         if(input[0]=='2'){
-            printf("1-> exit, 2-> rechoose function, 3-> s21_len, 4-> s21_memcpy,\n5-> s21_memset, 6-> s21_strncpy\n\n");
+            printf("1-> exit, 2-> rechoose function, 3-> s21_len, 4-> s21_memcpy,\n5-> s21_memset, 6-> s21_strncpy\n7-> s21_memchr\n8-> s21_memcmp\n");
             scanf("%d",&commands);
             getchar();
         }
@@ -79,7 +79,34 @@ int main(){
             //printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
             getchar();
             break;
+        case 7:             //s21_memchr
+            printf("Input line1->\t");
+            fgets(input, LIMIT_1, stdin);
+            strcpy(input3,input);
+            printf("Input character->\t");
+			scanf("%c",&c);
+            printf("Input size->\t");
+			scanf("%ld",&n);
 
+            printf("\t%p-->%p-->%c-->%s\n",input, memchr(input3, c, n), *(unsigned char*)(memchr(input3, c, n)) , input);
+            printf("\t%p-->%p-->%c-->%s\n",input, s21_memchr(input, c, n), *(unsigned char*)(s21_memchr(input, c, n)), input);
+            //printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
+            getchar();
+            break;
+        case 8:             //s21_memcmp
+            printf("Input line1->\t");
+            fgets(input, LIMIT_1, stdin);
+            strcpy(input3,input);
+            printf("Input line2->\t");
+            fgets(input2, LIMIT_1, stdin);
+            printf("Input length->\t");
+            scanf("%ld",&n);
+
+            printf("\t%p-->%d-->%s\n",input, memcmp(input3,input2,n), input);
+            printf("\t%p-->%d-->%s\n",input, s21_memcmp(input,input2,n), input);
+            //printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
+            getchar();
+            break;
 
         default:
             input[0]='2';

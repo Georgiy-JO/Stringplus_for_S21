@@ -10,7 +10,7 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-SRC_FILES = s21_len.c s21_cpy.c s21_memset.c
+SRC_FILES = s21_len.c s21_cpy.c s21_memset.c s21_memchr.c s21_memcmp.c
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 

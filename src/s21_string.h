@@ -2,13 +2,13 @@
 #define S21_STRING
 #include <stdio.h>
 
-#define size_t unsigned long int
+//#define size_t unsigned long int //do not compile with this define
 #define symbol unsigned char
-#define NULL ((void *)0)
+//#define NULL ((void *)0) //do not compile with this define 
 #define C_ZERO '\0'
 
-//void *s21_memchr(const void *str, int c, size_t n);
-//int s21_memcmp(const void *str1, const void *str2, size_t n);
+void *s21_memchr(const void *str, int c, size_t n);
+int s21_memcmp(const void *str1, const void *str2, size_t n);
 
 void *s21_memcpy(void *dest, const void *src, size_t n);
 size_t s21_strlen(const char *str);
