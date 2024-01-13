@@ -17,8 +17,10 @@
 #define FOUR_CHAR "asdf"  //4(5)
 #define SEVEN_CHAR "asdfghj"  //7(8)
 
-//s21_strlen -->1.1-1.5
-//s21_memset -->2.0-2.6
+
+
+//s21_strlen -->1.1-1.5 //!add test for 2000 symbols
+//s21_memset -->2.0-2.6 //!add test for 2000 symbols
 //s21_memcpy  -->3.1-3.
 //s21_strncpy -->4.1-4.
 //s21_strncat -->5.1-5.
