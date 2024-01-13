@@ -1,7 +1,7 @@
 CC = gcc
-GENLAGS = -Wall -Wextra -Werror -std=c11
+GENLAGS = -std=c11 -Wall -Wextra -Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
-CHLIB = -lcheck #string.h_flag_?
+CHLIB = -lcheck -lsubunit
 DFLAG = -D_POSIX_C_SOURCE=200809L
 
 VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
@@ -10,7 +10,7 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-SRC_FILES = s21_len.c s21_cpy.c s21_memset.c
+SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
@@ -35,7 +35,7 @@ all: s21_string.a
 tester: $(LIBRARY) tester.o
 	$(CC) $(GENLAGS) $(DFLAG) tester.o -o tester $(LIBRARY)
 	rm -f *.o
-	./tester
+#	 ./tester
 
 tester.o:tester.c
 	$(CC) $(GENLAGS) $(DFLAG) -c tester.c
@@ -55,8 +55,8 @@ $(TESTS): $(LIBRARY) $(TEST_OBJ)
 $(OBJ_FILES):%.o: %.c $(HEAD_FILE)
 	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@
 
-$(TEST_OBJ):%.c
-	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@
+$(TEST_OBJ):$(TEST_SRC)
+	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@ $(CHLIB)
 
 # run tests
 test: $(TESTS)
@@ -109,7 +109,7 @@ clang_all:
 #------------------------------------------------------------------------------------------------------------------------------------
 
 clean:
-	rm -f $(TEST_COV) $(TEST_COV) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester 
+	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester 
 #tester-temp
 clear_o:
 	rm -f *.o

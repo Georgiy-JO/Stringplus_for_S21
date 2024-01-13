@@ -8,11 +8,3 @@ void *s21_memset(void *str, int c, size_t n){
     }
     return str;
 }
-
-/*posible thin places:
-    1)too long (longer than str)
-    2)NULL line
-    3)\n
-    4)\t
-    5)other zero-chars
-*/

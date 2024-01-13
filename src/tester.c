@@ -5,6 +5,34 @@
 #define LIMIT_1 1800
 
 int main(){
+/*
+    //(*1.1)
+    char* line=NULL;
+    printf("%ld",s21_strlen(line));
+    scanf("%s",line);
+*/
+
+/*
+    //(*3)
+    char line[10]="ggggg";
+    s21_memset(line, 'f', 13);
+    for(int i=0; i<15;i++){
+        printf("%c",line[i]);
+    }
+    scanf("%s",line);
+*/
+
+/*
+    //(*1.2)
+    char* line=NULL;
+    char letter = 'f';
+    int len = 2;
+    void* p=memset(line,letter,len);
+    //void* p=s21_memset(line,letter,len);
+    printf("%s",(char*)p);
+    scanf("%s",line);
+*/
+
     char input[LIMIT_1];
     char input2[LIMIT_1];
     char input3[LIMIT_1];
@@ -31,6 +59,7 @@ int main(){
         case 3:             //s21_len
             printf("Input line or a-> test_ultimate.txt\n");
             fgets(input, LIMIT_1, stdin);
+            getchar();
             if(input[0]=='a')
                 //file_read_function("test_ultimate.txt");
                 printf("TEMP\n\n");
@@ -47,10 +76,9 @@ int main(){
             fgets(input2, LIMIT_1, stdin);
             printf("Input length of copying->\t");
             scanf("%ld",&n);
-
+            getchar();
             printf("\t%p-->%p-->%s\n",input, memcpy(input,input2,n), input);
             printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
-            getchar();
             break;
         case 5:             //s21_memset
             printf("Input line->\t");
@@ -61,10 +89,9 @@ int main(){
             //printf("----%d----", c);
             printf("Input length ->\t");
             scanf("%ld",&n);
-
+            getchar();
             printf("\t%p-->%p-->%s\n",input, memset(input,c,n), input);
             printf("\t%p-->%p-->%s\n\n",input3, s21_memset(input3,c,n), input3);
-            getchar();
             break;
         case 6:             //s21_strncpy
             printf("Input line1->\t");
@@ -74,10 +101,9 @@ int main(){
             fgets(input2, LIMIT_1, stdin);
             printf("Input length of copying->\t");
             scanf("%ld",&n);
-
-            printf("\t%p-->%p-->%s\n",input, strncpy(input,input2,n), input);
-            //printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
             getchar();
+            printf("\t%p-->%p-->%s\n",input, strncpy(input,input2,n), input);
+            printf("\t%p-->%p-->%s\n\n",input3, s21_memcpy(input3,input2,n), input3);
             break;
 
 
