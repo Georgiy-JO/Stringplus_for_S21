@@ -25,7 +25,7 @@ char *s21_strtok(char *str, const char *delim);                                 
 char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, size_t n);
 // size_t s21_strcspn(const char *str1, const char *str2);
-// char *s21_strerror(int errnum);
+char *s21_strerror(int errnum);
 // char *s21_strpbrk(const char *str1, const char *str2);
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
