@@ -516,9 +516,252 @@ START_TEST(test_memset_midline_4) {
     ck_assert_str_eq(line1,line2);
 }
 
+START_TEST(test_memcmp) {
+	char* str1 = "hello";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
 
+START_TEST(test_memcmp_2) {
+	char* str1 = "hello";
+	char* str2 = "hallo";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
 
+START_TEST(test_memcmp_3) {
+	char* str1 = "hello";
+	char* str2 = "h3llo";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
 
+START_TEST(test_memcmp_4) {
+	char* str1 = "hello";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_memcmp_5) {
+	char* str1 = "";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_memcmp_6) {
+	char* str1 = "";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp) {
+	char* str1 = "hello";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp_2) {
+	char* str1 = "hello";
+	char* str2 = "hallo";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp_3) {
+	char* str1 = "hello";
+	char* str2 = "h3llo";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp_4) {
+	char* str1 = "hello";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp_5) {
+	char* str1 = "";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_strncmp_6) {
+	char* str1 = "";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_memchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	size_t n = 4;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_memchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	size_t n = 4;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_memchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	size_t n = 10;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strchr_4) {
+	char* str1 = "hello\0bye";
+	int c = 'y';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strrchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strrchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strrchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strrchr_4) {
+	char* str1 = "hello\0bye";
+	int c = 'y';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr) {
+	char* str1 = "hello";
+	char* str2 = "lo";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr_2) {
+	char* str1 = "hello";
+	char* str2 = "abc";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr_3) {
+	char* str1 = "hello";
+	char* str2 = "";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr_4) {
+	char* str1 = "";
+	char* str2 = "hello";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr_5) {
+	char* str1 = "";
+	char* str2 = "";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_strstr_6) {
+	char* str1 = "hello\0bye";
+	char* str2 = "bye";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
 
 Suite *my_string_suite(void) {
     Suite *s;
@@ -577,6 +820,47 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_memset_midline_3);
     tcase_add_test(tc_core, test_memset_midline_2);
     tcase_add_test(tc_core, test_memset_midline_4);
+
+	//memcmp
+	tcase_add_test(tc_core, test_memcmp);
+	tcase_add_test(tc_core, test_memcmp_2);
+	tcase_add_test(tc_core, test_memcmp_3);
+	tcase_add_test(tc_core, test_memcmp_4);
+	tcase_add_test(tc_core, test_memcmp_5);
+	tcase_add_test(tc_core, test_memcmp_6);
+
+	//strncmp
+	tcase_add_test(tc_core, test_strncmp);
+	tcase_add_test(tc_core, test_strncmp_2);
+	tcase_add_test(tc_core, test_strncmp_3);
+	tcase_add_test(tc_core, test_strncmp_4);
+	tcase_add_test(tc_core, test_strncmp_5);
+	tcase_add_test(tc_core, test_strncmp_6);
+
+	//memchr
+	tcase_add_test(tc_core, test_memchr);
+	tcase_add_test(tc_core, test_memchr_2);
+	tcase_add_test(tc_core, test_memchr_3);
+
+	//strchr
+	tcase_add_test(tc_core, test_strchr);
+	tcase_add_test(tc_core, test_strchr_2);
+	tcase_add_test(tc_core, test_strchr_3);
+	tcase_add_test(tc_core, test_strchr_4);
+
+	//strrchr
+	tcase_add_test(tc_core, test_strrchr);
+	tcase_add_test(tc_core, test_strrchr_2);
+	tcase_add_test(tc_core, test_strrchr_3);
+	tcase_add_test(tc_core, test_strrchr_4);
+
+	//strstr
+	tcase_add_test(tc_core, test_strstr);
+	tcase_add_test(tc_core, test_strstr_2);
+	tcase_add_test(tc_core, test_strstr_3);
+	tcase_add_test(tc_core, test_strstr_4);
+	tcase_add_test(tc_core, test_strstr_5);
+	tcase_add_test(tc_core, test_strstr_6);
 
     //s21_memcpy  -->3.1-3.
     //s21_strncpy -->4.1-4.
