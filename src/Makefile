@@ -1,7 +1,7 @@
 CC = gcc
 GENLAGS = -std=c11 -Wall -Wextra -Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
-CHLIB = -lcheck -lsubunit
+CHLIB = -lcheck -lsubunit -lm
 DFLAG = -D_POSIX_C_SOURCE=200809L
 
 VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
@@ -10,7 +10,7 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c
+SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
