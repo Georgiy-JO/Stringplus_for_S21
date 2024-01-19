@@ -7,6 +7,7 @@
 #define S21_SPRINTF_LENGTH "hlL"
 #define S21_SPRINTF_SPEC "cdieEfgGosuxXpn"
 #define S21_SPRINTF_DIGITS "0123456789"
+#define S21_SPRINTF_DEFAULE_ACCURACY 6
 
 int is_start(char ch){
 	return ch == '%' ? 1 : 0;
@@ -76,6 +77,21 @@ int convert_digit_int_to_str(int integer, char* str){
 		str[digit_len - i - 1] = single_digit_char;
 	}
 	str[digit_len] = '\0';
+	return 0;
+}
+int convert_digit_frational_part_to_str(double frac, int len, char* str){
+	int single_digit = 0;
+	char single_digit_char = 0;
+	double temp = 0;
+	for (int i = 0; i < len; i++){
+		temp = frac * 10;
+		single_digit = (int)temp;
+		frac = temp - single_digit;
+		if (i == len - 1 && frac >= 0.5) single_digit++;
+		single_digit_char = convert_digit_int_to_char(single_digit);
+		str[i] = single_digit_char;
+	}
+	str[len] = '\0';
 	return 0;
 }
 
@@ -322,6 +338,19 @@ int print_digit(int argint, char* str){
 	return digit_len;
 }
 
+int print_float(double argfloat, int default_fractional_part_len, char* str){
+	char float_buffer[1024] = {'\0'};
+	char float_fractional_buffer[1024] = {'\0'};
+	int floor_len = get_digit_int_len((int)argfloat);
+	convert_digit_int_to_str((int)argfloat, float_buffer);
+	double fract = argfloat - (int)argfloat;
+	convert_digit_frational_part_to_str(fract, default_fractional_part_len, float_fractional_buffer);
+	s21_strncpy(str, float_buffer, floor_len);
+	s21_strncpy(&(str[floor_len]), ".", 1);
+	s21_strncpy(&(str[floor_len + 1]), float_fractional_buffer, default_fractional_part_len);
+	return floor_len + 1 + default_fractional_part_len;
+}
+
 int print(va_list args, opts opt, char* str){
 	int offset = 0;
 	if (opt.spec_c) {
@@ -331,9 +360,12 @@ int print(va_list args, opts opt, char* str){
 		int argint = va_arg(args, int);
 		offset += print_digit(argint, str);
 	}
-	//if (opt.spec_f){
-		//float argfloat = va_arg(args, float);
-	//}
+	if (opt.spec_f){
+		double argfloat = va_arg(args, double);
+		int accuracy = S21_SPRINTF_DEFAULE_ACCURACY;
+		if (opt.accuracy_digit != 0) accuracy = opt.accuracy_digit;
+		offset += print_float(argfloat, accuracy ,str);
+	}
 	return offset;
 }
 
