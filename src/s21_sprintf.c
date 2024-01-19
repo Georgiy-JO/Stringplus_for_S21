@@ -1,6 +1,5 @@
 #include "s21_string.h"
 #include "stdarg.h"
-#include <stdio.h>
 
 #define S21_SPRINTF_FLAGS "-+ #0"
 #define S21_SPRINTF_WIDTH "0123456789*"
@@ -331,9 +330,6 @@ int print(va_list args, opts opt, char* str){
 	}else if (opt.spec_d){
 		int argint = va_arg(args, int);
 		offset += print_digit(argint, str);
-		for (int i = 0; i < 50; i++){
-		}
-		printf("\n");
 	}
 	//if (opt.spec_f){
 		//float argfloat = va_arg(args, float);
