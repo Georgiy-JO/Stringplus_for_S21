@@ -1,5 +1,6 @@
 #include "s21_string.h"
 #include "stdarg.h"
+#include <stdio.h>
 
 #define S21_SPRINTF_FLAGS "-+ #0"
 #define S21_SPRINTF_WIDTH "0123456789*"
@@ -40,10 +41,6 @@ int is_spec(char ch){
 int is_digit(char ch){
 	return s21_strchr(S21_SPRINTF_DIGITS, ch) != NULL ? 1 : 0;
 }
-int is_width(char ch){
-	return s21_strchr(S21_SPRINTF_WIDTH, ch) != NULL ? 1 : 0;
-}
-
 char* get_flag(char ch){
 	return s21_strchr(S21_SPRINTF_FLAGS, ch);
 }
@@ -57,6 +54,30 @@ char* get_spec(char ch){
 }
 int convert_digit_char_to_int(char ch){
 	return ch - '0';
+}
+int convert_digit_int_to_char(int integer){
+	return integer + '0';
+}
+int get_digit_int_len(int digit){
+	int len = 0;
+	do{
+		digit /= 10;
+		len++;
+	}while(digit);
+	return len;
+}
+int convert_digit_int_to_str(int integer, char* str){
+	int digit_len = get_digit_int_len(integer);
+	int single_digit = 0;
+	char single_digit_char = 0;
+	for (int i = 0; i < digit_len ; i++){
+		single_digit = integer % 10;
+		integer /= 10;
+		single_digit_char = convert_digit_int_to_char(single_digit);
+		str[digit_len - i - 1] = single_digit_char;
+	}
+	str[digit_len] = '\0';
+	return 0;
 }
 
 // c d i e E f g G  o s u x X p n  [spec]
@@ -245,14 +266,14 @@ int get_opts(opts* optarg, const char* format){
 	//flags
 	while(is_flag(format[offset])){
 		ptrch = get_flag(format[offset]);
-		flag_to_struct(localoptarg, *ptrch);
+		flag_to_struct(&localoptarg, *ptrch);
 		offset++;
 	}
 	//width
 	if(is_width(format[offset])){
 		if (is_digit(format[offset])){
-			offset += get_full_number(format[offset], &number);
-			width_digit_to_struct(localoptarg, number);
+			offset += get_full_number(&(format[offset]), &number);
+			width_digit_to_struct(&localoptarg, number);
 		}else {
 			localoptarg.width_any = 1;
 			offset++;
@@ -263,8 +284,8 @@ int get_opts(opts* optarg, const char* format){
 		offset++;
 		if (is_accuracy(format[offset])){
 			if (is_digit(format[offset])){
-				offset += get_full_number(format[offset], &number);
-				accuracy_digit_to_struct(localoptarg, number);
+				offset += get_full_number(&(format[offset]), &number);
+				accuracy_digit_to_struct(&localoptarg, number);
 			} else {
 				localoptarg.accuracy_any = 1;
 				offset++;
@@ -274,13 +295,13 @@ int get_opts(opts* optarg, const char* format){
 	//length
 	if(is_length(format[offset])){
 		ptrch = get_length(format[offset]);
-		length_to_struct(localoptarg, *ptrch);
+		length_to_struct(&localoptarg, *ptrch);
 		offset++;
 	}
 	//spec
 	if(is_spec(format[offset])){
 		ptrch = get_spec(format[offset]);
-		spec_to_struct(localoptarg, *ptrch);
+		spec_to_struct(&localoptarg, *ptrch);
 		offset++;
 	}
 	//end of options for single variable
@@ -294,18 +315,30 @@ int print_char(char argchar, char* str){
 	return 1;
 }
 
-int print(va_list args, opts opt, char* str, int offset){
+int print_digit(int argint, char* str){
+	char integer_buffer[1024] = {'\0'};
+	int digit_len = get_digit_int_len(argint);
+	convert_digit_int_to_str(argint, integer_buffer);
+	s21_strncpy(str, integer_buffer, digit_len + 1);
+	return digit_len;
+}
+
+int print(va_list args, opts opt, char* str){
+	int offset = 0;
 	if (opt.spec_c) {
-		char argchar = va_arg(args, char);
-		offset += print_char(argchar, &(str[offset]));
-	}
-	if (opt.spec_d){
+		char argchar = (char)va_arg(args, int);
+		offset += print_char(argchar, str);
+	}else if (opt.spec_d){
 		int argint = va_arg(args, int);
+		offset += print_digit(argint, str);
+		for (int i = 0; i < 50; i++){
+		}
+		printf("\n");
 	}
-	if (opt.spec_f){
-		float argfloat = va_arg(args, float);
-	}
-	return 0;
+	//if (opt.spec_f){
+		//float argfloat = va_arg(args, float);
+	//}
+	return offset;
 }
 
 int s21_sprintf(char *str, const char *format, ...){
@@ -313,19 +346,20 @@ int s21_sprintf(char *str, const char *format, ...){
 	if(str == NULL){
 		return -1;
 	}
-	int num_args = count_percent_signs(format);
 	va_list args;
-	va_start(args, num_args);
+	va_start(args, format);
 	int len = s21_strlen(format);
-	for (int i = 0; i < len;){
+	int str_index = 0;
+	for (int format_index = 0; format_index < len;){
 		opts opt = {0};
-		if (is_start(format[i])){
-			i++;
-			i += get_opts(opt, format[i]);
-			print(args, opt, str, i);
+		if (is_start(format[format_index])){
+			format_index++;
+			format_index += get_opts(&opt, &(format[format_index]));
+			str_index += print(args, opt, &(str[str_index]));
 		} else {
-			str[i] = format[i];
-			i++;
+			str[str_index] = format[format_index];
+			format_index++;
+			str_index++;
 		}
 		count++;
 	}
