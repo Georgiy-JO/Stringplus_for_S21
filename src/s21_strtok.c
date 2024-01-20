@@ -4,9 +4,9 @@
 //NOT CHECKED MANUALY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Breaks string str into a series of tokens separated by delim.
 char *s21_strtok(char *str, const char *delim){
-    static char* point=NULL;
+    static char* point=MY_NULL;
     static size_t i=0;
-    point = (str!=NULL)? str:point+i;
+    point = (str!=NULL)? str:point+i;  //MY_NULL
     // if(str!=NULL)
     //     point=str;
     // else
@@ -34,4 +34,6 @@ char *s21_strtok(char *str, const char *delim){
     11)not all tokens returned
     12)wrong work of static char
     13)when the delim is the last symbol
+    14)Changing the original line?????
+    15)severl delims
 */

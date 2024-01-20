@@ -5,7 +5,7 @@
 
 #define size_t unsigned long int
 #define symbol unsigned char
-#define NULL ((void *)0)
+#define MY_NULL ((void *)0)       //#define NULL ((void *)0)
 #define C_ZERO '\0'
 
 //void *s21_memchr(const void *str, int c, size_t n);

@@ -44,7 +44,7 @@ char s21_isinstr(const char a, const char* str){
 //NOT CHECKED MANUALY!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Finds the first character in the string str1 that matches any character specified in str2.
 char *s21_strpbrk(const char *str1, const char *str2){
-    char* founder=NULL;
+    char* founder=MY_NULL;
     for(size_t i=0;*(str1+i)!=C_ZERO;i++){
         if(s21_isinstr(*(str1+i),str2)){
             founder=(char *)str1+i;
