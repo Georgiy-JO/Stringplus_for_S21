@@ -330,6 +330,13 @@ int print_char(char argchar, char* str){
 	return 1;
 }
 
+int print_str(char* argchar, char* str){
+	int str_len = 0;
+	str_len = s21_strlen(argchar);
+	s21_strncpy(str, argchar, str_len);
+	return str_len;
+}
+
 int print_digit(int argint, char* str){
 	char integer_buffer[1024] = {'\0'};
 	int digit_len = get_digit_int_len(argint);
@@ -360,11 +367,15 @@ int print(va_list args, opts opt, char* str){
 		int argint = va_arg(args, int);
 		offset += print_digit(argint, str);
 	}
-	if (opt.spec_f){
+	else if (opt.spec_f){
 		double argfloat = va_arg(args, double);
 		int accuracy = S21_SPRINTF_DEFAULE_ACCURACY;
 		if (opt.accuracy_digit != 0) accuracy = opt.accuracy_digit;
 		offset += print_float(argfloat, accuracy ,str);
+	}
+	else if (opt.spec_s){
+		char* argstr = va_arg(args, char*);
+		offset += print_str(argstr, str);
 	}
 	return offset;
 }

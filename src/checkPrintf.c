@@ -13,8 +13,8 @@ int main(){
 	int *ptr = &digit; //p
 	//n
 	//%
-	s21_sprintf(buffer, "s21_sprintf---\nhello %d %d\nchar is %c\nfloat is %f %.10f %f\n", digit, (int)fdigit, c, fdigit, fdigit2, fdigit3);
-	sprintf(buffer2, "sprintf---\nhello %d %d\nchar is %c\nfloat is %f %.10f %f\n", digit, (int)fdigit, c, fdigit, fdigit2, fdigit3);
+	s21_sprintf(buffer, "s21_sprintf---\nhello %d %d\nchar is %c\nfloat is %f %.10f %f\nstr is %s%s\n", digit, (int)fdigit, c, fdigit, fdigit2, fdigit3, str, str);
+	sprintf(buffer2, "s21_sprintf---\nhello %d %d\nchar is %c\nfloat is %f %.10f %f\nstr is %s%s\n", digit, (int)fdigit, c, fdigit, fdigit2, fdigit3, str, str);
 	printf("%s", buffer);
 	printf("\n----\n");
 	printf("%s\n", buffer2);
