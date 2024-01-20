@@ -58,6 +58,7 @@ int convert_digit_char_to_int(char ch){
 int convert_digit_int_to_char(int integer){
 	return integer + '0';
 }
+
 int get_digit_int_len(int digit){
 	int len = 0;
 	do{
@@ -66,6 +67,16 @@ int get_digit_int_len(int digit){
 	}while(digit);
 	return len;
 }
+
+int get_digit_uint_len(unsigned int digit){
+	int len = 0;
+	do{
+		digit /= 10;
+		len++;
+	}while(digit);
+	return len;
+}
+
 int convert_digit_int_to_str(int integer, char* str){
 	int digit_len = get_digit_int_len(integer);
 	int single_digit = 0;
@@ -79,6 +90,21 @@ int convert_digit_int_to_str(int integer, char* str){
 	str[digit_len] = '\0';
 	return 0;
 }
+
+int convert_digit_uint_to_str(unsigned int integer, char* str){
+	int digit_len = get_digit_uint_len(integer);
+	int single_digit = 0;
+	char single_digit_char = 0;
+	for (int i = 0; i < digit_len ; i++){
+		single_digit = integer % 10;
+		integer /= 10;
+		single_digit_char = convert_digit_int_to_char(single_digit);
+		str[digit_len - i - 1] = single_digit_char;
+	}
+	str[digit_len] = '\0';
+	return 0;
+}
+
 int convert_digit_frational_part_to_str(double frac, int len, char* str){
 	int single_digit = 0;
 	char single_digit_char = 0;
@@ -345,6 +371,14 @@ int print_digit(int argint, char* str){
 	return digit_len;
 }
 
+int print_udigit(unsigned int arguint, char* str){
+	char integer_buffer[1024] = {'\0'};
+	int digit_len = get_digit_uint_len(arguint);
+	convert_digit_uint_to_str(arguint, integer_buffer);
+	s21_strncpy(str, integer_buffer, digit_len + 1);
+	return digit_len;
+}
+
 int print_float(double argfloat, int default_fractional_part_len, char* str){
 	char float_buffer[1024] = {'\0'};
 	char float_fractional_buffer[1024] = {'\0'};
@@ -376,6 +410,9 @@ int print(va_list args, opts opt, char* str){
 	else if (opt.spec_s){
 		char* argstr = va_arg(args, char*);
 		offset += print_str(argstr, str);
+	}else if (opt.spec_u){
+		unsigned int arguint = (unsigned int)va_arg(args,int);
+		offset += print_udigit(arguint, str);
 	}
 	return offset;
 }
