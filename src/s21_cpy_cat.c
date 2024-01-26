@@ -33,7 +33,6 @@ void padding(char* place, size_t length){
     }
 }
 
-//NOT CHECKED MANUAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Appends the string pointed to, by src to the end of the string pointed to, by dest up to n characters long.
 char *s21_strncat(char *dest, const char *src, size_t n){
     size_t len_src=0,i=0, len_dest=0;
@@ -45,13 +44,4 @@ char *s21_strncat(char *dest, const char *src, size_t n){
     padding(dest+i+len_dest, n-i+1);
     return dest;
 }
-/*posible thin places:
-    1)too big n
-    2)NULL line
-    3n=0
-    4)\n
-    5)\t
-    6)other zero-chars
-    7)memory allocation error
-    8)overlaping
-*/
+

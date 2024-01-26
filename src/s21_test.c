@@ -1146,6 +1146,7 @@ START_TEST(test_memcpy_long_3) {
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE-1;
     void* p1=memcpy(line1,sourceline,len);
     void* p2=s21_memcpy(line2,sourceline,len);
@@ -1168,6 +1169,7 @@ START_TEST(test_memcpy_long_4) {
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE;
     void* p1=memcpy(line1,sourceline,len);
     void* p2=s21_memcpy(line2,sourceline,len);
@@ -1807,6 +1809,7 @@ START_TEST(test_strncpy_long_3) {
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE-1;
     void* p1=strncpy(line1,sourceline,len);
     void* p2=s21_strncpy(line2,sourceline,len);
@@ -1829,6 +1832,7 @@ START_TEST(test_strncpy_long_4) {
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE;
     void* p1=strncpy(line1,sourceline,len);
     void* p2=s21_strncpy(line2,sourceline,len);
@@ -1885,8 +1889,8 @@ START_TEST(test_strncat_norm_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,10);
+    ck_assert_mem_eq(line1,line2,10);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -1895,8 +1899,8 @@ START_TEST(test_strncat_norm_1) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_norm_2) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
     char sourceline[6] = FRIVE_CHAR_2;
     int len = 5;
     void* p1=strncat(line1,sourceline,len);
@@ -1905,8 +1909,8 @@ START_TEST(test_strncat_norm_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -1916,8 +1920,8 @@ START_TEST(test_strncat_norm_2) {
 }
 //5.2
 START_TEST(test_strncat_nullend_1) {
-    char line1[5] = NULL_END_line;
-    char line2[5] = NULL_END_line;
+    char line1[11] = NULL_END_line;
+    char line2[11] = NULL_END_line;
     char sourceline[5] = TAB_END_line;
     int len = 3;
     void* p1=strncat(line1,sourceline,len);
@@ -1926,8 +1930,8 @@ START_TEST(test_strncat_nullend_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -1936,8 +1940,8 @@ START_TEST(test_strncat_nullend_1) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_nullend_2) {
-    char line1[5] = NULL_END_line;
-    char line2[5] = NULL_END_line;
+    char line1[11] = NULL_END_line;
+    char line2[11] = NULL_END_line;
     char sourceline[5] = TAB_END_line;
     int len = 4;
     void* p1=strncat(line1,sourceline,len);
@@ -1946,8 +1950,88 @@ START_TEST(test_strncat_nullend_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_nullend_3) {
+    char line1[11] = TAB_END_line;
+    char line2[11] = TAB_END_line;
+    char sourceline[5] = NULL_END_line;
+    int len = 4;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_nullmid_4) {
+    char line1[11] = TAB_END_line;
+    char line2[11] = TAB_END_line;
+    char sourceline[5] = NULL_MID_line;
+    int len = 4;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_nullmid_5) {
+    char line1[11] = TAB_END_line;
+    char line2[11] = TAB_END_line;
+    char sourceline[5] = NULL_MID_line;
+    int len = 3;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_nullmid_6) {
+    char line1[11] = TAB_END_line;
+    char line2[11] = TAB_END_line;
+    char sourceline[5] = NULL_MID_line;
+    int len = 2;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -1956,8 +2040,8 @@ START_TEST(test_strncat_nullend_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_nullmid_1) {
-    char line1[5] = NULL_MID_line;
-    char line2[5] = NULL_MID_line;
+    char line1[11] = NULL_MID_line;
+    char line2[11] = NULL_MID_line;
     char sourceline[5] = TAB_END_line;
     int len = 2;
     void* p1=strncat(line1,sourceline,len);
@@ -1966,8 +2050,8 @@ START_TEST(test_strncat_nullmid_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -1976,8 +2060,8 @@ START_TEST(test_strncat_nullmid_1) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_nullmid_2) {
-    char line1[5] = NULL_MID_line;
-    char line2[5] = NULL_MID_line;
+    char line1[11] = NULL_MID_line;
+    char line2[11] = NULL_MID_line;
     char sourceline[5] = TAB_END_line;
 
     //printf("%s--%s--%s\n", line1,line2,sourceline);
@@ -1991,8 +2075,8 @@ START_TEST(test_strncat_nullmid_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2001,8 +2085,8 @@ START_TEST(test_strncat_nullmid_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_nullmid_3) {
-    char line1[5] = NULL_MID_line;
-    char line2[5] = NULL_MID_line;
+    char line1[11] = NULL_MID_line;
+    char line2[11] = NULL_MID_line;
     char sourceline[5] = TAB_END_line;
     int len = 4;
     void* p1=strncat(line1,sourceline,len);
@@ -2011,8 +2095,8 @@ START_TEST(test_strncat_nullmid_3) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2021,8 +2105,8 @@ START_TEST(test_strncat_nullmid_3) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_entermid_1) {
-    char line1[5] = ENTER_MID_line;
-    char line2[5] = ENTER_MID_line;
+    char line1[11] = ENTER_MID_line;
+    char line2[11] = ENTER_MID_line;
     char sourceline[5] = TAB_END_line;
     int len = 2;
     void* p1=strncat(line1,sourceline,len);
@@ -2031,8 +2115,8 @@ START_TEST(test_strncat_entermid_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2041,8 +2125,8 @@ START_TEST(test_strncat_entermid_1) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_entermid_2) {
-    char line1[5] = ENTER_MID_line;
-    char line2[5] = ENTER_MID_line;
+    char line1[11] = ENTER_MID_line;
+    char line2[11] = ENTER_MID_line;
     char sourceline[5] = TAB_END_line;
     int len = 3;
     void* p1=strncat(line1,sourceline,len);
@@ -2051,8 +2135,8 @@ START_TEST(test_strncat_entermid_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2061,8 +2145,8 @@ START_TEST(test_strncat_entermid_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_entermid_3) {
-    char line1[5] = ENTER_MID_line;
-    char line2[5] = ENTER_MID_line;
+    char line1[11] = ENTER_MID_line;
+    char line2[11] = ENTER_MID_line;
     char sourceline[5] = TAB_END_line;
     int len = 4;
     void* p1=strncat(line1,sourceline,len);
@@ -2071,8 +2155,8 @@ START_TEST(test_strncat_entermid_3) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,5);
-    ck_assert_mem_eq(line1,line2,5);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2081,8 +2165,8 @@ START_TEST(test_strncat_entermid_3) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_invis_1) {
-    char line1[33] = INVIS_CHAR;
-    char line2[33] = INVIS_CHAR;
+    char line1[38] = INVIS_CHAR;
+    char line2[38] = INVIS_CHAR;
     char sourceline[5] = TAB_END_line;
     int len = 4;
     void* p1=strncat(line1,sourceline,len);
@@ -2091,28 +2175,8 @@ START_TEST(test_strncat_invis_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,33);
-    ck_assert_mem_eq(line1,line2,33);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
-START_TEST(test_strncat_invis_2) {
-    char line1[33] = INVIS_CHAR;
-    char line2[33] = INVIS_CHAR;
-    char sourceline[33] = INVIS_CHAR;
-    int len = 4;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
-
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,33);
-    ck_assert_mem_eq(line1,line2,33);
+    ck_assert_mem_eq(p1,p2,38);
+    ck_assert_mem_eq(line1,line2,38);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2121,8 +2185,8 @@ START_TEST(test_strncat_invis_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_invis_3) {
-    char line1[33] = INVIS_CHAR;
-    char line2[33] = INVIS_CHAR;
+    char line1[66] = INVIS_CHAR;
+    char line2[66] = INVIS_CHAR;
     char sourceline[33] = INVIS_CHAR;
     int len = 32;
     void* p1=strncat(line1,sourceline,len);
@@ -2131,8 +2195,8 @@ START_TEST(test_strncat_invis_3) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,33);
-    ck_assert_mem_eq(line1,line2,33);
+    ck_assert_mem_eq(p1,p2,66);
+    ck_assert_mem_eq(line1,line2,66);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2140,6 +2204,28 @@ START_TEST(test_strncat_invis_3) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+START_TEST(test_strncat_invis_2) {
+    char line1[38] = FRIVE_CHAR_1;
+    char line2[38] = FRIVE_CHAR_1;
+    char sourceline[33] = INVIS_CHAR;
+    int len = 32;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,38);
+    ck_assert_mem_eq(line1,line2,38);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+
+
 //5.3
 START_TEST(test_strncat_different_n_1) {
     char line1[6] = FRIVE_CHAR_1;
@@ -2161,9 +2247,29 @@ START_TEST(test_strncat_different_n_1) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+START_TEST(test_strncat_different_n_13) {
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
+    char sourceline[6] = FRIVE_CHAR_2;
+    int len = 0;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
 START_TEST(test_strncat_different_n_2) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
     char sourceline[6] = FRIVE_CHAR_2;
     int len = 5;
     void* p1=strncat(line1,sourceline,len);
@@ -2172,8 +2278,8 @@ START_TEST(test_strncat_different_n_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2182,8 +2288,8 @@ START_TEST(test_strncat_different_n_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_different_n_3) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[12] = FRIVE_CHAR_1;
+    char line2[12] = FRIVE_CHAR_1;
     char sourceline[6] = FRIVE_CHAR_2;
     int len = 6;
     void* p1=strncat(line1,sourceline,len);
@@ -2192,8 +2298,8 @@ START_TEST(test_strncat_different_n_3) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,12);
+    ck_assert_mem_eq(line1,line2,12);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2201,7 +2307,66 @@ START_TEST(test_strncat_different_n_3) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+START_TEST(test_strncat_different_n_14) {
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
+    char sourceline[6] = FRIVE_CHAR_2;
+    int len = 6;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
 
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,12);
+    ck_assert_mem_eq(line1,line2,12);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_different_n_15) {
+    char line1[14] = FRIVE_CHAR_1;
+    char line2[14] = FRIVE_CHAR_1;
+    char sourceline[6] = FRIVE_CHAR_2;
+    int len = 7;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,14);
+    ck_assert_mem_eq(line1,line2,14);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+START_TEST(test_strncat_different_n_16) {
+    char line1[10] = FRIVE_CHAR_1;
+    char line2[10] = FRIVE_CHAR_1;
+    char sourceline[10] = "HHHHHHHHH";
+    int len = 9;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,10);
+    ck_assert_mem_eq(line1,line2,10);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
 //--->overlapping:
 START_TEST(test_strncat_different_n_4) {
     char line1[6] = FRIVE_CHAR_1;
@@ -2224,18 +2389,18 @@ START_TEST(test_strncat_different_n_4) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_different_n_5) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[12] = FRIVE_CHAR_1;
+    char line2[12] = FRIVE_CHAR_1;
     char sourceline[8] = SEVEN_CHAR;
-    int len = 8;
+    int len = 7;
     void* p1=strncat(line1,sourceline,len);
     void* p2=s21_strncat(line2,sourceline,len);
 
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,12);
+    ck_assert_mem_eq(line1,line2,12);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2244,18 +2409,18 @@ START_TEST(test_strncat_different_n_5) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_different_n_8) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
-    char sourceline[5] = FOUR_CHAR;
-    int len = 10;
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
+    char sourceline[8] = SEVEN_CHAR;
+    int len = 7;
     void* p1=strncat(line1,sourceline,len);
     void* p2=s21_strncat(line2,sourceline,len);
 
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2266,8 +2431,8 @@ START_TEST(test_strncat_different_n_8) {
 
 //--->probably the same because of size_t
 START_TEST(test_strncat_different_n_9) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
     char sourceline[5] = FOUR_CHAR;
     size_t len = -3;
     void* p1=strncat(line1,sourceline,len);
@@ -2276,8 +2441,8 @@ START_TEST(test_strncat_different_n_9) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2306,49 +2471,10 @@ START_TEST(test_strncat_different_n_6) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
-START_TEST(test_strncat_different_n_7) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
-    char sourceline[5] = FOUR_CHAR;
-    int len = 5;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
 
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
-START_TEST(test_strncat_different_n_10) {
-    char line1[8] = FRIVE_CHAR_1;
-    char line2[8] = FRIVE_CHAR_1;
-    char sourceline[5] = FOUR_CHAR;
-    int len = 6;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
-
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,8);
-    ck_assert_mem_eq(line1,line2,8);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
 START_TEST(test_strncat_different_n_11) {
-    char line1[10] = "ggggggggg";
-    char line2[10] = "ggggggggg";
+    char line1[14] = "ggggggggg";
+    char line2[14] = "ggggggggg";
     char sourceline[5] = FOUR_CHAR;
     int len = 9;
     void* p1=strncat(line1,sourceline,len);
@@ -2366,30 +2492,10 @@ START_TEST(test_strncat_different_n_11) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
-START_TEST(test_strncat_different_n_12) {
-    char line1[10] = FRIVE_CHAR_1;
-    char line2[10] = FRIVE_CHAR_1;
-    char sourceline[5] = FOUR_CHAR;
-    int len = 5;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
-
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,10);
-    ck_assert_mem_eq(line1,line2,10);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
 //5.4
 START_TEST(test_strncat_nullline_1) {
-    char line1[6] = FRIVE_CHAR_1;
-    char line2[6] = FRIVE_CHAR_1;
+    char line1[9] = FRIVE_CHAR_1;
+    char line2[9] = FRIVE_CHAR_1;
     char sourceline[5] = NULL_LINE;
     int len = 3;
     void* p1=strncat(line1,sourceline,len);
@@ -2398,8 +2504,8 @@ START_TEST(test_strncat_nullline_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,6);
-    ck_assert_mem_eq(line1,line2,6);
+    ck_assert_mem_eq(p1,p2,9);
+    ck_assert_mem_eq(line1,line2,9);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2408,8 +2514,8 @@ START_TEST(test_strncat_nullline_1) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_nullline_2) {
-    char line1[NORMLINES_SIX] = NULL_LINE;
-    char line2[NORMLINES_SIX] = NULL_LINE;
+    char line1[NORMLINES_SIX*2-1] = NULL_LINE;
+    char line2[NORMLINES_SIX*2-1] = NULL_LINE;
     char sourceline[NORMLINES_SIX] = FRIVE_CHAR_1;
     int len = 3;
     void* p1=strncat(line1,sourceline,len);
@@ -2418,8 +2524,8 @@ START_TEST(test_strncat_nullline_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,NORMLINES_SIX);
-    ck_assert_mem_eq(line1,line2,NORMLINES_SIX);
+    ck_assert_mem_eq(p1,p2,NORMLINES_SIX*2-1);
+    ck_assert_mem_eq(line1,line2,NORMLINES_SIX*2-1);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2429,8 +2535,8 @@ START_TEST(test_strncat_nullline_2) {
 }
 //5.5
 START_TEST(test_strncat_long_1) {
-    char line1[LONG_CHECK_LINE] = NULL_LINE;
-    char line2[LONG_CHECK_LINE] = NULL_LINE;
+    char line1[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char line2[LONG_CHECK_LINE*2-1] = NULL_LINE;
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[6] = FRIVE_CHAR_1;
@@ -2441,8 +2547,8 @@ START_TEST(test_strncat_long_1) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE);
-    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE);
+    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE*2-1);
+    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE*2-1);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2450,12 +2556,14 @@ START_TEST(test_strncat_long_1) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+
 START_TEST(test_strncat_long_2) {
-    char line1[LONG_CHECK_LINE] = NULL_LINE;
-    char line2[LONG_CHECK_LINE] = NULL_LINE;
+    char line1[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char line2[LONG_CHECK_LINE*2-1] = NULL_LINE;
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = 5;
     void* p1=strncat(line1,sourceline,len);
     void* p2=s21_strncat(line2,sourceline,len);
@@ -2463,8 +2571,8 @@ START_TEST(test_strncat_long_2) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE);
-    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE);
+    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE*2-1);
+    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE*2-1);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2473,11 +2581,12 @@ START_TEST(test_strncat_long_2) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_long_3) {
-    char line1[LONG_CHECK_LINE] = NULL_LINE;
-    char line2[LONG_CHECK_LINE] = NULL_LINE;
+    char line1[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char line2[LONG_CHECK_LINE*2-1] = NULL_LINE;
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE-1;
     void* p1=strncat(line1,sourceline,len);
     void* p2=s21_strncat(line2,sourceline,len);
@@ -2485,8 +2594,8 @@ START_TEST(test_strncat_long_3) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE);
-    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE);
+    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE*2-1);
+    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE*2-1);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2495,11 +2604,12 @@ START_TEST(test_strncat_long_3) {
     ck_assert_ptr_eq(line2,p2); 
 }
 START_TEST(test_strncat_long_4) {
-    char line1[LONG_CHECK_LINE] = NULL_LINE;
-    char line2[LONG_CHECK_LINE] = NULL_LINE;
+    char line1[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char line2[LONG_CHECK_LINE*2-1] = NULL_LINE;
     rand_str(line1,LONG_CHECK_LINE-1);
     strcpy(line2,line1);
     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
     int len = LONG_CHECK_LINE;
     void* p1=strncat(line1,sourceline,len);
     void* p2=s21_strncat(line2,sourceline,len);
@@ -2507,8 +2617,8 @@ START_TEST(test_strncat_long_4) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE);
-    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE);
+    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE*2-1);
+    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE*2-1);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2516,7 +2626,27 @@ START_TEST(test_strncat_long_4) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+START_TEST(test_strncat_long_5) {
+    char line1[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char line2[LONG_CHECK_LINE*2-1] = NULL_LINE;
+    char sourceline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(sourceline,LONG_CHECK_LINE-1);
+    int len = LONG_CHECK_LINE-1;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
 
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE*2-1);
+    ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE*2-1);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
 
 
 
@@ -2698,7 +2828,47 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_strncpy_long_2);
     tcase_add_test(tc_core, test_strncpy_long_3);
     tcase_add_test(tc_core, test_strncpy_long_4);
-    //s21_strncat -->5.1-5.
+
+    //s21_strncat -->5.0-5.5
+    tcase_add_test(tc_core, test_strncat_pointertes);
+    tcase_add_test(tc_core, test_strncat_norm_1);
+    tcase_add_test(tc_core, test_strncat_norm_2);
+    tcase_add_test(tc_core, test_strncat_nullend_1);
+    tcase_add_test(tc_core, test_strncat_nullend_2);
+    tcase_add_test(tc_core, test_strncat_nullend_3);
+    tcase_add_test(tc_core, test_strncat_nullmid_4);
+    tcase_add_test(tc_core, test_strncat_nullmid_5);
+    tcase_add_test(tc_core, test_strncat_nullmid_6);
+    tcase_add_test(tc_core, test_strncat_nullmid_1);
+    tcase_add_test(tc_core, test_strncat_nullmid_2);
+    tcase_add_test(tc_core, test_strncat_nullmid_3);
+    tcase_add_test(tc_core, test_strncat_entermid_1);
+    tcase_add_test(tc_core, test_strncat_entermid_2);
+    tcase_add_test(tc_core, test_strncat_entermid_3);
+    tcase_add_test(tc_core, test_strncat_invis_1);
+    tcase_add_test(tc_core, test_strncat_invis_2);
+    tcase_add_test(tc_core, test_strncat_invis_3);
+    tcase_add_test(tc_core, test_strncat_different_n_1);
+    tcase_add_test(tc_core, test_strncat_different_n_2);
+    tcase_add_test(tc_core, test_strncat_different_n_3);
+    tcase_add_test(tc_core, test_strncat_different_n_4);
+    tcase_add_test(tc_core, test_strncat_different_n_5);
+    tcase_add_test(tc_core, test_strncat_different_n_8);
+    tcase_add_test(tc_core, test_strncat_different_n_9);
+    tcase_add_test(tc_core, test_strncat_different_n_6);
+    tcase_add_test(tc_core, test_strncat_different_n_13);
+    tcase_add_test(tc_core, test_strncat_different_n_14);
+    tcase_add_test(tc_core, test_strncat_different_n_15);
+    tcase_add_test(tc_core, test_strncat_different_n_16);
+    tcase_add_test(tc_core, test_strncat_different_n_11);
+    tcase_add_test(tc_core, test_strncat_nullline_1);
+    tcase_add_test(tc_core, test_strncat_nullline_2);
+    tcase_add_test(tc_core, test_strncat_long_1);
+    tcase_add_test(tc_core, test_strncat_long_2);
+    tcase_add_test(tc_core, test_strncat_long_3);
+    tcase_add_test(tc_core, test_strncat_long_4);
+    tcase_add_test(tc_core, test_strncat_long_5);
+
     //s21_strcspn -->6.1-6.
     //s21_strpbrk -->7.1-7.
     //s21_strtok -->8.1-8.

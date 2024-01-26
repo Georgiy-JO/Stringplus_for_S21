@@ -160,3 +160,49 @@ s21_strncpy
     test_strncpy_long_3
     test_strncpy_long_4
 
+
+s21_strncat
+    4.0
+    test_strncat_pointertes
+    4.1
+    test_strncat_norm_1
+    test_strncat_norm_2
+    4.2
+    test_strncat_nullend_1
+    test_strncat_nullend_2
+    test_strncat_nullend_3
+    test_strncat_nullmid_4
+    test_strncat_nullmid_5
+    test_strncat_nullmid_6
+    test_strncat_nullmid_1
+    test_strncat_nullmid_2
+    test_strncat_nullmid_3
+    test_strncat_entermid_1
+    test_strncat_entermid_2
+    test_strncat_entermid_3
+    test_strncat_invis_1
+    test_strncat_invis_2
+    test_strncat_invis_3
+    4.3
+    test_strncat_different_n_1
+    test_strncat_different_n_2
+    test_strncat_different_n_3
+    test_strncat_different_n_4
+    test_strncat_different_n_5
+    test_strncat_different_n_8
+    test_strncat_different_n_9
+    test_strncat_different_n_6
+    test_strncat_different_n_13
+    test_strncat_different_n_14
+    test_strncat_different_n_15
+    test_strncat_different_n_16
+    test_strncat_different_n_11
+    4.4
+    test_strncat_nullline_1
+    test_strncat_nullline_2
+    4.5
+    test_strncat_long_1
+    test_strncat_long_2
+    test_strncat_long_3
+    test_strncat_long_4
+    test_strncat_long_5
