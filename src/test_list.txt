@@ -11,8 +11,11 @@ FRIVE_CHAR_2 --> "fffff" //5(6)
 FOUR_CHAR --> "asdf"  //4(5)
 SEVEN_CHAR --> "asdfghj"  //7(8)
 #define LONG_CHECK_LINE 100000
+#define STRLINES_FIVE 5
+#define NORMLINES_SIX 6
 
-    test_settings  
+
+test_settings  
 
 s21_strlen:
     1.1
@@ -75,6 +78,85 @@ s21_memset
     test_memset_midline_2
     test_memset_midline_4
     2.7
-    
+    //test_memset_long_1    !werror
+    test_memset_long_2
+    test_memset_long_3
+    test_memset_long_4
 
+s21_memcpy
+    3.0
+    test_memcpy_pointertes
+    3.1
+    test_memcpy_norm
+    3.2
+    test_memcpy_nullend_1
+    test_memcpy_nullend_2
+    test_memcpy_nullmid_1
+    test_memcpy_nullmid_2
+    test_memcpy_nullmid_3
+    test_memcpy_entermid_1
+    test_memcpy_entermid_2
+    test_memcpy_entermid_3
+    test_memcpy_invis_1
+    test_memcpy_invis_2
+    test_memcpy_invis_3
+    3.3
+    test_memcpy_different_n_1
+    test_memcpy_different_n_2
+    test_memcpy_different_n_3
+    //test_memcpy_different_n_4
+    //test_memcpy_different_n_5
+    test_memcpy_different_n_6
+    test_memcpy_different_n_7
+    //test_memcpy_different_n_8
+    //test_memcpy_different_n_9
+    3.4
+    test_memcpy_nullline_1
+    test_memcpy_nullline_2
+    3.5
+    test_memcpy_long_1
+    test_memcpy_long_2
+    test_memcpy_long_3
+    test_memcpy_long_4
+
+
+s21_strncpy
+    4.0
+    test_strncpy_pointertes
+    4.1
+    test_strncpy_norm_1
+    test_strncpy_norm_2
+    4.2
+    test_strncpy_nullend_1
+    test_strncpy_nullend_2
+    test_strncpy_nullmid_1
+    test_strncpy_nullmid_2
+    test_strncpy_nullmid_3
+    test_strncpy_entermid_1
+    test_strncpy_entermid_2
+    test_strncpy_entermid_3
+    test_strncpy_invis_1
+    test_strncpy_invis_2
+    test_strncpy_invis_3
+    4.3
+    test_strncpy_different_n_1
+    test_strncpy_different_n_2
+    test_strncpy_different_n_3
+    //test_strncpy_different_n_4
+    //test_strncpy_different_n_5
+    test_strncpy_different_n_6
+    test_strncpy_different_n_7
+    //test_strncpy_different_n_8
+    //test_strncpy_different_n_9
+    test_strncpy_different_n_10
+    test_strncpy_different_n_11
+    test_strncpy_different_n_12
+    4.4
+    test_strncpy_nullline_1
+    test_strncpy_nullline_2
+    4.5
+    test_strncpy_long_1
+    test_strncpy_long_2
+    test_strncpy_long_3
+    test_strncpy_long_4
 

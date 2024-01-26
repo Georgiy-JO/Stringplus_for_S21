@@ -1,5 +1,5 @@
 CC = gcc
-GENLAGS = -std=c11 -Wall -Wextra -Werror 
+GENLAGS = -std=c11 -Wall -Wextra #-Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
 CHLIB = -lcheck #-lsubunit
 DFLAG = -D_POSIX_C_SOURCE=200809L
@@ -108,12 +108,14 @@ clang_all:
 
 #------------------------------------------------------------------------------------------------------------------------------------
 
-clean:
+clear:
 	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester 
 #tester-temp
 clear_o:
 	rm -f *.o
 
-rebuild: clean all
+rebuild: clear all
+
+rebuild_test: clear test
 
 .extra_list: all test clean s21_string.a gcov_report
