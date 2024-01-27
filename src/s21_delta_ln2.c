@@ -11,7 +11,6 @@ size_t s21_strcspn(const char *str1, const char *str2){
     }
     return delta;
 }
-
 //checking if the CHAR is in STR
 /*
 //v1

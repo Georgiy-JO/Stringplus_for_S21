@@ -21,8 +21,6 @@
 #define STRLINES_FIVE 5
 #define NORMLINES_SIX 6
 
-
-
 //s21_strlen -->1.1-1.6
 //s21_memset -->2.0-2.7
 //s21_memcpy  -->3.0-3.5

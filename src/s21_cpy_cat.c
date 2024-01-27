@@ -20,7 +20,7 @@ char *s21_strncpy(char *dest, const char *src, size_t n){
     len_dest=s21_strlen(dest);
     len_src=s21_strlen(src);
     if(len_dest<=n && len_src>=n)
-        padding((dest+n), 1);           //*(dest+n)=C_ZERO;
+        padding((dest+n), 1);       //*(dest+n)=C_ZERO;
     else if (len_src<n)
         padding((dest+len_src), n-len_src);
     return dest;

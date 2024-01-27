@@ -1,7 +1,17 @@
 CC = gcc
 GENLAGS = -std=c11 -Wall -Wextra -Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
-CHLIB = -lcheck #-lsubunit
+CHLIB = -lcheck
+
+#NEED TO FIND A WAY DO DO IT 
+# ifdef __APPLE__
+# CHLIB = -lcheck
+# endif
+# ifdef __linux__
+# CHLIB = -lcheck -lsubunit
+# endif
+
+
 DFLAG = -D_POSIX_C_SOURCE=200809L
 
 VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
