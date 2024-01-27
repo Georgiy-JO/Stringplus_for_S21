@@ -11,53 +11,26 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
     //*(destination+n)=C_ZERO;
     return dest;
 }
-/*posible thin places:
-    1)too long
-    2)NULL line
-    3n=0
-    4)\n
-    5)\t
-    6)other zero-chars
-    7)something neative
-    8)memory allocation error
-    9)check VOID type
-
-*/
-
 //Copies up to n characters from the string pointed to, by src to dest.
 char *s21_strncpy(char *dest, const char *src, size_t n){
     size_t len_dest=0, len_src=0;
-    len_dest=s21_strlen(dest);
-    len_src=s21_strlen(src);
-    for(size_t i=0;i<n && i<len_src;i++){
+    for(size_t i=0;i<n /*&& i<len_src*/;i++){
         *(dest+i)=*(src+i);
     }
+    len_dest=s21_strlen(dest);
+    len_src=s21_strlen(src);
     if(len_dest<=n && len_src>=n)
         padding((dest+n), 1);           //*(dest+n)=C_ZERO;
     else if (len_src<n)
         padding((dest+len_src), n-len_src);
     return dest;
 }
-/*posible thin places:
-    1)too big n
-    2)NULL line
-    3n=0
-    4)\n
-    5)\t
-    6)other zero-chars
-    7)difference n, dest_len,src_len
-    8)memory allocation error
-    9)overlaping
-*/
-
 //Filling the line length n with \0 
 void padding(char* place, size_t length){
     for(size_t i=0;i<length;i++){
         *(place+i)=C_ZERO;
     }
 }
-
-//NOT CHECKED MANUAL!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Appends the string pointed to, by src to the end of the string pointed to, by dest up to n characters long.
 char *s21_strncat(char *dest, const char *src, size_t n){
     size_t len_src=0,i=0, len_dest=0;
@@ -66,16 +39,8 @@ char *s21_strncat(char *dest, const char *src, size_t n){
     for(;i<n && i<len_src;i++){
         *(dest+i+len_dest)=*(src+i);
     }
-    padding(dest+i+len_dest, n-i+1);
+    //padding(dest+i+len_dest, n-i+1);
+    padding(dest+i+len_dest, 1);
     return dest;
 }
-/*posible thin places:
-    1)too big n
-    2)NULL line
-    3n=0
-    4)\n
-    5)\t
-    6)other zero-chars
-    7)memory allocation error
-    8)overlaping
-*/
+

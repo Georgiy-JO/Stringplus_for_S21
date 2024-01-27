@@ -10,6 +10,12 @@ FRIVE_CHAR_1 --> "ggggg"//5(6)
 FRIVE_CHAR_2 --> "fffff" //5(6)
 FOUR_CHAR --> "asdf"  //4(5)
 SEVEN_CHAR --> "asdfghj"  //7(8)
+#define LONG_CHECK_LINE 100000
+#define STRLINES_FIVE 5
+#define NORMLINES_SIX 6
+
+
+test_settings  
 
 s21_strlen:
     1.1
@@ -37,6 +43,8 @@ s21_strlen:
     1.5
     test_strlen_invisible_1
     test_strlen_invisible_2
+    1.6
+    test_strlen_long
 
 s21_memset
     2.0
@@ -69,6 +77,302 @@ s21_memset
     test_memset_midline_3
     test_memset_midline_2
     test_memset_midline_4
+    2.7
+    //test_memset_long_1    !werror
+    test_memset_long_2
+    test_memset_long_3
+    test_memset_long_4
+
+s21_memcpy
+    3.0
+    test_memcpy_pointertes
+    3.1
+    test_memcpy_norm
+    3.2
+    test_memcpy_nullend_1
+    test_memcpy_nullend_2
+    test_memcpy_nullmid_1
+    test_memcpy_nullmid_2
+    test_memcpy_nullmid_3
+    test_memcpy_entermid_1
+    test_memcpy_entermid_2
+    test_memcpy_entermid_3
+    test_memcpy_invis_1
+    test_memcpy_invis_2
+    test_memcpy_invis_3
+    3.3
+    test_memcpy_different_n_1
+    test_memcpy_different_n_2
+    test_memcpy_different_n_3
+    //test_memcpy_different_n_4
+    //test_memcpy_different_n_5
+    test_memcpy_different_n_6
+    test_memcpy_different_n_7
+    //test_memcpy_different_n_8
+    //test_memcpy_different_n_9
+    3.4
+    test_memcpy_nullline_1
+    test_memcpy_nullline_2
+    3.5
+    test_memcpy_long_1
+    test_memcpy_long_2
+    test_memcpy_long_3
+    test_memcpy_long_4
+
+
+s21_strncpy
+    4.0
+    test_strncpy_pointertes
+    4.1
+    test_strncpy_norm_1
+    test_strncpy_norm_2
+    4.2
+    test_strncpy_nullend_1
+    test_strncpy_nullend_2
+    test_strncpy_nullmid_1
+    test_strncpy_nullmid_2
+    test_strncpy_nullmid_3
+    test_strncpy_entermid_1
+    test_strncpy_entermid_2
+    test_strncpy_entermid_3
+    test_strncpy_invis_1
+    test_strncpy_invis_2
+    test_strncpy_invis_3
+    4.3
+    test_strncpy_different_n_1
+    test_strncpy_different_n_2
+    test_strncpy_different_n_3
+    //test_strncpy_different_n_4
+    //test_strncpy_different_n_5
+    test_strncpy_different_n_6
+    test_strncpy_different_n_7
+    //test_strncpy_different_n_8
+    //test_strncpy_different_n_9
+    test_strncpy_different_n_10
+    test_strncpy_different_n_11
+    test_strncpy_different_n_12
+    4.4
+    test_strncpy_nullline_1
+    test_strncpy_nullline_2
+    4.5
+    test_strncpy_long_1
+    test_strncpy_long_2
+    test_strncpy_long_3
+    test_strncpy_long_4
+
+
+s21_strncat
+    5.0
+    test_strncat_pointertes
+    5.1
+    test_strncat_norm_1
+    test_strncat_norm_2
+    5.2
+    test_strncat_nullend_1
+    test_strncat_nullend_2
+    test_strncat_nullend_3
+    test_strncat_nullmid_4
+    test_strncat_nullmid_5
+    test_strncat_nullmid_6
+    test_strncat_nullmid_1
+    test_strncat_nullmid_2
+    test_strncat_nullmid_3
+    test_strncat_entermid_1
+    test_strncat_entermid_2
+    test_strncat_entermid_3
+    test_strncat_invis_1
+    test_strncat_invis_2
+    test_strncat_invis_3
+    5.3
+    test_strncat_different_n_1
+    test_strncat_different_n_2
+    test_strncat_different_n_3
+    //test_strncat_different_n_4
+    //test_strncat_different_n_5
+    //test_strncat_different_n_8
+    //test_strncat_different_n_6
+    //test_strncat_different_n_16
+    //test_strncat_different_n_9
+    test_strncat_different_n_13
+    test_strncat_different_n_14
+    test_strncat_different_n_15
+    test_strncat_different_n_11
+    5.4
+    test_strncat_nullline_1
+    test_strncat_nullline_2
+    5.5
+    test_strncat_long_1
+    test_strncat_long_2
+    test_strncat_long_3
+    test_strncat_long_4
+    test_strncat_long_5
+
+s21_strcspn
+    6.0
+    test_strcspn_types
+    6.1
+    test_strcspn_norm_1
+    test_strcspn_norm_2
+    test_strcspn_norm_3
+    test_strcspn_norm_4
+    test_strcspn_norm_5
+    6.2
+    test_strcspn_nullend_1
+    test_strcspn_nullend_2
+    test_strcspn_nullend_3
+    test_strcspn_nullend_4
+    test_strcspn_nullend_5
+    test_strcspn_nullmid_1
+    test_strcspn_nullmid_2
+    test_strcspn_nullmid_3
+    test_strcspn_entermid_1
+    test_strcspn_entermid_2
+    test_strcspn_entermid_3
+    test_strcspn_tabmid_1
+    test_strcspn_tabmid_2
+    test_strcspn_tabmid_3
+    test_strcspn_enterend_1
+    test_strcspn_invis_1
+    test_strcspn_invis_2
+    test_strcspn_invis_3
+    test_strcspn_invis_4
+    test_strcspn_invis_5
+    test_strcspn_invis_6
+    test_strcspn_invis_7
+    6.3
+    test_strcspn_nullline_1
+    //test_strcspn_nullline_2     !werror
+    //test_strcspn_nullline_4    !werror
+    test_strcspn_nullline_3
+    6.4
+    test_strcspn_long_1
+    test_strcspn_long_2
+    test_strcspn_long_3
+    test_strcspn_long_4
+    test_strcspn_long_5
+    test_strcspn_long_6
+    test_strcspn_long_7
+
+s21_strpbrk
+    7.0
+    test_strpbrk_types
+    7.1
+    test_strpbrk_norm_1
+    test_strpbrk_norm_2
+    test_strpbrk_norm_3
+    test_strpbrk_norm_4
+    test_strpbrk_norm_5
+    test_strpbrk_norm_6
+    7.2
+    test_strpbrk_nullend_1
+    test_strpbrk_nullend_2
+    test_strpbrk_nullend_3
+    test_strpbrk_nullend_4
+    test_strpbrk_nullend_5
+    test_strpbrk_nullmid_1
+    test_strpbrk_nullmid_2
+    test_strpbrk_nullmid_3
+    test_strpbrk_entermid_1
+    test_strpbrk_entermid_2
+    test_strpbrk_entermid_3
+    test_strpbrk_tabmid_1
+    test_strpbrk_tabmid_2
+    test_strpbrk_tabmid_3
+    test_strpbrk_enterend_1
+    test_strpbrk_invis_1
+    test_strpbrk_invis_2
+    test_strpbrk_invis_3
+    test_strpbrk_invis_4
+    test_strpbrk_invis_5
+    test_strpbrk_invis_6
+    test_strpbrk_invis_7
+    test_strpbrk_invis_8
+    test_strpbrk_invis_9
+    7.3
+    test_strpbrk_nullline_1
+    //test_strpbrk_nullline_2    !werror
+    //test_strpbrk_nullline_4    !werror
+    test_strpbrk_nullline_3
+    7.4
+    test_strpbrk_long_1
+    test_strpbrk_long_2
+    test_strpbrk_long_3
+    test_strpbrk_long_4
+    test_strpbrk_long_5
+    test_strpbrk_long_6
+    test_strpbrk_long_7
+
+s21_strtok
+    8.0
+    test_strtok_lineschange
+    test_strtok_types
+    test_strtok_diflines_1
+    test_strtok_diflines_2
+    test_strtok_diflines_3
+    test_strtok_diflines_4
+    8.1
+    test_strtok_norm_1
+    test_strtok_norm_2
+    test_strtok_norm_3
+    test_strtok_norm_4
+    test_strtok_norm_5
+    test_strtok_norm_6
+    test_strtok_norm_7
+    test_strtok_norm_8
+    test_strtok_norm_9
+    test_strtok_norm_10
+    test_strtok_norm_11
+    test_strtok_norm_12
+    test_strtok_norm_13
+    test_strtok_norm_14
+    8.2
+    test_strtok_nullendline_1
+    test_strtok_nullendline_2
+    test_strtok_nullmidline_1
+    test_strtok_nullmidline_2
+    test_strtok_nullmidline_3
+    test_strtok_nullmidline_4
+    test_strtok_enterendline
+    test_strtok_entermidline_1
+    test_strtok_entermidline_2
+    test_strtok_entermidline_3
+    test_strtok_tabendline
+    test_strtok_tabmidline_1
+    test_strtok_tabmidline_2
+    test_strtok_tabmidline_3
+    test_strtok_tabmidline_4
+    test_strtok_invis_1
+    test_strtok_invis_2
+    test_strtok_invis_3
+    test_strtok_invis_4
+    test_strtok_invis_5
+    test_strtok_invis_6
+    test_strtok_invis_7
+    test_strtok_invis_8
+    test_strtok_invis_9
+    8.3
+    test_strtok_nullline_1
+    test_strtok_nullline_2
+    test_strtok_nullline_3
+    test_strtok_nullline_4
+    test_strtok_nullline_5
+    test_strtok_nullline_6
+    //test_strtok_nullline_7
+    //test_strtok_nullline_8
+    //test_strtok_nullline_9
+    //test_strtok_nullline_10
+    //test_strtok_nullline_11
+    //test_strtok_nullline_12
+    8.4
+    test_strtok_longline_1
+    test_strtok_longline_2
+    //test_strtok_longline_3 
+    test_strtok_longline_4
+    test_strtok_longline_5
+    test_strtok_longline_6
+
+
+
 
 
 

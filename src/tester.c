@@ -7,7 +7,7 @@
 int main(){
 /*
     //(*1.1)
-    char* line=NULL;
+    char* line=MY_NULL;
     printf("%ld",s21_strlen(line));
     scanf("%s",line);
 */
@@ -24,7 +24,7 @@ int main(){
 
 /*
     //(*1.2)
-    char* line=NULL;
+    char* line=MY_NULL;
     char letter = 'f';
     int len = 2;
     void* p=memset(line,letter,len);
