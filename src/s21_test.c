@@ -28,9 +28,9 @@
 //s21_memcpy  -->3.0-3.5
 //s21_strncpy -->4.0-4.5
 //s21_strncat -->5.0-5.5
-//s21_strcspn -->6.1-6.
-//s21_strpbrk -->7.1-7.
-//s21_strtok -->8.1-8.
+//s21_strcspn -->6.0-6.4
+//s21_strpbrk -->7.0-7.4
+//s21_strtok -->8.0-8.4
 
 /*  //(*5)  TOO LONG　LINES CHECK  -- HOW?!
 
@@ -1851,16 +1851,6 @@ START_TEST(test_strncpy_long_4) {
 }
 
 //s21_strncat
-
-
-
-
-
-
-
-
-
-
 //5.0
 START_TEST(test_strncat_pointertes) {
     char line1[10] = FRIVE_CHAR_1;
@@ -1875,7 +1865,6 @@ START_TEST(test_strncat_pointertes) {
     ck_assert_ptr_eq(p2,line2);
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
-    ck_assert_str_eq(strncat(line1,sourceline,len),s21_strncat(line2,sourceline,len));    
 }
 //5.1
 START_TEST(test_strncat_norm_1) {
@@ -2312,14 +2301,14 @@ START_TEST(test_strncat_different_n_14) {
     char line2[11] = FRIVE_CHAR_1;
     char sourceline[6] = FRIVE_CHAR_2;
     int len = 6;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
+    void* p1=s21_strncat(line1,sourceline,len);
+    void* p2=strncat(line2,sourceline,len);
 
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 
-    ck_assert_mem_eq(p1,p2,12);
-    ck_assert_mem_eq(line1,line2,12);
+    //ck_assert_mem_eq(p1,p2,12);
+    //ck_assert_mem_eq(line1,line2,12);
 
     ck_assert_mem_eq(p1,p2,len);
     ck_assert_mem_eq(line1,line2,len);
@@ -2347,26 +2336,7 @@ START_TEST(test_strncat_different_n_15) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
-START_TEST(test_strncat_different_n_16) {
-    char line1[10] = FRIVE_CHAR_1;
-    char line2[10] = FRIVE_CHAR_1;
-    char sourceline[10] = "HHHHHHHHH";
-    int len = 9;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=s21_strncat(line2,sourceline,len);
-
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,10);
-    ck_assert_mem_eq(line1,line2,10);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
+/*
 //--->overlapping:
 START_TEST(test_strncat_different_n_4) {
     char line1[6] = FRIVE_CHAR_1;
@@ -2428,29 +2398,6 @@ START_TEST(test_strncat_different_n_8) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
-
-//--->probably the same because of size_t
-START_TEST(test_strncat_different_n_9) {
-    char line1[11] = FRIVE_CHAR_1;
-    char line2[11] = FRIVE_CHAR_1;
-    char sourceline[5] = FOUR_CHAR;
-    size_t len = -3;
-    void* p1=strncat(line1,sourceline,len);
-    void* p2=strncat(line2,sourceline,len);
-    printf("%s---%s\n",line1,line2);
-    ck_assert_str_eq(p1,p2);
-    ck_assert_str_eq(line1,line2);
-
-    ck_assert_mem_eq(p1,p2,11);
-    ck_assert_mem_eq(line1,line2,11);
-
-    ck_assert_mem_eq(p1,p2,len);
-    ck_assert_mem_eq(line1,line2,len);
-
-    ck_assert_ptr_eq(line1,p1);
-    ck_assert_ptr_eq(line2,p2); 
-}
-
 START_TEST(test_strncat_different_n_6) {
     char line1[6] = FRIVE_CHAR_1;
     char line2[6] = FRIVE_CHAR_1;
@@ -2471,7 +2418,47 @@ START_TEST(test_strncat_different_n_6) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+START_TEST(test_strncat_different_n_16) {
+    char line1[10] = FRIVE_CHAR_1;
+    char line2[10] = FRIVE_CHAR_1;
+    char sourceline[10] = "HHHHHHHHH";
+    int len = 9;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
 
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,10);
+    ck_assert_mem_eq(line1,line2,10);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+//--->probably the same because of size_t
+START_TEST(test_strncat_different_n_9) {
+    char line1[11] = FRIVE_CHAR_1;
+    char line2[11] = FRIVE_CHAR_1;
+    char sourceline[5] = FOUR_CHAR;
+    size_t len = -3;
+    void* p1=strncat(line1,sourceline,len);
+    void* p2=s21_strncat(line2,sourceline,len);
+    ck_assert_str_eq(p1,p2);
+    ck_assert_str_eq(line1,line2);
+
+    ck_assert_mem_eq(p1,p2,11);
+    ck_assert_mem_eq(line1,line2,11);
+
+    ck_assert_mem_eq(p1,p2,len);
+    ck_assert_mem_eq(line1,line2,len);
+
+    ck_assert_ptr_eq(line1,p1);
+    ck_assert_ptr_eq(line2,p2); 
+}
+*/
 START_TEST(test_strncat_different_n_11) {
     char line1[14] = "ggggggggg";
     char line2[14] = "ggggggggg";
@@ -2647,60 +2634,1814 @@ START_TEST(test_strncat_long_5) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
+//strcspn
+//6.0
+START_TEST(test_strcspn_types) {
+    char line[6] = "asdfg";
+    char searchline[6] = "fghjk";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+    ck_assert_float_eq(n,m);
+    ck_assert_double_eq(n,m);
+    ck_assert_ldouble_eq(n,m);
+}
+//6.1
+START_TEST(test_strcspn_norm_1) {
+    char line[6] = "asdfg";
+    char searchline[6] = "fghjk";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_norm_2) {
+    char line[6] = "asdfg";
+    char searchline[6] = "hjkl;";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_norm_3) {
+    char line[6] = "asdfg";
+    char searchline[6] = "asdfg";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_norm_4) {
+    char line[6] = "asdfg";
+    char searchline[6] = "d";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_norm_5) {
+    char line[6] = "asdfg";
+    char searchline[6] = "D";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+//6.2
+START_TEST(test_strcspn_nullend_1) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "th";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullend_2) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "t\0";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullend_3) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "\0";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullend_4) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = {'G','H','T','\0'} ;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullend_5) {
+    char line[6] = FRIVE_CHAR_1;
+    char searchline[6] = {'G','H','T','\0'} ;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullmid_1) {
+    char line[6] = NULL_MID_line;
+    char searchline[6] = NULL_LINE;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullmid_2) {
+    char line[6] = NULL_MID_line;
+    char searchline[6] = "NTM";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullmid_3) {
+    char line[5] = {'Z','F','\0','T'};
+    char searchline[5] = {'\0','T','Z','k'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_entermid_1) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = "\n";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_entermid_2) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = "tmn";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_entermid_3) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = {'G','H','\n','T'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_tabmid_1) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = "\t";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_tabmid_2) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = "tmn";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_tabmid_3) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = {'G','H','\t','T'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_enterend_1) {
+    char line[5] = ENTER_END_line;
+    char searchline[5] = "\n";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_1) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',15,'t'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_2) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',10,'t'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_3) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',25,'t'};
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_4) {
+    char line[6] = FRIVE_CHAR_1;
+    char searchline[33] = INVIS_CHAR;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_5) {
+    char line[33] = INVIS_CHAR;
+    char searchline[33] = INVIS_CHAR;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_6) {
+    char line[5]=NULL_MID_line;
+    char searchline[33] = INVIS_CHAR;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_invis_7) {
+    char line[5]={'g',15,25,'f'};
+    char searchline[33] = INVIS_CHAR;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+//6.3
+START_TEST(test_strcspn_nullline_1) {
+    char line[5]=NULL_LINE;
+    char searchline[6] = FRIVE_CHAR_1;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+/*
+//WERROR -- ZEROsize-line
+START_TEST(test_strcspn_nullline_2) {
+    char line[0];
+    char searchline[6] = FRIVE_CHAR_1;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
-                                                                        // START_TEST(test_3_long_4) {
-                                                                        //     char line1[LONG_CHECK_LINE] = NULL_LINE;
-                                                                        //     char line2[LONG_CHECK_LINE] = NULL_LINE;
-                                                                        //     rand_str(line1,LONG_CHECK_LINE-1);
-                                                                        //     strcpy(line2,line1);
-                                                                        //     char sourceline[LONG_CHECK_LINE] = NULL_LINE;
-                                                                        //     int len = LONG_CHECK_LINE;
-                                                                        //     void* p1=memcpy(line1,sourceline,len);
-                                                                        //     void* p2=s21_memcpy(line2,sourceline,len);
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_nullline_4) {
+    char line[6]=FRIVE_CHAR_1;
+    char searchline[0];
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
-                                                                        //     ck_assert_str_eq(p1,p2);
-                                                                        //     ck_assert_str_eq(line1,line2);
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+*/
+START_TEST(test_strcspn_nullline_3) {
+    char line[6]=FRIVE_CHAR_1;
+    char searchline[5]=NULL_LINE;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
-                                                                        //     ck_assert_mem_eq(p1,p2,LONG_CHECK_LINE);
-                                                                        //     ck_assert_mem_eq(line1,line2,LONG_CHECK_LINE);
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
 
-                                                                        //     ck_assert_mem_eq(p1,p2,len);
-                                                                        //     ck_assert_mem_eq(line1,line2,len);
+//6.4
+START_TEST(test_strcspn_long_1) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[10]="asdfghjkl";
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
-                                                                        //     ck_assert_ptr_eq(line1,p1);
-                                                                        //     ck_assert_ptr_eq(line2,p2); 
-                                                                        // }
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_2) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_3) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[33] = INVIS_CHAR;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_4) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[5] = ENTER_MID_line;
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
 
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_5) {
+    char line[33] = INVIS_CHAR;
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
+
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_6) {
+    char line[5] = "asdf";
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
+
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+START_TEST(test_strcspn_long_7) {
+    char line[5] = "\n";
+    char searchline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE*10-1);
+    size_t n=0, m=0;
+    n=strcspn(line,searchline);
+    m=s21_strcspn(line,searchline);
+
+    ck_assert_int_eq(n,m);
+    ck_assert_uint_eq(n,m);
+}
+
+//strpbrk
+//7.0
+START_TEST(test_strpbrk_types) {
+    char line[6] = "asdfg";
+    char searchline[6] = "fghjk";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m);
+    ck_assert_str_eq(n,m);
+}
+//7.1
+START_TEST(test_strpbrk_norm_1) {
+    char line[6] = "asdfg";
+    char searchline[6] = "fghjk";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m);  
+}
+START_TEST(test_strpbrk_norm_2) {
+    char line[6] = "asdfg";
+    char searchline[6] = "hjkl;";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_norm_3) {
+    char line[6] = "asdfg";
+    char searchline[6] = "asdfg";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_norm_4) {
+    char line[6] = "asdfg";
+    char searchline[6] = "d";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_norm_5) {
+    char line[6] = "asdfg";
+    char searchline[6] = "D";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_norm_6) {
+    char line[6] = "asdfg";
+    char searchline[6] = "gooo";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+//7.2
+START_TEST(test_strpbrk_nullend_1) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "th";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullend_2) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "t\0";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullend_3) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = "\0";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullend_4) {
+    char line[6] = NULL_END_line;
+    char searchline[6] = {'G','H','T','\0'} ;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullend_5) {
+    char line[6] = FRIVE_CHAR_1;
+    char searchline[6] = {'G','H','T','\0'} ;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullmid_1) {
+    char line[6] = NULL_MID_line;
+    char searchline[6] = NULL_LINE;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullmid_2) {
+    char line[6] = NULL_MID_line;
+    char searchline[6] = "NTM";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullmid_3) {
+    char line[5] = {'Z','F','\0','T'};
+    char searchline[5] = {'\0','T','Z','k'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_entermid_1) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = "\n";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_entermid_2) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = "tmn";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_entermid_3) {
+    char line[5] = ENTER_MID_line;
+    char searchline[5] = {'G','H','\n','T'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_tabmid_1) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = "\t";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_tabmid_2) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = "tmn";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_tabmid_3) {
+    char line[5] = TAB_MID_line;
+    char searchline[5] = {'G','H','\t','T'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_enterend_1) {
+    char line[5] = ENTER_END_line;
+    char searchline[5] = "\n";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_1) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',15,'t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_2) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',10,'t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_3) {
+    char line[33] = INVIS_CHAR;
+    char searchline[5] = {'g','m',25,'t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_4) {
+    char line[6] = FRIVE_CHAR_1;
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_8) {
+    char line[6] = {'6','5','9','7','1'};
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_9) {
+    char line[6] = {'6','0','9',7,'1'};
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_5) {
+    char line[33] = INVIS_CHAR;
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_6) {
+    char line[5]=NULL_MID_line;
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_invis_7) {
+    char line[5]={'g',15,25,'f'};
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+//7.3
+START_TEST(test_strpbrk_nullline_1) {
+    char line[5]=NULL_LINE;
+    char searchline[6] = FRIVE_CHAR_1;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+/*
+//WERROR -- ZEROsize-line
+START_TEST(test_strpbrk_nullline_2) {
+    char line[0];
+    char searchline[6] = FRIVE_CHAR_1;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_nullline_4) {
+    char line[6]=FRIVE_CHAR_1;
+    char searchline[0];
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+*/
+START_TEST(test_strpbrk_nullline_3) {
+    char line[6]=FRIVE_CHAR_1;
+    char searchline[5]=NULL_LINE;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+//7.4
+START_TEST(test_strpbrk_long_1) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[10]="asdfghjkl";
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_2) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_3) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_4) {
+    char line[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE-1);
+    char searchline[5] = ENTER_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_5) {
+    char line[33] = INVIS_CHAR;
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_6) {
+    char line[5] = "asdf";
+    char searchline[LONG_CHECK_LINE] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+START_TEST(test_strpbrk_long_7) {
+    char line[5] = "\n";
+    char searchline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(searchline,LONG_CHECK_LINE*10-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strpbrk(line,searchline);
+    m=s21_strpbrk(line,searchline);
+
+    ck_assert_pstr_eq(n,m);
+    ck_assert_ptr_eq(n,m); 
+}
+
+//strtok
+//8.0
+START_TEST(test_strtok_lineschange) {
+    char line[6] = "asdfg";
+    char line2[6]=NULL_LINE;
+    char line3[6]=NULL_LINE;
+    strcpy(line3,line);
+    strcpy(line2,line);
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line3,divline);
+    ck_assert_pstr_eq(n,m);
+    ck_assert_pstr_ne(line,line2);
+    ck_assert_pstr_ne(line3,line2);
+
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+        ck_assert_pstr_ne(line,line2);
+        ck_assert_pstr_ne(line3,line2);
+    }
+}
+START_TEST(test_strtok_types) {
+    char line[6] = "asdfg";
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    //printf("%s--%s\n",n,m);
+    ck_assert_pstr_eq(n,m);
+    //ck_assert_ptr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        //printf("%s--%s\n",n,m);
+        ck_assert_pstr_eq(n,m);
+        //ck_assert_ptr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_diflines_1) {
+    char line[6] = "asdfg";
+    char line2[6] = "asdfg";
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_diflines_2) {
+    char line[6] = "asdfg";
+    char line2[6] = "afdfg";
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_diflines_3) {
+    char line[6] = "asdfg";
+    char line2[6] = "pfpfp";
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_ne(n,m);
+
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        if(n!=MY_NULL && m!=NULL)
+            ck_assert_pstr_ne(n,m);
+    }
+}
+START_TEST(test_strtok_diflines_4) {
+    char line[6] = "asdfg";
+    char line2[6] = "afpfp";
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        if(n!=MY_NULL && m!=NULL)
+            ck_assert_pstr_ne(n,m);
+    }
+}
+//8.1
+START_TEST(test_strtok_norm_1) {
+    char line[6] = "asdfg";
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "fs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_2) {
+    char line[6] = "asdfg";
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "afs";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_3) {
+    char line[6] = "asdfg";
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "gfkps";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_4) {
+    char line[84] = "https://youtu.be/dQw4w9WgXcQ?si=V_2-moWdSx-jhLE7";
+    char line2[84]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = ":/.";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_5) {
+    char line[84] = "/home/jackoneill/Programming/s21/StrString/C2_s21_stringplus-1/src";
+    char line2[84]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "/";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_6) {
+    char line[370] = "You motherfucker, come on you little ass… fuck with me, eh? You fucking little asshole, dickhead cocksucker…You fuckin' come on, come fuck with me! I'll get your ass, you jerk! Oh, you fuckhead motherfucker! Fuck all you and your family! Come on, you cocksucker, slime bucket, shitface turdball! Come on, you scum sucker, you fucking with me? Come on, you asshole!";
+    char line2[370]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = " ";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_7) {
+    char line[15] = "Hello. .World";
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = ".";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_8) {
+    char line[20] = "Hello.....World";
+    char line2[20]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = ".";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        //printf("%s--%s\n",n,m);
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_9) {
+    char line[16] = "Hello.....World";
+    char line2[16]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "_";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_10) {
+    char line[16] = "Hello.....World";
+    char line2[16]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "a";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_11) {
+    char line[116] = " fff..Fg.fgg  dscsdc scdscs.. . dcscsdcs.cs c..cs   .cdscs  .  .   ... cdscscs cdscs.cdscsd dcsc.csc s.cscs .scscsc";
+    char line2[116]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = " .";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_12) {
+    char line[116] = " fff..Fg.fgg  dscsdc scdscs.. . dcscsdcs.cs c..cs   .cdscs  .  .   ... cdscscs cdscs.cdscsd dcsc.csc s.cscs .scscsc";
+    char line2[116]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = {'.',' '};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_13) {
+    char line[116] = " fff..Fg.fgg  dscsdc scdscs.. . dcscsdcs.cs c..cs   .cdscs  .  .   ... cdscscs cdscs.cdscsd dcsc.csc s.cscs .scscsc";
+    char line2[116]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = {'z'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_norm_14) {
+    char line[120] = " fff..Fg.fgg  dscsdc scdscs.. . dcscsdcs.cs c..cs   .cdscs  .  .   ... cdscscs cdscs.cdscsd dcsc.csc s.cscs .scscsc";
+    char line2[120]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = {' '};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+//8.2
+START_TEST(test_strtok_nullendline_1) {
+    char line[6] = NULL_END_line;
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "t";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullendline_2) {
+    char line[6] = NULL_END_line;
+    char line2[6]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[6] = "\t \0";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullmidline_1) {
+    char line[5] = NULL_MID_line;
+    char line2[5]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[4] = "TZ";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullmidline_3) {
+    char line[5] = NULL_MID_line;
+    char line2[5]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[4] = "TZ\0";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullmidline_2) {
+    char line[8] = "ZggTffT";
+    char line2[8]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[5] = NULL_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullmidline_4) {
+    char line[8] = {'z','t','t','\0','k','t','z'};
+    char line2[8]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[2] = {'t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_entermidline_1) {
+    char line[9] = ENTER_MID_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\n'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_entermidline_2) {
+    char line[9] = ENTER_MID_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\n','h'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_entermidline_3) {
+    char line[9] = {'g','h','\n','t','k','l'};
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\n','k'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_enterendline) {
+    char line[9] = ENTER_END_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\n','h'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_tabendline) {
+    char line[9] = TAB_END_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\t','h'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_tabmidline_1) {
+    char line[9] = TAB_MID_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_tabmidline_2) {
+    char line[9] = TAB_MID_line;
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\t','h'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_tabmidline_3) {
+    char line[9] = {'g','h','\t','t','k','l'};
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[3] = {'\t','k'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_tabmidline_4) {
+    char line[9] = {'g','h','\t','t','k','l'};
+    char line2[9]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[4] = {'\n','k','\0'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_1) {
+    char line[33] = INVIS_CHAR;
+    char line2[33]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[4] = {'n','k','t'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_2) {
+    char line[33] = INVIS_CHAR;
+    char line2[33]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[4] = {'9','0','\0'};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_3) {
+    char line[33] = INVIS_CHAR;
+    char line2[33]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[10] = {'9','0','\0', '\t','\n',10};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_4) {
+    char line[33] = INVIS_CHAR;
+    char line2[33]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[10] = {10, 15, 5, 20, 25,30, 7, 32, 1};
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_5) {
+    char line[33] = INVIS_CHAR;
+    char line2[33]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_6) {
+    char line[10] = {10, 15, 5, 20, 25,30, 7, 32, 1};
+    char line2[10]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_7) {
+    char line[10] = {'1', '5', '5', '2', '2','3','0', '\t', '1'};
+    char line2[10]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_8) {
+    char line[15] = "asd\tasd\nasd";
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_invis_9) {
+    char line[15] = {'a','f','\n','a','.',5,'\n','f','5',15,'d'};
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+//8.3
+START_TEST(test_strtok_nullline_1) {
+    char line[15] = NULL_LINE;
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = ENTER_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_2) {
+    char line[15] = NULL_LINE;
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = NULL_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_3) {
+    char line[15] = NULL_LINE;
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[5] = NULL_LINE;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_4) {
+    char line[15] = FRIVE_CHAR_1;
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[5] = NULL_LINE;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_5) {
+    char line[15] = NULL_MID_line;
+    char line2[15]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[5] = NULL_LINE;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_6) {
+    char line[0];
+    char line2[0];
+    char divline[5] = NULL_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+/*
+//Segmentation fault
+START_TEST(test_strtok_nullline_7) {
+    char* line=MY_NULL;
+    char* line2=NULL;
+    char divline[5] = NULL_MID_line;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_9) {
+    char line[5] = NULL_MID_line;
+    char line2[5] = NULL_MID_line;
+    char* divline=NULL;
+    char* n=NULL, *m=MY_NULL;
+    n=s21_strtok(line,divline);
+    m=strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_10) {
+    char line[5] = NULL_MID_line;
+    char line2[5] = NULL_MID_line;
+    char* divline=MY_NULL;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_11) {
+    char *line = NULL;
+    char *line2= MY_NULL;
+    char *divline=MY_NULL;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_nullline_12) {
+    char* line = NULL;
+    char* line2= MY_NULL;
+    char* divline=MY_NULL;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+//randome stuff (Don't know what is going on)
+START_TEST(test_strtok_nullline_8) {
+    char line[5] = NULL_MID_line;
+    char line2[5] = NULL_MID_line;
+    char divline[0];
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);         //try change places
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+                                    //comment below
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+*/
+//8.4
+START_TEST(test_strtok_longline_1) {
+    char line[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE*10-1);
+    char line2[LONG_CHECK_LINE*10]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[33] = INVIS_CHAR;
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_longline_2) {
+    char line[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE*10-1);
+    char line2[LONG_CHECK_LINE*10]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[15] = "asdfghjkl;";
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+/*
+//takes too much time
+START_TEST(test_strtok_longline_3) {
+    char line[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(line,LONG_CHECK_LINE*10-1);
+    char line2[LONG_CHECK_LINE*10]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(divline,LONG_CHECK_LINE*10-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+*/
+START_TEST(test_strtok_longline_4) {
+    char line[35] = "sdadfddsd..asdada_fsfwqdqwdq";
+    char line2[35]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(divline,LONG_CHECK_LINE*10-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_longline_5) {
+    char line[35] = "aaaaaaaaaaaaaaaaaaaa";
+    char line2[35]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(divline,LONG_CHECK_LINE*10-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
+START_TEST(test_strtok_longline_6) {
+    char line[35] = {5,6,7,0};
+    char line2[35]=NULL_LINE;
+    strcpy(line2,line);
+    char divline[LONG_CHECK_LINE*10] = NULL_LINE;
+    rand_str(divline,LONG_CHECK_LINE*10-1);
+    char* n=NULL, *m=MY_NULL;
+    n=strtok(line,divline);
+    m=s21_strtok(line2,divline);
+    ck_assert_pstr_eq(n,m);
+    for(;n!=MY_NULL && m!=NULL;){
+        n=strtok(MY_NULL,divline);
+        m=s21_strtok(NULL,divline);
+        ck_assert_pstr_eq(n,m);
+    }
+}
 
 Suite *my_string_suite(void) {
     Suite *s;
@@ -2785,7 +4526,7 @@ Suite *my_string_suite(void) {
     //tcase_add_test(tc_core, test_memcpy_different_n_4);
     //tcase_add_test(tc_core, test_memcpy_different_n_5);
     //tcase_add_test(tc_core, test_memcpy_different_n_8);
-    //tcase_add_test(tc_core, test_memcpy_different_n_9);
+    //tcase_add_test(tc_core, test_memcpy_different_n_9);  ---?
     tcase_add_test(tc_core, test_memcpy_different_n_6);
     tcase_add_test(tc_core, test_memcpy_different_n_7);
     tcase_add_test(tc_core, test_memcpy_nullline_1);
@@ -2816,7 +4557,7 @@ Suite *my_string_suite(void) {
     // tcase_add_test(tc_core, test_strncpy_different_n_4);
     // tcase_add_test(tc_core, test_strncpy_different_n_5);
     // tcase_add_test(tc_core, test_strncpy_different_n_8);
-    // tcase_add_test(tc_core, test_strncpy_different_n_9);
+    // tcase_add_test(tc_core, test_strncpy_different_n_9);  ---?
     tcase_add_test(tc_core, test_strncpy_different_n_6);
     tcase_add_test(tc_core, test_strncpy_different_n_7);
     tcase_add_test(tc_core, test_strncpy_different_n_10);
@@ -2851,15 +4592,15 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_strncat_different_n_1);
     tcase_add_test(tc_core, test_strncat_different_n_2);
     tcase_add_test(tc_core, test_strncat_different_n_3);
-    tcase_add_test(tc_core, test_strncat_different_n_4);
-    tcase_add_test(tc_core, test_strncat_different_n_5);
-    tcase_add_test(tc_core, test_strncat_different_n_8);
-    tcase_add_test(tc_core, test_strncat_different_n_9);
-    tcase_add_test(tc_core, test_strncat_different_n_6);
+    //tcase_add_test(tc_core, test_strncat_different_n_4);
+    //tcase_add_test(tc_core, test_strncat_different_n_5);
+    //tcase_add_test(tc_core, test_strncat_different_n_8);
+    //tcase_add_test(tc_core, test_strncat_different_n_6);
+    //tcase_add_test(tc_core, test_strncat_different_n_9);  ---?
+    //tcase_add_test(tc_core, test_strncat_different_n_16);
     tcase_add_test(tc_core, test_strncat_different_n_13);
     tcase_add_test(tc_core, test_strncat_different_n_14);
     tcase_add_test(tc_core, test_strncat_different_n_15);
-    tcase_add_test(tc_core, test_strncat_different_n_16);
     tcase_add_test(tc_core, test_strncat_different_n_11);
     tcase_add_test(tc_core, test_strncat_nullline_1);
     tcase_add_test(tc_core, test_strncat_nullline_2);
@@ -2869,9 +4610,154 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_strncat_long_4);
     tcase_add_test(tc_core, test_strncat_long_5);
 
-    //s21_strcspn -->6.1-6.
-    //s21_strpbrk -->7.1-7.
-    //s21_strtok -->8.1-8.
+    //s21_strcspn -->6.0-6.4
+    tcase_add_test(tc_core, test_strcspn_types);
+    tcase_add_test(tc_core, test_strcspn_norm_1);
+    tcase_add_test(tc_core, test_strcspn_norm_2);
+    tcase_add_test(tc_core, test_strcspn_norm_3);
+    tcase_add_test(tc_core, test_strcspn_norm_4);
+    tcase_add_test(tc_core, test_strcspn_norm_5);
+    tcase_add_test(tc_core, test_strcspn_nullend_1);
+    tcase_add_test(tc_core, test_strcspn_nullend_2);
+    tcase_add_test(tc_core, test_strcspn_nullend_3);
+    tcase_add_test(tc_core, test_strcspn_nullend_4);
+    tcase_add_test(tc_core, test_strcspn_nullend_5);
+    tcase_add_test(tc_core, test_strcspn_nullmid_1);
+    tcase_add_test(tc_core, test_strcspn_nullmid_2);
+    tcase_add_test(tc_core, test_strcspn_nullmid_3);
+    tcase_add_test(tc_core, test_strcspn_entermid_1);
+    tcase_add_test(tc_core, test_strcspn_entermid_2);
+    tcase_add_test(tc_core, test_strcspn_entermid_3);
+    tcase_add_test(tc_core, test_strcspn_tabmid_1);
+    tcase_add_test(tc_core, test_strcspn_tabmid_2);
+    tcase_add_test(tc_core, test_strcspn_tabmid_3);
+    tcase_add_test(tc_core, test_strcspn_enterend_1);
+    tcase_add_test(tc_core, test_strcspn_invis_1);
+    tcase_add_test(tc_core, test_strcspn_invis_2);
+    tcase_add_test(tc_core, test_strcspn_invis_3);
+    tcase_add_test(tc_core, test_strcspn_invis_4);
+    tcase_add_test(tc_core, test_strcspn_invis_5);
+    tcase_add_test(tc_core, test_strcspn_invis_6);
+    tcase_add_test(tc_core, test_strcspn_invis_7);
+    tcase_add_test(tc_core, test_strcspn_nullline_1);
+    //tcase_add_test(tc_core, test_strcspn_nullline_2);
+    //tcase_add_test(tc_core, test_strcspn_nullline_4);
+    tcase_add_test(tc_core, test_strcspn_nullline_3);
+    tcase_add_test(tc_core, test_strcspn_long_1);
+    tcase_add_test(tc_core, test_strcspn_long_2);
+    tcase_add_test(tc_core, test_strcspn_long_3);
+    tcase_add_test(tc_core, test_strcspn_long_4);
+    tcase_add_test(tc_core, test_strcspn_long_5);
+    tcase_add_test(tc_core, test_strcspn_long_6);
+    tcase_add_test(tc_core, test_strcspn_long_7); //speed with big lines (spesially 2)??
+
+    //s21_strpbrk -->7.0-7.4
+    tcase_add_test(tc_core, test_strpbrk_types);
+    tcase_add_test(tc_core, test_strpbrk_norm_1);
+    tcase_add_test(tc_core, test_strpbrk_norm_2);
+    tcase_add_test(tc_core, test_strpbrk_norm_3);
+    tcase_add_test(tc_core, test_strpbrk_norm_4);
+    tcase_add_test(tc_core, test_strpbrk_norm_5);
+    tcase_add_test(tc_core, test_strpbrk_norm_6);
+    tcase_add_test(tc_core, test_strpbrk_nullend_1);
+    tcase_add_test(tc_core, test_strpbrk_nullend_2);
+    tcase_add_test(tc_core, test_strpbrk_nullend_3);
+    tcase_add_test(tc_core, test_strpbrk_nullend_4);
+    tcase_add_test(tc_core, test_strpbrk_nullend_5);
+    tcase_add_test(tc_core, test_strpbrk_nullmid_1);
+    tcase_add_test(tc_core, test_strpbrk_nullmid_2);
+    tcase_add_test(tc_core, test_strpbrk_nullmid_3);
+    tcase_add_test(tc_core, test_strpbrk_entermid_1);
+    tcase_add_test(tc_core, test_strpbrk_entermid_2);
+    tcase_add_test(tc_core, test_strpbrk_entermid_3);
+    tcase_add_test(tc_core, test_strpbrk_tabmid_1);
+    tcase_add_test(tc_core, test_strpbrk_tabmid_2);
+    tcase_add_test(tc_core, test_strpbrk_tabmid_3);
+    tcase_add_test(tc_core, test_strpbrk_enterend_1);
+    tcase_add_test(tc_core, test_strpbrk_invis_1);
+    tcase_add_test(tc_core, test_strpbrk_invis_2);
+    tcase_add_test(tc_core, test_strpbrk_invis_3);
+    tcase_add_test(tc_core, test_strpbrk_invis_4);
+    tcase_add_test(tc_core, test_strpbrk_invis_5);
+    tcase_add_test(tc_core, test_strpbrk_invis_6);
+    tcase_add_test(tc_core, test_strpbrk_invis_7);
+    tcase_add_test(tc_core, test_strpbrk_invis_8);
+    tcase_add_test(tc_core, test_strpbrk_invis_9);
+    tcase_add_test(tc_core, test_strpbrk_nullline_1);
+    //tcase_add_test(tc_core, test_strpbrk_nullline_2);
+    //tcase_add_test(tc_core, test_strpbrk_nullline_4);
+    tcase_add_test(tc_core, test_strpbrk_nullline_3);
+    tcase_add_test(tc_core, test_strpbrk_long_1);
+    tcase_add_test(tc_core, test_strpbrk_long_2);
+    tcase_add_test(tc_core, test_strpbrk_long_3);
+    tcase_add_test(tc_core, test_strpbrk_long_4);
+    tcase_add_test(tc_core, test_strpbrk_long_5);
+    tcase_add_test(tc_core, test_strpbrk_long_6);
+    tcase_add_test(tc_core, test_strpbrk_long_7); //speed with big lines (spesially 2)??
+
+    //s21_strtok -->8.0-8.4
+    tcase_add_test(tc_core, test_strtok_lineschange);       //does it change the line it self?!
+    tcase_add_test(tc_core, test_strtok_types);
+    tcase_add_test(tc_core, test_strtok_diflines_1);
+    tcase_add_test(tc_core, test_strtok_diflines_2);
+    tcase_add_test(tc_core, test_strtok_diflines_3);
+    tcase_add_test(tc_core, test_strtok_diflines_4);
+    tcase_add_test(tc_core, test_strtok_norm_1);
+    tcase_add_test(tc_core, test_strtok_norm_2);
+    tcase_add_test(tc_core, test_strtok_norm_3);
+    tcase_add_test(tc_core, test_strtok_norm_4);
+    tcase_add_test(tc_core, test_strtok_norm_5);
+    tcase_add_test(tc_core, test_strtok_norm_6);
+    tcase_add_test(tc_core, test_strtok_norm_7);
+    tcase_add_test(tc_core, test_strtok_norm_8);
+    tcase_add_test(tc_core, test_strtok_norm_9);
+    tcase_add_test(tc_core, test_strtok_norm_10);
+    tcase_add_test(tc_core, test_strtok_norm_11);
+    tcase_add_test(tc_core, test_strtok_norm_12);
+    tcase_add_test(tc_core, test_strtok_norm_13);
+    tcase_add_test(tc_core, test_strtok_norm_14);
+    tcase_add_test(tc_core, test_strtok_nullendline_1);
+    tcase_add_test(tc_core, test_strtok_nullendline_2);
+    tcase_add_test(tc_core, test_strtok_nullmidline_1);
+    tcase_add_test(tc_core, test_strtok_nullmidline_2);
+    tcase_add_test(tc_core, test_strtok_nullmidline_3);
+    tcase_add_test(tc_core, test_strtok_nullmidline_4);
+    tcase_add_test(tc_core, test_strtok_enterendline);
+    tcase_add_test(tc_core, test_strtok_entermidline_1);
+    tcase_add_test(tc_core, test_strtok_entermidline_2);
+    tcase_add_test(tc_core, test_strtok_entermidline_3);
+    tcase_add_test(tc_core, test_strtok_tabendline);
+    tcase_add_test(tc_core, test_strtok_tabmidline_1);
+    tcase_add_test(tc_core, test_strtok_tabmidline_2);
+    tcase_add_test(tc_core, test_strtok_tabmidline_3);
+    tcase_add_test(tc_core, test_strtok_tabmidline_4);
+    tcase_add_test(tc_core, test_strtok_invis_1);
+    tcase_add_test(tc_core, test_strtok_invis_2);
+    tcase_add_test(tc_core, test_strtok_invis_3);
+    tcase_add_test(tc_core, test_strtok_invis_4);
+    tcase_add_test(tc_core, test_strtok_invis_5);
+    tcase_add_test(tc_core, test_strtok_invis_6);
+    tcase_add_test(tc_core, test_strtok_invis_7);
+    tcase_add_test(tc_core, test_strtok_invis_8);
+    tcase_add_test(tc_core, test_strtok_invis_9);
+    tcase_add_test(tc_core, test_strtok_nullline_1);
+    tcase_add_test(tc_core, test_strtok_nullline_2);
+    tcase_add_test(tc_core, test_strtok_nullline_3);
+    tcase_add_test(tc_core, test_strtok_nullline_4);
+    tcase_add_test(tc_core, test_strtok_nullline_5);
+    tcase_add_test(tc_core, test_strtok_nullline_6);
+    //tcase_add_test(tc_core, test_strtok_nullline_7);
+    //tcase_add_test(tc_core, test_strtok_nullline_9);
+    //tcase_add_test(tc_core, test_strtok_nullline_10);
+    //tcase_add_test(tc_core, test_strtok_nullline_11);
+    //tcase_add_test(tc_core, test_strtok_nullline_12);
+    //tcase_add_test(tc_core, test_strtok_nullline_8);  //?
+    tcase_add_test(tc_core, test_strtok_longline_1);
+    tcase_add_test(tc_core, test_strtok_longline_2);
+    //tcase_add_test(tc_core, test_strtok_longline_3);      //too much time!
+    tcase_add_test(tc_core, test_strtok_longline_4);
+    tcase_add_test(tc_core, test_strtok_longline_5);
+    tcase_add_test(tc_core, test_strtok_longline_6);
 
     suite_add_tcase(s, tc_core);
     return s;

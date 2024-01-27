@@ -1,13 +1,14 @@
 #ifndef S21_STRING
 #define S21_STRING
 
-#include <stdio.h>
-
 #define size_t unsigned long int
 #define symbol unsigned char
-#define MY_NULL ((void *)0)       //#define NULL ((void *)0)
-#define C_ZERO '\0'
+#define MY_NULL ((void *)0)
+#ifndef NULL
+#define NULL ((void *)0)
+#endif
 
+#define C_ZERO '\0'
 //void *s21_memchr(const void *str, int c, size_t n);
 //int s21_memcmp(const void *str1, const void *str2, size_t n);
 
