@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 #define NULL_LINE "\0"  //2+
 #define INVIS_CHAR {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32} //32(33)
 #define NULL_END_line {'g','h','t','\0'} //4(5)
@@ -83,34 +84,265 @@ START_TEST(test_settings) {
     ck_assert_ptr_eq(NULL, MY_NULL);
 }
 
+//s21_memcmp
+START_TEST(test_memcmp) {
+	char* str1 = "hello";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_memcmp_2) {
+	char* str1 = "hello";
+	char* str2 = "hallo";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_memcmp_3) {
+	char* str1 = "hello";
+	char* str2 = "h3llo";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+/*                              //WERROR -- overread
+START_TEST(test_memcmp_4) {
+	char* str1 = "hello";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_memcmp_5) {
+	char* str1 = "";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+START_TEST(test_memcmp_6) {
+	char* str1 = "";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_memcmp(str1, str2, n);
+	int expected = memcmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+*/
+
+//s21_strmcmp
+START_TEST(test_strncmp) {
+	char* str1 = "hello";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_strncmp_2) {
+	char* str1 = "hello";
+	char* str2 = "hallo";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_strncmp_3) {
+	char* str1 = "hello";
+	char* str2 = "h3llo";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_strncmp_4) {
+	char* str1 = "hello";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_strncmp_5) {
+	char* str1 = "";
+	char* str2 = "hello";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+START_TEST(test_strncmp_6) {
+	char* str1 = "";
+	char* str2 = "";
+	size_t n = 4;
+	int result = s21_strncmp(str1, str2, n);
+	int expected = strncmp(str1, str2, n);
+	ck_assert_int_eq(result, expected);
+}
+
+//s21_memchr
+START_TEST(test_memchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	size_t n = 4;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_memchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	size_t n = 4;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+/*                              //WERROR -- overread
+START_TEST(test_memchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	size_t n = 10;
+	char* result = s21_memchr(str1, c, n);
+	char* expected = memchr(str1, c, n);
+	ck_assert_ptr_eq(result, expected);
+}
+*/
+
+//s21_strchr
+START_TEST(test_strchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strchr_4) {
+	char* str1 = "hello\0bye";
+	int c = 'y';
+	char* result = s21_strchr(str1, c);
+	char* expected = strchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+//s21_strrchr
+START_TEST(test_strrchr) {
+	char* str1 = "hello";
+	int c = 'l';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strrchr_2) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strrchr_3) {
+	char* str1 = "hello";
+	int c = 'f';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strrchr_4) {
+	char* str1 = "hello\0bye";
+	int c = 'y';
+	char* result = s21_strrchr(str1, c);
+	char* expected = strrchr(str1, c);
+	ck_assert_ptr_eq(result, expected);
+}
+
+//s21_strstr
+START_TEST(test_strstr) {
+	char* str1 = "hello";
+	char* str2 = "lo";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strstr_2) {
+	char* str1 = "hello";
+	char* str2 = "abc";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strstr_3) {
+	char* str1 = "hello";
+	char* str2 = "";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strstr_4) {
+	char* str1 = "";
+	char* str2 = "hello";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strstr_5) {
+	char* str1 = "";
+	char* str2 = "";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+START_TEST(test_strstr_6) {
+	char* str1 = "hello\0bye";
+	char* str2 = "bye";
+	char* result = s21_strstr(str1, str2);
+	char* expected = strstr(str1, str2);
+	ck_assert_ptr_eq(result, expected);
+}
+
 //s21_strlen 
 //1.1
 START_TEST(test_strlen_usual_1) {
     char line[5] = FRIVE_CHAR_1;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_usual_2) {
     char line[6] = FRIVE_CHAR_1;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_usual_3) {
     char line[7] = FRIVE_CHAR_1;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_usual_4) {
     char line[8] = FRIVE_CHAR_1;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 //1.2
 START_TEST(test_strlen_nullline) {
     char line[8] = NULL_LINE;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 //  //(*4.1)   Werror does not like these lines: ‘strlen’ reading 1 or more bytes from a region of size 0
 // START_TEST(test_strlen_zeroline) {   
 //     char line[0];
@@ -134,69 +366,56 @@ START_TEST(test_strlen_nullendline) {
     char line[4] = NULL_END_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_enterendline_1) {
     char line[4] = ENTER_END_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_enterendline_2) {
     char line[5] = ENTER_END_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_tabendline_1) {
     char line[4] = TAB_END_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_tabendline_2) {
     char line[5] = TAB_END_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 //1.4
 START_TEST(test_strlen_nullmidline_1) {
     char line[4] = NULL_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_nullmidline_2) {
     char line[5] = NULL_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_entermidline_1) {
     char line[4] = ENTER_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_entermidline_2) {
     char line[5] = ENTER_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_tabmidline_1) {
     char line[4] = TAB_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_tabmidline_2) {
     char line[5] = TAB_MID_line;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 //1.5
 START_TEST(test_strlen_invisible_1) {
     char line[32] = INVIS_CHAR;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 START_TEST(test_strlen_invisible_2) {
     char line[33] = INVIS_CHAR;
     ck_assert_int_eq(strlen(line), s21_strlen(line));
 }
-
 //1.6
 START_TEST(test_strlen_long) {
     char line[LONG_CHECK_LINE] = {'\0'};
@@ -237,7 +456,6 @@ START_TEST(test_memset_normal_1) {
     ck_assert_str_eq(line1,line2);
 }
 */
-
 //2.1
 START_TEST(test_memset_normal_1) {
     char line1[6] = FRIVE_CHAR_1;
@@ -270,7 +488,6 @@ START_TEST(test_memset_nullline) {
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
 }
-
 // //(*4.2)  Werror does not like these: ‘memset’ writing 2 bytes into a region of size 0 overflows the destination
 // START_TEST(test_memset_zeroline) {
 //     char line1[0];
@@ -281,8 +498,8 @@ START_TEST(test_memset_nullline) {
 //     void* p2=s21_memset(line2,letter,len);
 //     ck_assert_str_eq(p1,p2);
 //     ck_assert_str_eq(line1,line2);
-
 // }
+
 /*  //(*1.1) Segmentation fault (core dumped)  -  both original and our strlen
 START_TEST(test_memset_absolutenullline) {
     char* line1=NULL;
@@ -312,10 +529,12 @@ so if you give it more that the length of the original string, it overflows and
 does not put '\0' at the end. As the result the output is unpredictable.
 p1 == "ffffffff�#�*�", p2 == "ffffffffffffffff�#�*�"
 */
+
 /*
 (*3) not sure how memset works outside of the given str length. Memory works illogical it that zone.
 memset_nummore_4: line1 == "ffffffff�#�*�", line2 == "ffffffffffffffff�#�*�"
 */
+
 // //(*4.2)  Werror does not like  ‘memset’ writing more bytes into a region than its size   --->  overflows the destination
 // START_TEST(test_memset_nummore_1) {
 //     char line1[6] = FRIVE_CHAR_1;
@@ -397,8 +616,6 @@ START_TEST(test_memset_nummore_5) {
     ck_assert_ptr_eq(line2,p2); 
     //ck_assert_str_eq(line1,line2);  //(*2)
 }
-
-
 START_TEST(test_memset_numsame) {
     char line1[6] = FRIVE_CHAR_1;
     char line2[6] = FRIVE_CHAR_1;
@@ -498,7 +715,6 @@ START_TEST(test_memset_numerror) {
     ck_assert_str_eq(line1,line2);
 }
 */
-
 //2.6
 START_TEST(test_memset_midline_1) {
     char line1[5] = ENTER_MID_line;
@@ -926,7 +1142,6 @@ START_TEST(test_memcpy_different_n_3) {
 }
 /*
 --->overlapping:
-
 START_TEST(test_memcpy_different_n_4) {
     char line1[6] = FRIVE_CHAR_1;
     char line2[6] = FRIVE_CHAR_1;
@@ -1050,8 +1265,6 @@ START_TEST(test_memcpy_different_n_7) {
     ck_assert_ptr_eq(line1,p1);
     ck_assert_ptr_eq(line2,p2); 
 }
-
-
 //3.4
 START_TEST(test_memcpy_nullline_1) {
     char line1[6] = FRIVE_CHAR_1;
@@ -1309,13 +1522,9 @@ START_TEST(test_strncpy_nullmid_2) {
     char line2[5] = NULL_MID_line;
     char sourceline[5] = TAB_END_line;
 
-    //printf("%s--%s--%s\n", line1,line2,sourceline);
-
     int len = 3;
     void* p1=strncpy(line1,sourceline,len);
     void* p2=s21_strncpy(line2,sourceline,len);
-
-    //printf("%s--%s--%s--%s\n", line1,line2,p1, p2);
 
     ck_assert_str_eq(p1,p2);
     ck_assert_str_eq(line1,line2);
@@ -4447,7 +4656,51 @@ Suite *my_string_suite(void) {
 
     s = suite_create("My_String");
     tc_core = tcase_create("Core");
+
+
     tcase_add_test(tc_core, test_settings);
+
+    //s21_memcmp
+	tcase_add_test(tc_core, test_memcmp);
+	tcase_add_test(tc_core, test_memcmp_2);
+	tcase_add_test(tc_core, test_memcmp_3);
+	//tcase_add_test(tc_core, test_memcmp_4); --?
+	//tcase_add_test(tc_core, test_memcmp_5); --?
+	//case_add_test(tc_core, test_memcmp_6); --?
+
+	//s21_strncmp
+	tcase_add_test(tc_core, test_strncmp);
+	tcase_add_test(tc_core, test_strncmp_2);
+	tcase_add_test(tc_core, test_strncmp_3);
+	tcase_add_test(tc_core, test_strncmp_4);
+	tcase_add_test(tc_core, test_strncmp_5);
+	tcase_add_test(tc_core, test_strncmp_6);
+
+	//s21_memchr
+	tcase_add_test(tc_core, test_memchr);
+	tcase_add_test(tc_core, test_memchr_2);
+	//tcase_add_test(tc_core, test_memchr_3); --?
+
+	//s21_strchr
+	tcase_add_test(tc_core, test_strchr);
+	tcase_add_test(tc_core, test_strchr_2);
+	tcase_add_test(tc_core, test_strchr_3);
+	tcase_add_test(tc_core, test_strchr_4);
+
+	//s21_strrchr
+	tcase_add_test(tc_core, test_strrchr);
+	tcase_add_test(tc_core, test_strrchr_2);
+	tcase_add_test(tc_core, test_strrchr_3);
+	tcase_add_test(tc_core, test_strrchr_4);
+
+	//s21_strstr
+	tcase_add_test(tc_core, test_strstr);
+	tcase_add_test(tc_core, test_strstr_2);
+	tcase_add_test(tc_core, test_strstr_3);
+	tcase_add_test(tc_core, test_strstr_4);
+	tcase_add_test(tc_core, test_strstr_5);
+	tcase_add_test(tc_core, test_strstr_6);
+
     //S21_strlen  -->1.1-1.6
     tcase_add_test(tc_core, test_strlen_usual_1);
     tcase_add_test(tc_core, test_strlen_usual_2);

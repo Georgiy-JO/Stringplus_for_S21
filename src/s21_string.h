@@ -25,11 +25,11 @@ void *s21_memchr(const void *str, int c, size_t n);
 int s21_memcmp(const void *str1, const void *str2, size_t n);
 char *s21_strchr(const char *str, int c);
 int s21_strncmp(const char *str1, const char *str2, size_t n);
+char *s21_strerror(int errnum);
 char *s21_strrchr(const char *str, int c);
 char *s21_strstr(const char *haystack, const char *needle);
-// char *s21_strerror(int errnum);
 
 // int s21_sscanf(const char *str, const char *format, ...);
-// int s21_sprintf(char *str, const char *format, ...);
+int s21_sprintf(char *str, const char *format, ...);
 
 #endif
