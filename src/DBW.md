@@ -1,0 +1,28 @@
+# Dead Branches Will
+
+## feature/rk_jo_1 last commit:
+
+Minor changies nothing special! ( ͡° ͜ʖ ͡°)
+JK  (ಠ_ಠ)
+
+So that's, what is done:
+1)A little bit modified --> added step to rebuild tests --> src/Makefile;
+2)modified --> some bugs fixed &&/|| unneeded comments deleted -->  src/s21_cpy_cat.c;
+                                                                    src/s21_delta_ln2.c;
+                                                                    src/s21_strtok.c;
+                                                                    src/s21_len.c;
+                                                                    src/s21_memset.c;
+3)Remcreated function to work fuster --> src/s21_delta_ln2.c;
+4)More inportant changies in functions stucture --> src/s21_strtok.c;
+                                                    src/s21_cpy_cat.c;
+5)modified --> minor chngies + better NULL --> src/s21_string.h
+6)created 258 complex tests --> for strlen, memcpy, memset, strncpy, strncat, strcspn, strpbrk, strtok -->src/s21_test.c
+7)Created and updated list of all created tests --> src/test_list.txt
+8)Updeted --> according do existing tests --> src/New_README.md src/New_README_rus.md.
+
+<【☯】‿【☯】>
+
+## develop 31.01 commit:
+
+feature/rk_jo_1 and feature/shadowmm merged 
+283 complex tests present
