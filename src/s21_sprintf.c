@@ -9,6 +9,44 @@
 #define S21_SPRINTF_DIGITS "0123456789"
 #define S21_SPRINTF_DEFAULE_ACCURACY 6
 
+typedef struct opts {
+	//specs
+	char spec_c;
+	char spec_d;
+	char spec_i;
+	char spec_e;
+	char spec_E;
+	char spec_f;
+	char spec_g;
+	char spec_G;
+	char spec_o;
+	char spec_s;
+	char spec_u;
+	char spec_x;
+	char spec_X;
+	char spec_p;
+	char spec_n;
+
+	//flags
+	char flag_minus;
+	char flag_plus;
+	char flag_space;
+	char flag_hash;
+	char flag_zero;
+
+	//width
+	int width_digit;
+	char width_any;
+
+	//accuracy
+	int accuracy_digit;
+	char accuracy_any;
+
+	//length
+	char length_h;
+	char length_l;
+	char length_L;
+} opts;
 
 int is_start(char ch){
 	return ch == '%' ? 1 : 0;
@@ -105,13 +143,16 @@ int fget_digit_sign(double digit){
 	return digit < 0 ? -1 : 1;
 }
 
-int add_sign_to_str(char* str, int sign, int forced_plus){
+int add_sign_to_str(char* str, int sign, opts opt){
+	int status = 0;
 	if (sign < 0) {
 		str[0] = '-';
-	} else if (forced_plus){
+		status = 1;
+	} else if (opt.flag_plus){
 		str[0] = '+';
+		status = 1;
 	}
-	return 0;
+	return status;
 }
 
 int convert_digit_int_to_str(int integer, char* str){
@@ -166,44 +207,6 @@ int convert_digit_frational_part_to_str(double frac, int len, char* str){
 
 // %[flags][width][.accuracy][length][spec]
 
-typedef struct opts {
-	//specs
-	char spec_c;
-	char spec_d;
-	char spec_i;
-	char spec_e;
-	char spec_E;
-	char spec_f;
-	char spec_g;
-	char spec_G;
-	char spec_o;
-	char spec_s;
-	char spec_u;
-	char spec_x;
-	char spec_X;
-	char spec_p;
-	char spec_n;
-
-	//flags
-	char flag_minus;
-	char flag_plus;
-	char flag_space;
-	char flag_hash;
-	char flag_zero;
-
-	//width
-	int width_digit;
-	char width_any;
-
-	//accuracy
-	int accuracy_digit;
-	char accuracy_any;
-
-	//length
-	char length_h;
-	char length_l;
-	char length_L;
-} opts;
 
 int flag_to_struct(opts* optarg, char ch){
 	int status = 0;
@@ -400,15 +403,12 @@ int print_str(char* argchar, char* str){
 	return str_len;
 }
 
-int print_digit(int argint, char* str){
+int print_digit(int argint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
 	int digit_len = get_digit_int_len(argint);
 	int offset = 0;
-	if (argint < 0){ 
-		offset = 1;
-		digit_len++;
-	}
-	add_sign_to_str(integer_buffer, get_digit_sign(argint), 0);
+	offset = add_sign_to_str(integer_buffer, get_digit_sign(argint), opt);
+	digit_len+=offset;
 	convert_digit_int_to_str(abs(argint), &(integer_buffer[offset]));
 	s21_strncpy(str, integer_buffer, digit_len);
 	return digit_len;
@@ -422,16 +422,14 @@ int print_udigit(unsigned int arguint, char* str){
 	return digit_len;
 }
 
-int print_float(double argfloat, int default_fractional_part_len, char* str){
+int print_float(double argfloat, int default_fractional_part_len, char* str,
+		opts opt){
 	char float_buffer[1024] = {'\0'};
 	char float_fractional_buffer[1024] = {'\0'};
 	int floor_len = get_digit_int_len((int)argfloat);
 	int offset = 0;
-	if (argfloat < 0){ 
-		offset = 1;
-		floor_len++;
-	}
-	add_sign_to_str(float_buffer, fget_digit_sign(argfloat), 0);
+	offset = add_sign_to_str(float_buffer, fget_digit_sign(argfloat), opt);
+	floor_len+=offset;
 	convert_digit_int_to_str((int)fabs(argfloat), &(float_buffer[offset]));
 	double fract = fabs(argfloat) - (int)fabs(argfloat);
 	convert_digit_frational_part_to_str(fract, default_fractional_part_len,
@@ -450,13 +448,13 @@ int print(va_list args, opts opt, char* str){
 		offset += print_char(argchar, str);
 	}else if (opt.spec_d){
 		int argint = va_arg(args, int);
-		offset += print_digit(argint, str);
+		offset += print_digit(argint, str, opt);
 	}
 	else if (opt.spec_f){
 		double argfloat = va_arg(args, double);
 		int accuracy = S21_SPRINTF_DEFAULE_ACCURACY;
 		if (opt.accuracy_digit != 0) accuracy = opt.accuracy_digit;
-		offset += print_float(argfloat, accuracy ,str);
+		offset += print_float(argfloat, accuracy ,str, opt);
 	}
 	else if (opt.spec_s){
 		char* argstr = va_arg(args, char*);
