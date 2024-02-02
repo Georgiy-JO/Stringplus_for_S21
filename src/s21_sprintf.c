@@ -408,11 +408,25 @@ int print_str(char* argchar, char* str){
 	return str_len;
 }
 
+int add_width_int(char* str, opts opt){
+	int width = opt.width_digit;
+	for (int i = 0; i < width; i++){
+		str[i] = ' ';
+	}
+	return 0;
+}
+
 int print_digit(int argint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
-	int digit_len = get_digit_int_len(argint);
 	int offset = 0;
-	offset = add_sign_to_str(integer_buffer, get_digit_sign(argint), opt);
+	add_width_int(integer_buffer, opt);
+	int width = opt.width_digit;
+	int digit_len = get_digit_int_len(argint);
+	if (width > digit_len){
+		offset = width - digit_len - 1;
+	}
+	offset += add_sign_to_str(&(integer_buffer[offset]),
+			get_digit_sign(argint), opt);
 	digit_len+=offset;
 	convert_digit_int_to_str(abs(argint), &(integer_buffer[offset]));
 	s21_strncpy(str, integer_buffer, digit_len);
@@ -431,9 +445,17 @@ int print_float(double argfloat, int default_fractional_part_len, char* str,
 		opts opt){
 	char float_buffer[1024] = {'\0'};
 	char float_fractional_buffer[1024] = {'\0'};
-	int floor_len = get_digit_int_len((int)argfloat);
 	int offset = 0;
-	offset = add_sign_to_str(float_buffer, fget_digit_sign(argfloat), opt);
+	add_width_int(float_buffer, opt);
+	int width = opt.width_digit;
+	int floor_len = get_digit_int_len((int)argfloat);
+	int dot_char_offset = 1;
+	if (width > floor_len + default_fractional_part_len){
+		offset = width - 
+			(floor_len + default_fractional_part_len) - 1 - dot_char_offset;
+	}
+	offset += add_sign_to_str(&(float_buffer[offset]),
+			fget_digit_sign(argfloat), opt);
 	floor_len+=offset;
 	convert_digit_int_to_str((int)fabs(argfloat), &(float_buffer[offset]));
 	double fract = fabs(argfloat) - (int)fabs(argfloat);
