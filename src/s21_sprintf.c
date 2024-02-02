@@ -9,9 +9,11 @@
 #define S21_SPRINTF_DIGITS "0123456789"
 #define S21_SPRINTF_DEFAULE_ACCURACY 6
 
+
 int is_start(char ch){
 	return ch == '%' ? 1 : 0;
 }
+
 int count_percent_signs(const char* format){
 	int len = s21_strlen(format);
 	int count = 0;
@@ -20,27 +22,35 @@ int count_percent_signs(const char* format){
 	}
 	return count;
 }
+
 int is_flag(char ch){
 	return s21_strchr(S21_SPRINTF_FLAGS, ch) != NULL ? 1 : 0;
 }
+
 int is_width(char ch){
 	return s21_strchr(S21_SPRINTF_WIDTH, ch) != NULL ? 1 : 0;
 }
+
 int is_accuracy_dot(char ch){
 	return s21_strchr(".", ch) != NULL ? 1 : 0;
 }
+
 int is_accuracy(char ch){
 	return s21_strchr(S21_SPRINTF_ACCURACY, ch) != NULL ? 1 : 0;
 }
+
 int is_length(char ch){
 	return s21_strchr(S21_SPRINTF_LENGTH, ch) != NULL ? 1 : 0;
 }
+
 int is_spec(char ch){
 	return s21_strchr(S21_SPRINTF_SPEC, ch) != NULL ? 1 : 0;
 }
+
 int is_digit(char ch){
 	return s21_strchr(S21_SPRINTF_DIGITS, ch) != NULL ? 1 : 0;
 }
+
 char* get_flag(char ch){
 	return s21_strchr(S21_SPRINTF_FLAGS, ch);
 }
@@ -52,11 +62,21 @@ char* get_length(char ch){
 char* get_spec(char ch){
 	return s21_strchr(S21_SPRINTF_SPEC, ch);
 }
+
 int convert_digit_char_to_int(char ch){
 	return ch - '0';
 }
+
 int convert_digit_int_to_char(int integer){
 	return integer + '0';
+}
+
+int abs(int integer){
+	return integer < 0 ? -integer : integer;
+}
+
+double fabs(double dbl){
+	return dbl < 0 ? -dbl : dbl;
 }
 
 int get_digit_int_len(int digit){
@@ -77,6 +97,23 @@ int get_digit_uint_len(unsigned int digit){
 	return len;
 }
 
+int get_digit_sign(int digit){
+	return digit < 0 ? -1 : 1;
+}
+
+int fget_digit_sign(double digit){
+	return digit < 0 ? -1 : 1;
+}
+
+int add_sign_to_str(char* str, int sign, int forced_plus){
+	if (sign < 0) {
+		str[0] = '-';
+	} else if (forced_plus){
+		str[0] = '+';
+	}
+	return 0;
+}
+
 int convert_digit_int_to_str(int integer, char* str){
 	int digit_len = get_digit_int_len(integer);
 	int single_digit = 0;
@@ -87,7 +124,7 @@ int convert_digit_int_to_str(int integer, char* str){
 		single_digit_char = convert_digit_int_to_char(single_digit);
 		str[digit_len - i - 1] = single_digit_char;
 	}
-	str[digit_len] = '\0';
+	//str[digit_len + sign_offset] = '\0';
 	return 0;
 }
 
@@ -366,8 +403,14 @@ int print_str(char* argchar, char* str){
 int print_digit(int argint, char* str){
 	char integer_buffer[1024] = {'\0'};
 	int digit_len = get_digit_int_len(argint);
-	convert_digit_int_to_str(argint, integer_buffer);
-	s21_strncpy(str, integer_buffer, digit_len + 1);
+	int offset = 0;
+	if (argint < 0){ 
+		offset = 1;
+		digit_len++;
+	}
+	add_sign_to_str(integer_buffer, get_digit_sign(argint), 0);
+	convert_digit_int_to_str(abs(argint), &(integer_buffer[offset]));
+	s21_strncpy(str, integer_buffer, digit_len);
 	return digit_len;
 }
 
@@ -375,7 +418,7 @@ int print_udigit(unsigned int arguint, char* str){
 	char integer_buffer[1024] = {'\0'};
 	int digit_len = get_digit_uint_len(arguint);
 	convert_digit_uint_to_str(arguint, integer_buffer);
-	s21_strncpy(str, integer_buffer, digit_len + 1);
+	s21_strncpy(str, integer_buffer, digit_len);
 	return digit_len;
 }
 
@@ -383,12 +426,20 @@ int print_float(double argfloat, int default_fractional_part_len, char* str){
 	char float_buffer[1024] = {'\0'};
 	char float_fractional_buffer[1024] = {'\0'};
 	int floor_len = get_digit_int_len((int)argfloat);
-	convert_digit_int_to_str((int)argfloat, float_buffer);
-	double fract = argfloat - (int)argfloat;
-	convert_digit_frational_part_to_str(fract, default_fractional_part_len, float_fractional_buffer);
+	int offset = 0;
+	if (argfloat < 0){ 
+		offset = 1;
+		floor_len++;
+	}
+	add_sign_to_str(float_buffer, fget_digit_sign(argfloat), 0);
+	convert_digit_int_to_str((int)fabs(argfloat), &(float_buffer[offset]));
+	double fract = fabs(argfloat) - (int)fabs(argfloat);
+	convert_digit_frational_part_to_str(fract, default_fractional_part_len,
+			float_fractional_buffer);
 	s21_strncpy(str, float_buffer, floor_len);
 	s21_strncpy(&(str[floor_len]), ".", 1);
-	s21_strncpy(&(str[floor_len + 1]), float_fractional_buffer, default_fractional_part_len);
+	s21_strncpy(&(str[floor_len + 1]), float_fractional_buffer,
+			default_fractional_part_len);
 	return floor_len + 1 + default_fractional_part_len;
 }
 
