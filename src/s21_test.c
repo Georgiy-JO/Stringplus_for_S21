@@ -3820,6 +3820,7 @@ START_TEST(test_strtok_norm_2) {
     char* n=NULL, *m=MY_NULL;
     n=strtok(line,divline);
     m=s21_strtok(line2,divline);
+    //printf("HEY: %s--%s",n, m);
     ck_assert_pstr_eq(n,m);
     for(;n!=MY_NULL && m!=NULL;){
         n=strtok(MY_NULL,divline);
@@ -4649,6 +4650,24 @@ START_TEST(test_strtok_longline_6) {
         ck_assert_pstr_eq(n,m);
     }
 }
+//s21_sscanf
+//9.0
+START_TEST(test_sscanf_settings) {
+    //char line[300] = "12345, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    //int num1=1; //num4=5;
+
+    char line[35] = {'m','%','k','o'};
+    // size_t num2, num5, num6;
+    // float num3;
+    // char str1[100];
+    //sscanf(line,"%20d, %3ld, %*s%s%*s %5f%5d %99ld %5ld", &num1,&num2,str1, &num3,&num4, &num5,&num6);
+    //printf("Result:%d-->%ld-->%s-->%f-->%d---->%ld-->%ld\n", num1,num2,str1,num3,num4,num5,num6);
+    
+    printf("--%s\n\n",s21_strtok(line,"%"));
+
+    //printf("%d",s21_sscanf(line,"%d",&num1));
+    //printf("%d\n", num1);
+}
 
 Suite *my_string_suite(void) {
     Suite *s;
@@ -5009,6 +5028,10 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_strtok_longline_4);
     tcase_add_test(tc_core, test_strtok_longline_5);
     tcase_add_test(tc_core, test_strtok_longline_6);
+    
+    //s21_sscanf -->9.0-
+    tcase_add_test(tc_core, test_sscanf_settings);
+
 
     suite_add_tcase(s, tc_core);
     return s;

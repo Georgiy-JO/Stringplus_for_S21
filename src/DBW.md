@@ -2,7 +2,7 @@
 
 ## feature/rk_jo_1 last commit:
 
-Minor changies nothing special! ( ͡° ͜ʖ ͡°)
+Minor changies nothing special! ( ͡° ͜ʖ ͡°)    
 JK  (ಠ_ಠ)
 
 So that's, what is done:
