@@ -12,7 +12,6 @@
 #define S21_SSCANF_SPECIAL_SPEC "pn"   //--'%'??  --- "%%"??
 #define S21_SSCANF_SKIP '*'
 #define S21_SSCANF_PERCENT '%'
-#define S21_SSCANF_PERCENT_LINE "%"
 #define S21_SSCANF_SPACE ' '
 
 #ifndef EOF
@@ -173,17 +172,15 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
 }
 
 //compare according to the format line and cut string between %
-char* string_cutter(char** str_coursor, const char* format_coursor){
-    char* loc_form = (char*) format_coursor;
-    size_t n=s21_strcspn(loc_form,S21_SSCANF_PERCENT_LINE);
-
-    if(s21_strncmp(loc_form,*str_coursor,n))
-        loc_form=NULL;          //EOF??  //if strings before % in format and in str does not match
+int string_cutter(char** str_coursor, const char* source_str){
+    int flag=0;
+    size_t n=s21_strlen(source_str);
+    if(s21_strncmp(source_str,*str_coursor,n))
+        flag=ERROR;          //EOF??  //if strings before % in format and in str does not match
     else{
         *str_coursor=*str_coursor+n;
-        loc_form+=n;
     }
-    return loc_form;
+    return flag;
 }
 
 int s21_sscanf(const char *str, const char *format, ...){
@@ -197,36 +194,49 @@ int s21_sscanf(const char *str, const char *format, ...){
 
         variables var_spec=VAR_STRUCT_ZERO;
         char *str_coursor=(char*) str;
-        char *format_coursor=(char*)format;
-        size_t var_number=0;
+        char *format_coursor=NULL;
+        format_coursor=(char*)format;
 
-        for(;var_number!=(size_t)ERROR && var_number<var_amount && *str_coursor!=C_ZERO && *format_coursor!=C_ZERO; zero_struct(&var_spec)){
-
-            if(*format_coursor!=S21_SSCANF_PERCENT) {
-                format_coursor = string_cutter(&str_coursor,format_coursor);
-                if(format_coursor==NULL){    //different lines in format and str
-                    var_number=ERROR;
-                    continue;
-                }
-            }
-            else{
-                format_coursor=spec_translator(&var_spec, format_coursor);
-                if (format_coursor==NULL){                             //spec error
-                    var_number=ERROR;
-                    continue;
-                }
-
-                str_coursor=var_filling(&var, var_spec, str_coursor);
-                if(str_coursor==NULL){                             //reading/wrighting var error?
-                    var_number=ERROR;
-                    continue;
-                }
-            }
+        if(*format_coursor!=S21_SSCANF_PERCENT){
+            format_coursor=s21_strtok(format_coursor,"%");
+            if(string_cutter(&str_coursor,format_coursor)==ERROR)   //different lines in format and str
+                var_amount=ERROR;
+            else
+                format_coursor=s21_strtok(NULL,"%");
         }
+        else{
+            format_coursor[0]='\0';
+            printf("--%ld--%ld--%d--%s\n",var_amount, s21_strlen(format_coursor), s21_isinstr(*format_coursor,"%"),format_coursor);
+            //s21_strtok("%d","%");
+            format_coursor=s21_strtok(format_coursor,"%");
+            printf("--%ld--%ld--%d--%s\n",var_amount, s21_strlen(format_coursor), s21_isinstr(*format_coursor,"%"),format_coursor);
+            return 5;
+        }
+
+        for(size_t i=0;var_amount!=(size_t)ERROR && i<var_amount;i++, zero_struct(&var_spec)){
+
+            format=spec_translator(&var_spec, format_coursor);
+            if(format==NULL){                             //spec error
+                var_amount=ERROR;
+                continue;
+            }
+
+            str_coursor=var_filling(&var, var_spec, str_coursor);
+            if(str_coursor==NULL){                             //reading/wrighting var error?
+                var_amount=ERROR;
+                continue;
+            }
+
+            if(*format_coursor!=S21_SSCANF_PERCENT && string_cutter(&str_coursor,format_coursor)==ERROR) {  //different lines in format and str
+                var_amount=ERROR;
+                continue;
+            }
+            format_coursor=s21_strtok(NULL,"%");
+        }
+
+
         va_end(var);
-        if(var_number!=var_amount)
-            var_amount=ERROR;            
     }
-    return var_amParodies
-ount;
+    return var_amount;
+
 }

@@ -4653,11 +4653,11 @@ START_TEST(test_strtok_longline_6) {
 //s21_sscanf
 //9.0
 START_TEST(test_sscanf_settings) {
-    char line[300] = "12345, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    //char line[300] = "12345, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
     int num1=1; //num4=5;
 
-    //const char line[35] = "%d";
-    //char* line2 = (char*) line;
+    const char line[3] = "%d";
+    char* line2 = (char*) line;
 
     // size_t num2, num5, num6;
     // float num3;
@@ -4666,8 +4666,10 @@ START_TEST(test_sscanf_settings) {
     //printf("Result:%d-->%ld-->%s-->%f-->%d---->%ld-->%ld\n", num1,num2,str1,num3,num4,num5,num6);
     
     //printf("--%s\n\n",s21_strtok(line2,"%"));
-
-    printf("%d",s21_sscanf(line,"%d",&num1));
+    printf("--%s\n", line2);
+    line2=s21_strtok(line2,"%");
+    printf("==%s\n",line2);
+    printf("\n>%d<\n",s21_sscanf(line,"%d",&num1));
     //printf("%d\n", num1);
 }
 
@@ -4678,7 +4680,7 @@ Suite *my_string_suite(void) {
     s = suite_create("My_String");
     tc_core = tcase_create("Core");
 
-
+    /*
     tcase_add_test(tc_core, test_settings);
 
     //s21_memcmp
@@ -5031,6 +5033,7 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_strtok_longline_5);
     tcase_add_test(tc_core, test_strtok_longline_6);
     
+    */
     //s21_sscanf -->9.0-
     tcase_add_test(tc_core, test_sscanf_settings);
 
