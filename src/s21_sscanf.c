@@ -85,7 +85,12 @@ char* spec_translator(variables* var_spec, const char* format){
     char* loc_format=(char*) format;
     size_t num_temp=0;
 
-    for(;*loc_format!=S21_SSCANF_SPACE && *loc_format!=C_ZERO && loc_format!=NULL;){
+
+
+
+
+
+    for(;*loc_format!=C_ZERO && *loc_format!=S21_SSCANF_SPACE && *loc_format!=C_ZERO && loc_format!=NULL;){
         //skip(*)
         if(*loc_format==S21_SSCANF_SKIP && var_spec->skip==C_ZERO){
             var_spec->skip=1;
@@ -163,6 +168,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }else{
             unsigned int* var_point=va_arg(*var,unsigned int*);         //num more that unsigned int ??
             *var_point=uint_from_line(str_coursor,&move);
+            printf("\n==%p==%u==\n",var_point,*var_point);
         }
         break;
     
@@ -199,7 +205,6 @@ int s21_sscanf(const char *str, const char *format, ...){
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
         size_t var_number=0;
-
         for(;var_number!=(size_t)ERROR && var_number<var_amount && *str_coursor!=C_ZERO && *format_coursor!=C_ZERO; zero_struct(&var_spec)){
 
             if(*format_coursor!=S21_SSCANF_PERCENT) {
@@ -210,23 +215,26 @@ int s21_sscanf(const char *str, const char *format, ...){
                 }
             }
             else{
-                format_coursor=spec_translator(&var_spec, format_coursor);
+
+                format_coursor=spec_translator(&var_spec, (format_coursor+1));
                 if (format_coursor==NULL){                             //spec error
                     var_number=ERROR;
                     continue;
                 }
-
+                //printf("\n%c\n", var_spec.spec);
                 str_coursor=var_filling(&var, var_spec, str_coursor);
+                //printf("%s", str_coursor);
                 if(str_coursor==NULL){                             //reading/wrighting var error?
                     var_number=ERROR;
                     continue;
                 }
+                else    var_number++;
             }
+           
         }
         va_end(var);
         if(var_number!=var_amount)
             var_amount=ERROR;            
     }
-    return var_amParodies
-ount;
+    return var_amount;
 }
