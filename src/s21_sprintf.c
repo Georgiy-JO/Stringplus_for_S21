@@ -420,19 +420,31 @@ int add_width_int(char* str, opts opt){
 
 int print_digit(int argint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
+	char full_digit_buffer[1024] = {'0'};
+	s21_memset(full_digit_buffer, '0', 1024);
+	printf("full_digit_buffer0 = \"%s\"\n", full_digit_buffer);
 	int offset = 0;
-	add_width_int(integer_buffer, opt);
 	int width = opt.width_digit;
 	int digit_len = get_digit_int_len(argint);
-	if (!opt.flag_minus){
-		if (width > digit_len){
-			offset = width - digit_len - 1;
-		}
-	}
-	offset += add_sign_to_str(&(integer_buffer[offset]),
+	int accuracy = opt.accuracy_digit;
+	if (accuracy < digit_len) accuracy = digit_len;
+	if (accuracy > width) width = accuracy;
+
+	offset += add_sign_to_str(&(full_digit_buffer[offset]),
 			get_digit_sign(argint), opt);
-	digit_len+=offset;
-	convert_digit_int_to_str(abs(argint), &(integer_buffer[offset]));
+	printf("full_digit_buffer1 = \"%s\"\n", full_digit_buffer);
+	offset += accuracy - digit_len;
+	convert_digit_int_to_str(abs(argint), &(full_digit_buffer[offset]));
+	printf("full_digit_buffer2 = \"%s\"\n", full_digit_buffer);
+
+	if (!opt.flag_minus){
+		add_width_int(integer_buffer, opt);
+		s21_strncpy(&(integer_buffer[width - accuracy - 1]), full_digit_buffer, accuracy + 1);
+	} else {
+		add_width_int(integer_buffer, opt);
+		s21_strncpy(integer_buffer, full_digit_buffer, accuracy + 1);
+	}
+
 	int copied_len = s21_strlen(integer_buffer);
 	s21_strncpy(str, integer_buffer, copied_len);
 	return copied_len;
