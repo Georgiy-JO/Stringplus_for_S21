@@ -151,13 +151,15 @@ int add_sign_to_str(char* str, int sign, opts opt){
 		str[0] = '-';
 		status = 1;
 	}
-	if (opt.flag_plus){
-		str[0] = '+';
-		status = 1;
-	}
-	else if (opt.flag_space){
-		str[0] = ' ';
-		status = 1;
+	if (sign > 0) {
+		if (opt.flag_plus){
+			str[0] = '+';
+			status = 1;
+		}
+		else if (opt.flag_space){
+			str[0] = ' ';
+			status = 1;
+		}
 	}
 	return status;
 }
