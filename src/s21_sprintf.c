@@ -518,6 +518,13 @@ int print(va_list args, opts opt, char* str){
 	return offset;
 }
 
+int print_percentage_char(char* str){
+	int offset = 0;
+	*str = '%';
+	offset++;
+	return offset;
+}
+
 int s21_sprintf(char *str, const char *format, ...){
 	int count = 0;
 	if(str == NULL){
@@ -531,8 +538,13 @@ int s21_sprintf(char *str, const char *format, ...){
 		opts opt = {0};
 		if (is_start(format[format_index])){
 			format_index++;
-			format_index += get_opts(&opt, &(format[format_index]));
-			str_index += print(args, opt, &(str[str_index]));
+			if (is_start(format[format_index])){
+				str_index += print_percentage_char(&(str[str_index]));
+				format_index++;
+			} else {
+				format_index += get_opts(&opt, &(format[format_index]));
+				str_index += print(args, opt, &(str[str_index]));
+			}
 		} else {
 			str[str_index] = format[format_index];
 			format_index++;
