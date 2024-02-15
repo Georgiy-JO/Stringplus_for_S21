@@ -111,11 +111,11 @@ int convert_digit_int_to_char(int integer){
 	return integer + '0';
 }
 
-int abs(int integer){
+long int s21_abs(long int integer){
 	return integer < 0 ? -integer : integer;
 }
 
-double fabs(double dbl){
+double s21_fabs(double dbl){
 	return dbl < 0 ? -dbl : dbl;
 }
 
@@ -164,7 +164,7 @@ int add_sign_to_str(char* str, int sign, opts opt){
 	return status;
 }
 
-int convert_digit_int_to_str(int integer, char* str){
+int convert_digit_int_to_str(long int integer, char* str){
 	int digit_len = get_digit_int_len(integer);
 	int single_digit = 0;
 	char single_digit_char = 0;
@@ -420,11 +420,10 @@ int add_width_int(char* str, opts opt){
 	return 0;
 }
 
-int print_digit(int argint, char* str, opts opt){
+int print_digit(long int argint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
 	char full_digit_buffer[1024] = {'0'};
 	s21_memset(full_digit_buffer, '0', 1024);
-	printf("full_digit_buffer0 = \"%s\"\n", full_digit_buffer);
 	int offset = 0;
 	int width = opt.width_digit;
 	int digit_len = get_digit_int_len(argint);
@@ -434,10 +433,8 @@ int print_digit(int argint, char* str, opts opt){
 
 	offset += add_sign_to_str(&(full_digit_buffer[offset]),
 			get_digit_sign(argint), opt);
-	printf("full_digit_buffer1 = \"%s\"\n", full_digit_buffer);
 	offset += accuracy - digit_len;
-	convert_digit_int_to_str(abs(argint), &(full_digit_buffer[offset]));
-	printf("full_digit_buffer2 = \"%s\"\n", full_digit_buffer);
+	convert_digit_int_to_str(s21_abs(argint), &(full_digit_buffer[offset]));
 
 	if (!opt.flag_minus){
 		add_width_int(integer_buffer, opt);
@@ -480,8 +477,8 @@ int print_float(double argfloat, int fractional_part_len, char* str,
 	offset += add_sign_to_str(&(float_buffer[offset]),
 			fget_digit_sign(argfloat), opt);
 	floor_len+=offset;
-	convert_digit_int_to_str((int)fabs(argfloat), &(float_buffer[offset]));
-	double fract = fabs(argfloat) - (int)fabs(argfloat);
+	convert_digit_int_to_str((int)s21_fabs(argfloat), &(float_buffer[offset]));
+	double fract = s21_fabs(argfloat) - (int)s21_fabs(argfloat);
 	convert_digit_frational_part_to_str(fract, fractional_part_len,
 			float_fractional_buffer);
 	s21_strncpy(final_buffer, float_buffer, floor_len);
@@ -499,8 +496,14 @@ int print(va_list args, opts opt, char* str){
 		char argchar = (char)va_arg(args, int);
 		offset += print_char(argchar, str);
 	}else if (opt.spec_d){
-		int argint = va_arg(args, int);
-		offset += print_digit(argint, str, opt);
+		long int argint = va_arg(args, long int);
+		if (opt.length_h){
+			offset += print_digit((short int)argint, str, opt);
+		} else if (opt.length_l){
+			offset += print_digit(argint, str, opt);
+		} else {
+			offset += print_digit((int)argint, str, opt);
+		}
 	}
 	else if (opt.spec_f){
 		double argfloat = va_arg(args, double);
