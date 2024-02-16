@@ -11,6 +11,7 @@ void *s21_memcpy(void *dest, const void *src, size_t n){
     //*(destination+n)=C_ZERO;
     return dest;
 }
+
 //Copies up to n characters from the string pointed to, by src to dest.
 char *s21_strncpy(char *dest, const char *src, size_t n){
     size_t len_dest=0, len_src=0;
@@ -25,12 +26,14 @@ char *s21_strncpy(char *dest, const char *src, size_t n){
         padding((dest+len_src), n-len_src);
     return dest;
 }
+
 //Filling the line length n with \0 
 void padding(char* place, size_t length){
     for(size_t i=0;i<length;i++){
         *(place+i)=C_ZERO;
     }
 }
+
 //Appends the string pointed to, by src to the end of the string pointed to, by dest up to n characters long.
 char *s21_strncat(char *dest, const char *src, size_t n){
     size_t len_src=0,i=0, len_dest=0;

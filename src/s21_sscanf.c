@@ -21,8 +21,6 @@
                     //EOF??         https://www.tutorialspoint.com/c_standard_library/c_function_sscanf.htm
 #define ERROR (-1)
 
-#define VAR_STRUCT_ZERO {0, C_ZERO,C_ZERO,0}
-// #define VAR_STRUCT_ZERO {C_ZERO,0, C_ZERO,C_ZERO,0}
 typedef struct variables
 {
     // char spec_type; //i-int, f-float, c-char, s-spesial
@@ -38,6 +36,10 @@ void zero_struct(variables * var){
     var->spec=C_ZERO;
     var->length=C_ZERO;
     var->width=0;
+}
+
+char char_is_invis (const char tmp){
+    return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
 }
 
 char char_is_num (const char tmp){
@@ -87,9 +89,7 @@ char* spec_translator(variables* var_spec, const char* format){
 
 
 
-
-
-
+    
     for(;*loc_format!=C_ZERO && *loc_format!=S21_SSCANF_SPACE && *loc_format!=C_ZERO && loc_format!=NULL;){
         //skip(*)
         if(*loc_format==S21_SSCANF_SKIP && var_spec->skip==C_ZERO){
@@ -168,7 +168,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }else{
             unsigned int* var_point=va_arg(*var,unsigned int*);         //num more that unsigned int ??
             *var_point=uint_from_line(str_coursor,&move);
-            printf("\n==%p==%u==\n",var_point,*var_point);
+            //printf("\n==%p==%u==\n",var_point,*var_point);
         }
         break;
     
@@ -180,61 +180,70 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
 
 //compare according to the format line and cut string between %
 char* string_cutter(char** str_coursor, const char* format_coursor){
-    char* loc_form = (char*) format_coursor;
-    size_t n=s21_strcspn(loc_form,S21_SSCANF_PERCENT_LINE);
+    char* loc_str_cours = *str_coursor;
+    char* loc_form_cours = (char*) format_coursor;
+    
+    for(;loc_form_cours != NULL && *loc_form_cours!=S21_SSCANF_PERCENT;){
 
-    if(s21_strncmp(loc_form,*str_coursor,n))
-        loc_form=NULL;          //EOF??  //if strings before % in format and in str does not match
-    else{
-        *str_coursor=*str_coursor+n;
-        loc_form+=n;
+        /*
+        if((*loc_form_cours<=32 && *loc_form_cours>=1) || *loc_form_cours==127) { loc_form_cours++;  continue;}
+        if ((*loc_str_cours<=32 && *loc_str_cours>=1) || *loc_str_cours==127) {loc_str_cours++;  continue;}
+        if((*loc_form_cours)==(*loc_str_cours))
+        {
+            loc_form_cours++;
+            loc_str_cours++;
+        }
+        else    loc_form_cours = NULL;     //EOF??  //if strings before % in format and in str does not match
+        */
+       
+        if(char_is_invis(*loc_form_cours)) loc_form_cours++;
+        else if (char_is_invis(*loc_str_cours)) loc_str_cours++;
+        else if ((*loc_form_cours)==(*loc_str_cours))
+        {
+            loc_form_cours++;
+            loc_str_cours++;
+        }
+        else   loc_form_cours = NULL;          //EOF??  //if strings before % in format and in str does not match
     }
-    return loc_form;
+    for(;char_is_invis(*loc_str_cours);) {loc_str_cours++;}
+    //printf("\n|||%d--%s|||\n",*loc_str_cours,  loc_form_cours);
+    *str_coursor = loc_str_cours;
+
+    return loc_form_cours;
 }
 
 int s21_sscanf(const char *str, const char *format, ...){
 	if(str == NULL || format==NULL)     return ERROR;          //EOF??
     size_t var_amount =0;
+    size_t var_number=0;
     var_amount=var_counting(format);
 
     if(var_amount){
         va_list var;                        //=0????
         va_start(var, format);
 
-        variables var_spec=VAR_STRUCT_ZERO;
+        variables var_spec={0, C_ZERO,C_ZERO,0};
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
-        size_t var_number=0;
-        for(;var_number!=(size_t)ERROR && var_number<var_amount && *str_coursor!=C_ZERO && *format_coursor!=C_ZERO; zero_struct(&var_spec)){
-
+        for(size_t i=0;i<var_amount && *str_coursor!=C_ZERO && format_coursor!=NULL; zero_struct(&var_spec)){
+            //printf("\n1)$$%s$$%s$$\n",str_coursor, format_coursor );
             if(*format_coursor!=S21_SSCANF_PERCENT) {
-                format_coursor = string_cutter(&str_coursor,format_coursor);
-                if(format_coursor==NULL){    //different lines in format and str
-                    var_number=ERROR;
-                    continue;
-                }
+                format_coursor = string_cutter(&str_coursor,format_coursor);    //??format_coursor==NULL    --different lines in format and str
             }
             else{
+                i++;
+                format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
+                if(format_coursor!=NULL ){
+                    str_coursor=var_filling(&var, var_spec, str_coursor);
+                    if(str_coursor!=NULL)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
 
-                format_coursor=spec_translator(&var_spec, (format_coursor+1));
-                if (format_coursor==NULL){                             //spec error
-                    var_number=ERROR;
-                    continue;
                 }
-                //printf("\n%c\n", var_spec.spec);
-                str_coursor=var_filling(&var, var_spec, str_coursor);
-                //printf("%s", str_coursor);
-                if(str_coursor==NULL){                             //reading/wrighting var error?
-                    var_number=ERROR;
-                    continue;
-                }
-                else    var_number++;
+  
             }
-           
+            //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
+        
         }
-        va_end(var);
-        if(var_number!=var_amount)
-            var_amount=ERROR;            
+        va_end(var);         
     }
-    return var_amount;
+    return var_number;
 }

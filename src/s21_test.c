@@ -109,7 +109,7 @@ START_TEST(test_memcmp_3) {
 	int expected = memcmp(str1, str2, n);
 	ck_assert_int_eq(result, expected);
 }
-                          //WERROR -- overread
+/*                          //WERROR -- overread
 START_TEST(test_memcmp_4) {
 	char* str1 = "hello";
 	char* str2 = "";
@@ -136,7 +136,7 @@ START_TEST(test_memcmp_6) {
 	int expected = memcmp(str1, str2, n);
 	ck_assert_int_eq(result, expected);
 }
-
+*/
 
 //s21_strmcmp
 START_TEST(test_strncmp) {
@@ -205,7 +205,7 @@ START_TEST(test_memchr_2) {
 	char* expected = memchr(str1, c, n);
 	ck_assert_ptr_eq(result, expected);
 }
-                              //WERROR -- overread
+/*                              //WERROR -- overread
 START_TEST(test_memchr_3) {
 	char* str1 = "hello";
 	int c = 'f';
@@ -214,7 +214,7 @@ START_TEST(test_memchr_3) {
 	char* expected = memchr(str1, c, n);
 	ck_assert_ptr_eq(result, expected);
 }
-
+*/
 
 //s21_strchr
 START_TEST(test_strchr) {
@@ -4653,8 +4653,9 @@ START_TEST(test_strtok_longline_6) {
 //s21_sscanf
 //9.0
 START_TEST(test_sscanf_settings) {
-    char line[300] = "12345, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-    int num1=1; //num4=5;
+    //char line[300] = "55, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
+    char line[]="num:001234567890 -  - \n\n 55555------";
+    unsigned int num1=8, num2=5, num3=0, num4=0;
 
     //const char line[3] = "%d";
     //char* line2 = (char*) line;
@@ -4669,8 +4670,11 @@ START_TEST(test_sscanf_settings) {
     //printf("--%s\n", line2);
     //line2=s21_strtok(line2,"%");
     //printf("==%s\n",line2);
-    printf("\n>%d -- %p==%u<\n",s21_sscanf(line,"%u",&num1), &num1,num1);
-    //printf("%d\n", num1);
+    printf("\n>%d -- ",s21_sscanf(line,"num:%u \n-\t-%u",&num1, &num3));
+    printf("%p==%u\t%p==%u<\n", &num1,num1, &num3,num3);
+    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%u",&num2, &num4));
+    printf("%p==%u\t%p==%u<\n", &num2,num2, &num4,num4);
+        //printf("%d\n", num1);
 }
 
 Suite *my_string_suite(void) {
@@ -4687,9 +4691,9 @@ Suite *my_string_suite(void) {
 	tcase_add_test(tc_core, test_memcmp);
 	tcase_add_test(tc_core, test_memcmp_2);
 	tcase_add_test(tc_core, test_memcmp_3);
-	tcase_add_test(tc_core, test_memcmp_4);
-	tcase_add_test(tc_core, test_memcmp_5);
-	tcase_add_test(tc_core, test_memcmp_6);
+	// tcase_add_test(tc_core, test_memcmp_4);
+	// tcase_add_test(tc_core, test_memcmp_5);
+	// tcase_add_test(tc_core, test_memcmp_6);
 
 	//s21_strncmp
 	tcase_add_test(tc_core, test_strncmp);
@@ -4702,7 +4706,7 @@ Suite *my_string_suite(void) {
 	//s21_memchr
 	tcase_add_test(tc_core, test_memchr);
 	tcase_add_test(tc_core, test_memchr_2);
-	tcase_add_test(tc_core, test_memchr_3);
+	// tcase_add_test(tc_core, test_memchr_3);
 
 	//s21_strchr
 	tcase_add_test(tc_core, test_strchr);
