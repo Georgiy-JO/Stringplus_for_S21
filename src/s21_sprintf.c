@@ -553,8 +553,8 @@ int s21_sprintf(char *str, const char *format, ...){
 			format_index++;
 			str_index++;
 		}
-		count++;
 	}
+	count = str_index;
 	va_end(args);
 	return count;
 }
