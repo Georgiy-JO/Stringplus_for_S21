@@ -1,5 +1,4 @@
 #include "s21_string.h"
-#include <stdlib.h>
 
 #define CASE_DIFF 32
 

@@ -4654,8 +4654,9 @@ START_TEST(test_strtok_longline_6) {
 //9.0
 START_TEST(test_sscanf_settings) {
     //char line[300] = "55, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-    char line[]="num:001234567890 -  - \n\n 55555---hello 555---";
-    unsigned int num1=8, num2=5, num3=0, num4=0, num5=0, num6=0;
+    char line[]="num:001234567890 -  - \n\n -1235---hello -0X1f0Aa---";
+    unsigned int num1=8, num2=5, num5=0, num6=0;
+    int num3=0, num4=0;
 
     //const char line[3] = "%d";
     //char* line2 = (char*) line;
@@ -4670,10 +4671,10 @@ START_TEST(test_sscanf_settings) {
     //printf("--%s\n", line2);
     //line2=s21_strtok(line2,"%");
     //printf("==%s\n",line2);
-    printf("\n>%d -- ",s21_sscanf(line,"num:%u \n-\t-%u ---hello %u",&num1, &num3, &num5));
-    printf("%p==%u\t%p==%u\t%d<\n", &num1,num1, &num3,num3, num5);
-    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%u ---hello%u",&num2, &num4, &num6));
-    printf("%p==%u\t%p==%u\t%d<\n", &num2,num2, &num4,num4, num6);
+    printf("\n>%d -- ",s21_sscanf(line,"num:%u \n-\t-%d ---hello %x",&num1, &num3, &num5));
+    printf("%p==%u\t%p==%d\t%d<\n", &num1,num1, &num3,num3, num5);
+    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%d ---hello%X",&num2, &num4, &num6));
+    printf("%p==%u\t%p==%d\t%d<\n", &num2,num2, &num4,num4, num6);
         //printf("%d\n", num1);
 }
 
