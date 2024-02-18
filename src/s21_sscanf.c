@@ -82,14 +82,14 @@ size_t var_counting (const char *format){
     return amount;
 }
 
-// format be like: %[*][width][length]specifier.
-char* spec_translator(variables* var_spec, const char* format){
+// format be like: %[*][width][length]specifier.                    
+char* spec_translator(variables* var_spec, const char* format){             ///NEXT YOU ARE NEXT
     char* loc_format=(char*) format;
     size_t num_temp=0;
 
 
 
-    
+
     for(;*loc_format!=C_ZERO && *loc_format!=S21_SSCANF_SPACE && *loc_format!=C_ZERO && loc_format!=NULL;){
         //skip(*)
         if(*loc_format==S21_SSCANF_SKIP && var_spec->skip==C_ZERO){

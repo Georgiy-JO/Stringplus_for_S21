@@ -53,3 +53,4 @@ dkms.conf
 .vscode
 tester
 test
+src/s21_test
