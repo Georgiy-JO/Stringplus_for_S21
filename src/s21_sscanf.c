@@ -259,6 +259,25 @@ long int long_hex_from_line(const char* line, size_t* move){
     return local_num*neg_flag;
 }
 
+//0.5   0.5e2=50    0.5E2=50     0.5e=0.5    0.5e2 (%fe2)=50   
+float float_from_line(const char* line, size_t* move){
+    float local_num=0;
+
+
+    
+    size_t local_move=0;
+    int neg_flag=1;
+    if(*line=='-'){
+        local_move++;
+        neg_flag=-1;
+    }
+    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+        local_num=local_num*10+char_to_num(*(line+local_move));
+    }
+    if(*move==0)  *move=local_move;
+    return local_num*neg_flag;
+}
+
 // format be like: %[*][width][length]specifier. -->%*10lu                   
 char* spec_translator(variables* var_spec, const char* format){             //add other flags
     char* loc_format=(char*) format;
@@ -288,9 +307,18 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
             loc_format++;
         }
         else                    loc_format=NULL;
+    }//float (eEfgG)
+    else if (s21_isinstr(*loc_format,S21_SSCANF_FLOAT_SPEC)){
+        if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"L"))
+        {
+            var_spec->spec=*loc_format;
+            loc_format++;
+        }
+        else                    loc_format=NULL;
     }
+    
 
-    //float(eEfgG)
+    //float (eEfgG)
     //spesial(pn)
     //char (cs)
     //error spec
