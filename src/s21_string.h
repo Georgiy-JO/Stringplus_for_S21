@@ -4,6 +4,7 @@
 //Needed for sscanf && sprintf && S.String.P.F.
 #include <stdarg.h>
 #include <stdlib.h>  //--allowed?
+#include <math.h>    //--allowed?
 
 #define size_t unsigned long int
 #define symbol unsigned char
@@ -71,6 +72,8 @@ size_t long_uoctal_from_line(const char* line, size_t* move);
 int hex_from_line(const char* line, size_t* move);
 short int short_hex_from_line(const char* line, size_t* move);
 long int long_hex_from_line(const char* line, size_t* move);
+float float_from_line(const char* line, size_t* move);
+double double_from_line(const char* line, size_t* move);
 
 char* string_cutter(char** str_coursor, const char* format_coursor);
 char* spec_translator(variables* var_spec, const char* format);

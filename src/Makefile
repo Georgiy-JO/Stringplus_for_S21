@@ -1,7 +1,7 @@
 CC = gcc
 GENLAGS = -std=c11 -Wall -Wextra -Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
-CHLIB = -lcheck -lsubunit -lm
+CHLIB = -lcheck -lm #-lsubunit 
 
 #NEED TO FIND A WAY DO DO IT 
 # ifdef __APPLE__
