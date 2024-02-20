@@ -15,6 +15,9 @@
 
 #define C_ZERO '\0'
 
+typedef unsigned int wint_t;
+typedef int wchar_t;
+
 //------------------------------------------------------------------------------------
 
 //string functions
@@ -50,8 +53,10 @@ int s21_sscanf(const char *str, const char *format, ...);
 typedef struct variables variables; //is needed not to break the header file
 
 char char_is_invis (const char tmp);
+char char_is_whitespace (const char tmp);
 char char_is_num (const char tmp);
 char char_is_hex (const char tmp);
+
 int char_to_num (const char n);
 char num_to_char (const int n);
 int big_hex_to_num (const char n);
@@ -59,6 +64,7 @@ int small_hex_to_num (const char n);
 
 void zero_struct(variables * var);
 size_t var_counting (const char *format);
+char* whitespace_romover (const char* a_string);
 
 unsigned int uint_from_line(const char* line, size_t* move);
 size_t ulong_from_line(const char* line, size_t* move);
@@ -74,6 +80,11 @@ short int short_hex_from_line(const char* line, size_t* move);
 long int long_hex_from_line(const char* line, size_t* move);
 float float_from_line(const char* line, size_t* move);
 double double_from_line(const char* line, size_t* move);
+char char_from_line(const char* line, size_t* move);
+wint_t long_char_from_line(const char* line, size_t* move);
+void string_from_line(const char* line, size_t* move, char* dest);
+void long_string_from_line(const char* line, size_t* move, wchar_t* dest);
+void** pointer_from_line(const char* line, size_t* move);
 
 char* string_cutter(char** str_coursor, const char* format_coursor);
 char* spec_translator(variables* var_spec, const char* format);

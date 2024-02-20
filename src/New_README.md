@@ -58,7 +58,7 @@ where:
 
 | No. | Sprintf Done | Sprintf Checked | Sscanf Done | Sscanf Checked | Specifier | sprintf output | sscanf output |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 |  |  |  |  | c | Character | Character |
+| 1 |  |  | ✔ |  | c | Character | Character |
 | 2 |  |  | ✔ |  | d | Signed decimal integer | Signed decimal integer |
 | 3 |  |  |  |  | i | Signed decimal integer | Signed integer (may be decimal, octal or hexadecimal) |
 | 4 |  |  | ✔ |  | e | Scientific notation (mantissa/exponent) using e character (the output of the numbers must match up to e-6) | Decimal floating point or scientific notation (mantissa/exponent) |
@@ -67,13 +67,13 @@ where:
 | 7 |  |  | ✔ |  | g | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 8 |  |  | ✔ |  | G | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 9 |  |  | ✔ |  | o | Unsigned octal | Unsigned octal |
-| 10 |  |  |  |  | s | String of characters | String of characters |
+| 10 |  |  | ✔ |  | s | String of characters | String of characters |
 | 11 |  |  | ✔ |  | u | Unsigned decimal integer | Unsigned decimal integer |
 | 12 |  |  | ✔ |  | x | Unsigned hexadecimal integer | Unsigned hexadecimal integer (any letters) |
 | 13 |  |  | ✔ |  | X | Unsigned hexadecimal integer (capital letters) | Unsigned hexadecimal integer (any letters) |
-| 14 |  |  |  |  | p | Pointer address | Pointer address |
-| 15 |  |  |  |  | n | Number of characters printed until %n occurs | Number of characters scanned until %n occurs |
-| 16 |  |  |  |  | % | Character % | Character % |
+| 14 |  |  | ✔ |  | p | Pointer address | Pointer address |
+| 15 |  |  | ✔ |  | n | Number of characters printed until %n occurs | Number of characters scanned until %n occurs |
+| 16 |  |  | ✔ |  | % | Character % | Character % |
 
 ### sprintf Flags
 

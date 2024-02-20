@@ -4652,12 +4652,37 @@ START_TEST(test_strtok_longline_6) {
 }
 //s21_sscanf
 //9.0
+/*
+START_TEST(test_sscanf_settings){
+    char input_line[]={13,9,10,11,12,32,' ',' ','a','5','5','4','.','7','\0'};
+    char format_line[]={13,9,10,11,'%','n',12,32,' ',' ','%','n','\n','a','5','5','4','%','n','\0'};
+    int num1=0, num2=0, num3=0;
+    printf("\n>%d==>\t",sscanf(input_line,format_line,&num1,&num2,&num3));
+    printf("%d==%d==%d<\n",num1,num2,num3);
+    input_line[10]=103;
+    //printf("\n>==%s==<\n", format_line);
+    for(int i=0;i<=32;i++){
+        format_line[1]=(char)i;
+        num1=0;
+        //printf("\n>==%s==<\n", format_line);
+        printf("\n>%d==>\t",sscanf(input_line,format_line,&num1,&num2,&num3));
+        printf("%d  =   %d = %d= %d<\n",i,num1, num2, num3);
+    }
+
+}
+*/
+
 START_TEST(test_sscanf_settings) {
-    //char line[300] = "55, 123456789012345678901234567890, hell to you, 1234567890 12345, 123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456780 1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-    char line[]="num:001234567890 -  - \n\n -1235---hello -0X1f0Aa----0.54E3";
+    char line[]="num:001234567890 -  - \n\n -1235---hello -0X1f0Aa----0.54E3 010\n--\nfghjklqw erty uiop 0x7FFdd251f78c   %   hell \0";
+    //char templine[]={'1',1,'2',2,'3',3,'4',4,'5',5,'6',6,'7',7,'8',8,'9',14,'0',15,'z',16,'x',17,'c',18,'v',19,'b',20,'n',21,'m',22,'a',23,'s',24,'d',25,'f',26,'g',27,'h',28,'j',29,'k',30,'l',31,'q',32,'w','e'};
+    //s21_strncat(line,templine,56);
     unsigned int num1=8, num2=5, num5=0, num6=0;
-    int num3=0, num4=0;
+    int num3=0, num4=0, num9=0, num10=0;
     float num7=0, num8=0;
+    char sym1=0, sym2=0;
+    char line1[100]={0,}, line2[100]={0}, line3[10]="0", line4[10]="0";
+    char* p1=NULL, *p2=NULL;
+    int n1=0, n2=0;
     //const char line[3] = "%d";
     //char* line2 = (char*) line;
 
@@ -4671,12 +4696,14 @@ START_TEST(test_sscanf_settings) {
     //printf("--%s\n", line2);
     //line2=s21_strtok(line2,"%");
     //printf("==%s\n",line2);
-    printf("\n>%d -- ",s21_sscanf(line,"num:%u \n-\t-%d ---hello %x---%7G",&num1, &num3, &num5, &num8));
-    printf("%p==%u\t%p==%d\t%d\t %f<\n", &num1,num1, &num3,num3, num5,num8);
-    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%d ---hello%X---%7GE2",&num2, &num4, &num6, &num7));
-    printf("%p==%u\t%p==%d\t%d\t %f<\n", &num2,num2, &num4,num4, num6, num7);
+    printf(">%d -- ",s21_sscanf(line,"num:%u \n-\t-%d ---hello %x---%7G %o--%3c   %serty uiop %p%n %% %s ",&num1, &num3, &num5, &num8, &num9, &sym2, line1,  &p2, &n2, line4));
+    printf("%p==%u\t%p==%d\t%d\t %f\t%d\t%c\t%s\t%p\t%d\t%s<\n", &num1,num1, &num3,num3, num5,num8,num9,sym2, line1,p2,  n2, line4);
+    //printf("\n{\n%s\n}\n",line);
+    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%d ---hello%X---%7G %o --\t %3c %s erty uiop %p       %n %%   %s",&num2, &num4, &num6, &num7, &num10,  &sym1, line2, &p1, &n1, line3));
+    printf("%p==%u\t%p==%d\t%d\t %f\t%d\t%c\t%s\t%p\t%d\t%s<\n", &num2,num2, &num4,num4, num6, num7,num10,sym1, line2, p1,n1, line3);
         //printf("%d\n", num1);
 }
+
 
 Suite *my_string_suite(void) {
     Suite *s;

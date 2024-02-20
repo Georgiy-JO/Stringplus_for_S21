@@ -13,6 +13,7 @@
 #define S21_SSCANF_SPACE ' '
 #define HEXADECIMAL_BIG "ABCDEF"
 #define HEXADECIMAL_SMALL "abcdef"
+#define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"      
 
 #ifndef EOF
 #define EOF (-1)        
@@ -22,7 +23,6 @@
 
 typedef struct variables
 {
-    // char spec_type; //i-int, f-float, c-char, s-spesial
     char skip;
     char spec;
     char length;
@@ -49,12 +49,28 @@ int s21_sscanf(const char *str, const char *format, ...){
                 format_coursor = string_cutter(&str_coursor,format_coursor);    //??format_coursor==NULL    --different lines in format and str
             }
             else{
+                if(*(format_coursor+1)==S21_SSCANF_PERCENT){
+                    if (char_is_whitespace(*str_coursor)) str_coursor=whitespace_romover(str_coursor);
+                    else if (*str_coursor==S21_SSCANF_PERCENT)
+                    {
+                        str_coursor++;
+                        i+=2;
+                        format_coursor+=2;
+                        continue;
+                    }
+                    
+                }
+                //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
                 if(format_coursor!=NULL ){
-                    str_coursor=var_filling(&var, var_spec, str_coursor);
-                    if(str_coursor!=NULL)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
-
+                    if (char_is_whitespace(*str_coursor)) str_coursor=whitespace_romover(str_coursor);
+                    //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
+                    if(var_spec.spec=='n')  *(va_arg(var,int*))=str_coursor- str;
+                    else{
+                        str_coursor=var_filling(&var, var_spec, str_coursor);
+                        if(str_coursor!=NULL)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
+                    }
                 }
   
             }
@@ -65,14 +81,11 @@ int s21_sscanf(const char *str, const char *format, ...){
     return var_number;
 }
 
-void zero_struct(variables * var){
-    var->skip=0;
-    var->spec=C_ZERO;
-    var->length=C_ZERO;
-    var->width=0;
-}
 char char_is_invis (const char tmp){
     return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
+}
+char char_is_whitespace (const char tmp){ //9,10,11,12,13,32,0
+    return ((tmp>=9 && tmp<=13) || tmp==32 || tmp==0)? 1:0;
 }
 char char_is_num (const char tmp){
     return (tmp>='0' && tmp<='9')? 1:0;
@@ -80,6 +93,7 @@ char char_is_num (const char tmp){
 char char_is_hex (const char tmp){
     return ((tmp>='0' && tmp<='9') || s21_isinstr(tmp,HEXADECIMAL_BIG) || s21_isinstr(tmp,HEXADECIMAL_SMALL))? 1:0;
 }
+
 int char_to_num (const char n){
     return n-'0';
 }
@@ -93,7 +107,12 @@ int small_hex_to_num (const char n){
     return n - 'a'+10;
 }
 
-
+void zero_struct(variables * var){
+    var->skip=0;
+    var->spec=C_ZERO;
+    var->length=C_ZERO;
+    var->width=0;
+}
 size_t var_counting (const char *format){
     size_t amount=0;
     for(int i=0;format[i]!=C_ZERO;i++){
@@ -102,6 +121,12 @@ size_t var_counting (const char *format){
     }
     return amount;
 }
+char* whitespace_romover (const char* a_string){
+    char* loc_str=(char*)a_string;
+    for(;char_is_whitespace(*loc_str);) {loc_str++;}
+    return loc_str;
+}
+
 
 unsigned int uint_from_line(const char* line, size_t* move){
     unsigned int local_num=0;
@@ -259,7 +284,6 @@ long int long_hex_from_line(const char* line, size_t* move){
     if(*move==0)  *move=local_move;
     return local_num*neg_flag;
 }
-
 float float_from_line(const char* line, size_t* move){
     float local_num=0;
     size_t local_move=0;
@@ -317,11 +341,38 @@ double double_from_line(const char* line, size_t* move){
     if(*move==0)  *move=local_move;
     return local_num*neg_flag;
 }
+char char_from_line(const char* line, size_t* move){
+    if(*move==0)  *move=1;
+    return *line;
+}
+wint_t long_char_from_line(const char* line, size_t* move){
+    if(*move==0)  *move=1;
+    return (wint_t)(*line);
+}
+void string_from_line(const char* line, size_t* move, char* dest){
+    size_t local_move=0;
+    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+        *(dest+local_move)=*(line+local_move);
+    }
+    if(*move==0)  *move=local_move;
+}
+void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
+    size_t local_move=0;
+    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+        *(dest+local_move)=(wchar_t)*(line+local_move);
+    }
+    if(*move==0)  *move=local_move;
+}
+void** pointer_from_line(const char* line, size_t* move){
+    size_t local_num=0;
+    local_num= long_hex_from_line(line,move);
+    return (void*)local_num;
+}
+
 
 // format be like: %[*][width][length]specifier. -->%*10lu                   
 char* spec_translator(variables* var_spec, const char* format){             //add other flags
     char* loc_format=(char*) format;
-
 
     //skip(*)
     if(*loc_format==S21_SSCANF_SKIP){
@@ -347,7 +398,8 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
             loc_format++;
         }
         else                    loc_format=NULL;
-    }//float (eEfgG)
+    }
+    //float (eEfgG)
     else if (s21_isinstr(*loc_format,S21_SSCANF_FLOAT_SPEC)){
         if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"L"))
         {
@@ -356,10 +408,33 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
         }
         else                    loc_format=NULL;
     }
+    //char (cs)
+    else if (s21_isinstr(*loc_format,S21_SSCANF_CHAR_SPEC)){
+        if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"l"))
+        {
+            var_spec->spec=*loc_format;
+            loc_format++;
+        }
+        else                    loc_format=NULL;
+    }
+    //spesial(pn)
+    else if (s21_isinstr(*loc_format,S21_SSCANF_SPECIAL_SPEC))
+    {
+        if (var_spec->length==C_ZERO)
+        {
+            if (var_spec->width!=0 && *loc_format=='n')                     loc_format=NULL;
+            else{
+                var_spec->spec=*loc_format;
+                loc_format++;
+            }
+        }
+        else                    loc_format=NULL;  
+    }
+    
+    
     
 
-    //spesial(pn)
-    //char (cs)
+
     //error spec
 
     return loc_format;
@@ -434,13 +509,33 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
             double* var_point=va_arg(*var,double*);
             *var_point=double_from_line(str_coursor,&move);
         }else {
-
             float* var_point=va_arg(*var,float*);
             *var_point=float_from_line(str_coursor,&move);
+            //printf("\n===%f=%ld===\n", *var_point, move);
         }
         break;
-
-
+    case 'c':
+        if(var_spec.length=='l'){
+            wint_t* var_point=va_arg(*var,wint_t*);
+            *var_point=long_char_from_line(str_coursor,&move);
+        }else {
+            char* var_point=va_arg(*var,char*);
+            *var_point=char_from_line(str_coursor,&move);
+        }
+        break;
+    case 's':
+        if(var_spec.length=='l'){
+            wchar_t* var_point=va_arg(*var,wchar_t*);
+            long_string_from_line(str_coursor,&move,var_point);
+        }else {
+            char* var_point=va_arg(*var,char*);
+            string_from_line(str_coursor,&move,var_point);
+        }
+        break;
+    case 'p':
+        void** var_point=va_arg(*var,void**);
+        *var_point=pointer_from_line(str_coursor,&move);
+        break; 
     default:
         /* code */
         break;
@@ -454,7 +549,6 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
     char* loc_form_cours = (char*) format_coursor;
     
     for(;loc_form_cours != NULL && *loc_form_cours!=S21_SSCANF_PERCENT;){
-
         /*
         if((*loc_form_cours<=32 && *loc_form_cours>=1) || *loc_form_cours==127) { loc_form_cours++;  continue;}
         if ((*loc_str_cours<=32 && *loc_str_cours>=1) || *loc_str_cours==127) {loc_str_cours++;  continue;}
@@ -465,9 +559,8 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
         }
         else    loc_form_cours = NULL;     //EOF??  //if strings before % in format and in str does not match
         */
-       
-        if(char_is_invis(*loc_form_cours)) loc_form_cours++;
-        else if (char_is_invis(*loc_str_cours)) loc_str_cours++;
+        if(char_is_whitespace(*loc_form_cours)) loc_form_cours++;
+        else if (char_is_whitespace(*loc_str_cours)) loc_str_cours++;
         else if ((*loc_form_cours)==(*loc_str_cours))
         {
             loc_form_cours++;
@@ -475,10 +568,9 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
         }
         else   loc_form_cours = NULL;          //EOF??  //if strings before % in format and in str does not match
     }
-    for(;char_is_invis(*loc_str_cours);) {loc_str_cours++;}
-    //printf("\n|||%d--%s|||\n",*loc_str_cours,  loc_form_cours);
+    loc_str_cours=whitespace_romover(loc_str_cours);
+    //printf("\n|||%d++++%s|||\n",*loc_str_cours,  loc_form_cours);
     *str_coursor = loc_str_cours;
-
     return loc_form_cours;
 }
 
@@ -509,3 +601,44 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  sscanf("%f %f %f", &num1, &num2);
 //  sscanf("%f ", num1);
 //  f==g==G==e==E ???? Decimal floating point or scientific notation (mantissa/exponent)
+//  lc-? ls-?
+            /*
+            wint_t is not necessarily an unsigned integer type. It is typically defined as an integer type capable of representing any 
+            valid value of wchar_t, as well as an additional distinct value to represent the end-of-file indicator for wide-character 
+            streams (WEOF).
+            The C standard doesn't specify the exact underlying type of wint_t. Its size and signedness can vary depending on the 
+            platform and the compiler implementation.
+            On most systems, wint_t is defined in <wchar.h> as an integer type, but whether it's signed or unsigned can vary. 
+            You would need to consult the documentation or the specific implementation of your compiler to determine its 
+            characteristics on your system.
+
+            %c- int which is internally converted to unsigned char
+            %lc - wint_t
+            %s - pointer to zero-terminated array of char
+            %ls - pointer to zero-terminated array of wchar_t
+
+            typedef unsigned int wint_t
+            typedef int wchar_t
+
+
+            */
+//  wint_t char_from_line   char->wint_t ????????????
+
+//  really??
+            /*
+            The %s format specifier in sscanf will read characters from the input string str until it encounters 
+            a whitespace character (space, tab, newline, etc.) or until it reaches the end of the string.
+
+            0-32
+            or
+            0,9,10,11,12,13,32      --  checked!!!
+            */
+//  %7G --\t %3lc
+//  in format: does not matter: 0-32    or  0,9,10,11,12,13,32
+//  errors in writing into veriables
+//  %p  0x7ffdd251f78c  || 7ffdd251f78c     || 0XFFFFFFFFFFFF //0xFFFFFFFFFFFFFFFF
+//  0x7ffdd251f78c  || 7ffdd251f78c ||  f78c  ==> 0x7ffdd251f78c || 0x7ffdd251f78c || 0xf78c
+//  %lp     --?
+//  %ln ||  %5n
+//  %n ==>sscanf=?
+//  %%  !!!
