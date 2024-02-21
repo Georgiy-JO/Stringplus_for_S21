@@ -4673,11 +4673,11 @@ START_TEST(test_sscanf_settings){
 */
 
 START_TEST(test_sscanf_settings) {
-    char line[]="num:001234567890 -  - \n\n -1235---hello -0X1f0Aa----0.54E3 010\n--\nfghjklqw erty uiop 0x7FFdd251f78c   %   hell \0";
+    char line[]="num:001234567890 -  - \n\n -1235---hello -0X1f0Aa----0.54E3 010\n--\nfghjklqw erty uiop 0x7FFdd251f78c   %   hell 10A\0";
     //char templine[]={'1',1,'2',2,'3',3,'4',4,'5',5,'6',6,'7',7,'8',8,'9',14,'0',15,'z',16,'x',17,'c',18,'v',19,'b',20,'n',21,'m',22,'a',23,'s',24,'d',25,'f',26,'g',27,'h',28,'j',29,'k',30,'l',31,'q',32,'w','e'};
     //s21_strncat(line,templine,56);
     unsigned int num1=8, num2=5, num5=0, num6=0;
-    int num3=0, num4=0, num9=0, num10=0;
+    int num3=0, num4=0, num9=0, num10=0, num11=0;
     float num7=0, num8=0;
     char sym1=0, sym2=0;
     char line1[100]={0,}, line2[100]={0}, line3[10]="0", line4[10]="0";
@@ -4699,8 +4699,8 @@ START_TEST(test_sscanf_settings) {
     printf(">%d -- ",s21_sscanf(line,"num:%u \n-\t-%d ---hello %x---%7G %o--%3c   %serty uiop %p%n %% %s ",&num1, &num3, &num5, &num8, &num9, &sym2, line1,  &p2, &n2, line4));
     printf("%p==%u\t%p==%d\t%d\t %f\t%d\t%c\t%s\t%p\t%d\t%s<\n", &num1,num1, &num3,num3, num5,num8,num9,sym2, line1,p2,  n2, line4);
     //printf("\n{\n%s\n}\n",line);
-    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%d ---hello%X---%7G %o --\t %3c %s erty uiop %p       %n %%   %s",&num2, &num4, &num6, &num7, &num10,  &sym1, line2, &p1, &n1, line3));
-    printf("%p==%u\t%p==%d\t%d\t %f\t%d\t%c\t%s\t%p\t%d\t%s<\n", &num2,num2, &num4,num4, num6, num7,num10,sym1, line2, p1,n1, line3);
+    printf(">%d -- ",sscanf(line,"num:%u \n-\t-%d ---hello%X---%7G %o --\t %3c %s erty uiop %p       %n %%   %s %i",&num2, &num4, &num6, &num7, &num10,  &sym1, line2, &p1, &n1, line3,&num11));
+    printf("%p==%u\t%p==%d\t%d\t %f\t%d\t%c\t%s\t%p\t%d\t%s\t%d<\n", &num2,num2, &num4,num4, num6, num7,num10,sym1, line2, p1,n1, line3,num11);
         //printf("%d\n", num1);
 }
 

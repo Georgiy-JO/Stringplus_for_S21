@@ -359,7 +359,7 @@ void string_from_line(const char* line, size_t* move, char* dest){
 void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
     size_t local_move=0;
     for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        *(dest+local_move)=(wchar_t)*(line+local_move);
+        *(dest+local_move)=(wchar_t)*(line+local_move);     //memset(   sizeof(wchar_t))
     }
     if(*move==0)  *move=local_move;
 }
@@ -368,7 +368,15 @@ void** pointer_from_line(const char* line, size_t* move){
     local_num= long_hex_from_line(line,move);
     return (void*)local_num;
 }
-
+int signed_num_from_line(const char* line, size_t* move){
+    int local_num=0;
+    size_t local_move=0;
+    if(*line=='-')  local_move++;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    hex_from_line(line,move);
+    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) uoctal_from_line(line,move);
+    else    int_from_line(line,move);
+    return local_num;
+}
 
 // format be like: %[*][width][length]specifier. -->%*10lu                   
 char* spec_translator(variables* var_spec, const char* format){             //add other flags
@@ -623,6 +631,8 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 
             */
 //  wint_t char_from_line   char->wint_t ????????????
+//  check some japaneses and other symbols
+
 
 //  really??
             /*
@@ -642,3 +652,4 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  %ln ||  %5n
 //  %n ==>sscanf=?
 //  %%  !!!
+//  %i     010 || 10 || 0x10 || 10A || -010 || -0X10 || -10 ||10a
