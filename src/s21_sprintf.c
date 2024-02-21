@@ -1,7 +1,7 @@
-#include "s21_string.h"
-#include "stdarg.h"
 #include <stdio.h>
 #include <string.h>
+#include "s21_string.h"
+#include "stdarg.h"
 
 #define S21_SPRINTF_FLAGS "-+ #0"
 #define S21_SPRINTF_WIDTH "0123456789*"
@@ -490,11 +490,29 @@ int print_float(double argfloat, int fractional_part_len, char* str,
 	return copied_len;
 }
 
+int print_wchar_t(wchar_t argwchar_t, char* str){
+	char ch[4] = {0};
+	s21_memchr(ch, 0, 4);
+	char cur = 0;
+	for (int i = 0; i < 4; i++){
+		cur = (char)(argwchar_t & 255);
+		argwchar_t = argwchar_t >> 8;
+		ch[i - 1 - i] = cur;
+	}
+	s21_strncpy(str, ch, 4);
+	return 4;
+}
+
 int print(va_list args, opts opt, char* str){
 	int offset = 0;
 	if (opt.spec_c) {
-		char argchar = (char)va_arg(args, int);
-		offset += print_char(argchar, str);
+		if (opt.length_l){
+			wchar_t argwchar_t = (wchar_t)va_arg(args, int);
+			offset += print_wchar_t(argwchar_t, str);
+		} else {
+			char argchar = (char)va_arg(args, int);
+			offset += print_char(argchar, str);
+		}
 	}else if (opt.spec_d){
 		long int argint = va_arg(args, long int);
 		if (opt.length_h){
