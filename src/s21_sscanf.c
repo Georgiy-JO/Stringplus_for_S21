@@ -49,27 +49,24 @@ int s21_sscanf(const char *str, const char *format, ...){
                 format_coursor = string_cutter(&str_coursor,format_coursor);    //??format_coursor==NULL    --different lines in format and str
             }
             else{
+                if (char_is_whitespace(*str_coursor)) str_coursor=whitespace_romover(str_coursor);
                 if(*(format_coursor+1)==S21_SSCANF_PERCENT){
-                    if (char_is_whitespace(*str_coursor)) str_coursor=whitespace_romover(str_coursor);
-                    else if (*str_coursor==S21_SSCANF_PERCENT)
-                    {
-                        str_coursor++;
-                        i+=2;
-                        format_coursor+=2;
-                        continue;
-                    }
-                    
+                    i+=2;
+                    format_coursor+=2;
+                    if (*str_coursor==S21_SSCANF_PERCENT)        str_coursor++;
+                                                        //-?? proper error handler
+                    //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
+                    continue;
                 }
                 //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
                 if(format_coursor!=NULL ){
-                    if (char_is_whitespace(*str_coursor)) str_coursor=whitespace_romover(str_coursor);
                     //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                     if(var_spec.spec=='n')  *(va_arg(var,int*))=str_coursor- str;
                     else{
                         str_coursor=var_filling(&var, var_spec, str_coursor);
-                        if(str_coursor!=NULL)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
+                        if(str_coursor!=NULL && var_spec.skip!=1)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
                     }
                 }
   
@@ -372,9 +369,27 @@ int signed_num_from_line(const char* line, size_t* move){
     int local_num=0;
     size_t local_move=0;
     if(*line=='-')  local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    hex_from_line(line,move);
-    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) uoctal_from_line(line,move);
-    else    int_from_line(line,move);
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num=hex_from_line(line,move);
+    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=uoctal_from_line(line,move);      //signed!!!!?
+    else    local_num=int_from_line(line,move);
+    return local_num;
+}
+short short_signed_num_from_line(const char* line, size_t* move){
+    short local_num=0;
+    size_t local_move=0;
+    if(*line=='-')  local_move++;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num=short_hex_from_line(line,move);
+    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=short_uoctal_from_line(line,move);      //signed!!!!?
+    else    local_num=short_from_line(line,move);
+    return local_num;
+}
+long int long_signed_num_from_line(const char* line, size_t* move){
+    long int local_num=0;
+    size_t local_move=0;
+    if(*line=='-')  local_move++;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num= long_hex_from_line(line,move);
+    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=long_uoctal_from_line(line,move);      //signed!!!!?
+    else    local_num=long_from_line(line,move);
     return local_num;
 }
 
@@ -456,56 +471,100 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
     switch (var_spec.spec)
     {
     case 'u':
-        if(var_spec.length=='l'){
-            size_t* var_point=va_arg(*var,size_t*);
-            *var_point=ulong_from_line(str_coursor,&move);
-        }else if (var_spec.length=='h'){
-            unsigned short* var_point=va_arg(*var,unsigned short*);
-            *var_point=ushort_from_line(str_coursor,&move);
-        }else{
-            unsigned int* var_point=va_arg(*var,unsigned int*);
-            *var_point=uint_from_line(str_coursor,&move);
-            //printf("\n==%p==%u==\n",var_point,*var_point);
+        if(var_spec.skip==1){
+            if(var_spec.length=='l')            ulong_from_line(str_coursor,&move);
+            else if (var_spec.length=='h')      ushort_from_line(str_coursor,&move);
+            else                                uint_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                size_t* var_point=va_arg(*var,size_t*);
+                *var_point=ulong_from_line(str_coursor,&move);
+            }else if (var_spec.length=='h'){
+                unsigned short* var_point=va_arg(*var,unsigned short*);
+                *var_point=ushort_from_line(str_coursor,&move);
+            }else{
+                unsigned int* var_point=va_arg(*var,unsigned int*);
+                *var_point=uint_from_line(str_coursor,&move);
+                //printf("\n==%p==%u==\n",var_point,*var_point);
+            }
         }
         break;
     case 'd':
-        if(var_spec.length=='l'){
-            long int* var_point=va_arg(*var,long int*);
-            *var_point=long_from_line(str_coursor,&move);
-        }else if (var_spec.length=='h'){
-            short int* var_point=va_arg(*var,short int*);
-            *var_point=short_from_line(str_coursor,&move);
-        }else{
-            int* var_point=va_arg(*var,int*);
-            *var_point=int_from_line(str_coursor,&move);
+         if(var_spec.skip==1){
+            if(var_spec.length=='l')            long_from_line(str_coursor,&move);
+            else if (var_spec.length=='h')      short_from_line(str_coursor,&move);
+            else                                int_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                long int* var_point=va_arg(*var,long int*);
+                *var_point=long_from_line(str_coursor,&move);
+            }else if (var_spec.length=='h'){
+                short int* var_point=va_arg(*var,short int*);
+                *var_point=short_from_line(str_coursor,&move);
+            }else{
+                int* var_point=va_arg(*var,int*);
+                *var_point=int_from_line(str_coursor,&move);
+            }
         }
         break;
-    case 'i':               //wtf is this peace of shit?!
-        /* code */
+    case 'i':
+        if(var_spec.skip==1){
+            if(var_spec.length=='l')            long_signed_num_from_line(str_coursor,&move);
+            else if (var_spec.length=='h')      short_signed_num_from_line(str_coursor,&move);
+            else                                signed_num_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                long int* var_point=va_arg(*var,long int*);
+                *var_point=long_signed_num_from_line(str_coursor,&move);
+            }else if (var_spec.length=='h'){
+                short int* var_point=va_arg(*var,short int*);
+                *var_point=short_signed_num_from_line(str_coursor,&move);
+            }else{
+                int* var_point=va_arg(*var,int*);
+                *var_point=signed_num_from_line(str_coursor,&move);
+            }
+        }
         break;
     case 'o':       //? unsigned/signed
-        if(var_spec.length=='l'){
-            size_t* var_point=va_arg(*var,size_t*);
-            *var_point=long_uoctal_from_line(str_coursor,&move);
-        }else if (var_spec.length=='h'){
-            unsigned short int* var_point=va_arg(*var,unsigned short int*);
-            *var_point=short_uoctal_from_line(str_coursor,&move);
-        }else{
-            unsigned int* var_point=va_arg(*var,unsigned int*);
-            *var_point=uoctal_from_line(str_coursor,&move);
+        if(var_spec.skip==1){
+            if(var_spec.length=='l')            long_uoctal_from_line(str_coursor,&move);
+            else if (var_spec.length=='h')      short_uoctal_from_line(str_coursor,&move);
+            else                                uoctal_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                size_t* var_point=va_arg(*var,size_t*);
+                *var_point=long_uoctal_from_line(str_coursor,&move);
+            }else if (var_spec.length=='h'){
+                unsigned short int* var_point=va_arg(*var,unsigned short int*);
+                *var_point=short_uoctal_from_line(str_coursor,&move);
+            }else{
+                unsigned int* var_point=va_arg(*var,unsigned int*);
+                *var_point=uoctal_from_line(str_coursor,&move);
+            }
         }
         break;
     case 'x':
     case 'X':
-        if(var_spec.length=='l'){
-            size_t* var_point=va_arg(*var,size_t*);
-            *var_point=long_hex_from_line(str_coursor,&move);
-        }else if (var_spec.length=='h'){
-            unsigned short int* var_point=va_arg(*var,unsigned short int*);
-            *var_point=short_hex_from_line(str_coursor,&move);
-        }else{
-            int* var_point=va_arg(*var,int*);
-            *var_point=hex_from_line(str_coursor,&move);
+        if(var_spec.skip==1){
+            if(var_spec.length=='l')            long_hex_from_line(str_coursor,&move);
+            else if (var_spec.length=='h')      short_hex_from_line(str_coursor,&move);
+            else                                hex_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                long int* var_point=va_arg(*var,long int*);
+                *var_point=long_hex_from_line(str_coursor,&move);
+            }else if (var_spec.length=='h'){
+                short int* var_point=va_arg(*var,short int*);
+                *var_point=short_hex_from_line(str_coursor,&move);
+            }else{
+                int* var_point=va_arg(*var,int*);
+                *var_point=hex_from_line(str_coursor,&move);
+            }
         }
         break;
     case 'f':
@@ -513,39 +572,60 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
     case 'G':
     case 'e':
     case 'E':
-        if(var_spec.length=='L'){
-            double* var_point=va_arg(*var,double*);
-            *var_point=double_from_line(str_coursor,&move);
-        }else {
-            float* var_point=va_arg(*var,float*);
-            *var_point=float_from_line(str_coursor,&move);
-            //printf("\n===%f=%ld===\n", *var_point, move);
+        if(var_spec.skip==1){
+            if(var_spec.length=='L')            double_from_line(str_coursor,&move);
+            else                                float_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='L'){
+                double* var_point=va_arg(*var,double*);
+                *var_point=double_from_line(str_coursor,&move);
+            }else {
+                float* var_point=va_arg(*var,float*);
+                *var_point=float_from_line(str_coursor,&move);
+                //printf("\n===%f=%ld===\n", *var_point, move);
+            }
         }
         break;
     case 'c':
-        if(var_spec.length=='l'){
-            wint_t* var_point=va_arg(*var,wint_t*);
-            *var_point=long_char_from_line(str_coursor,&move);
-        }else {
-            char* var_point=va_arg(*var,char*);
-            *var_point=char_from_line(str_coursor,&move);
+        if(var_spec.skip==1){
+            if(var_spec.length=='l')            long_char_from_line(str_coursor,&move);
+            else                                char_from_line(str_coursor,&move);
+        }
+        else{
+            if(var_spec.length=='l'){
+                wint_t* var_point=va_arg(*var,wint_t*);
+                *var_point=long_char_from_line(str_coursor,&move);
+            }else {
+                char* var_point=va_arg(*var,char*);
+                *var_point=char_from_line(str_coursor,&move);
+            }
         }
         break;
     case 's':
-        if(var_spec.length=='l'){
-            wchar_t* var_point=va_arg(*var,wchar_t*);
-            long_string_from_line(str_coursor,&move,var_point);
-        }else {
-            char* var_point=va_arg(*var,char*);
-            string_from_line(str_coursor,&move,var_point);
+        if(var_spec.skip==1){
+            if(var_spec.length=='l'){   wchar_t* var_point=NULL;         long_string_from_line(str_coursor,&move,var_point);}
+            else{ char* var_point=NULL;                               string_from_line(str_coursor,&move,var_point);}
+        }
+        else{
+            if(var_spec.length=='l'){
+                wchar_t* var_point=va_arg(*var,wchar_t*);
+                long_string_from_line(str_coursor,&move,var_point);
+            }else {
+                char* var_point=va_arg(*var,char*);
+                string_from_line(str_coursor,&move,var_point);
+            }
         }
         break;
     case 'p':
-        void** var_point=va_arg(*var,void**);
-        *var_point=pointer_from_line(str_coursor,&move);
+        if(var_spec.skip==1)    pointer_from_line(str_coursor,&move);
+        else{
+            void** var_point=va_arg(*var,void**);
+            *var_point=pointer_from_line(str_coursor,&move);
+        }
         break; 
     default:
-        /* code */
+        /* ERROR code */
         break;
     }
     return str_coursor+move;
@@ -653,3 +733,4 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  %n ==>sscanf=?
 //  %%  !!!
 //  %i     010 || 10 || 0x10 || 10A || -010 || -0X10 || -10 ||10a
+//  %*n

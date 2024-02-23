@@ -86,6 +86,8 @@ void string_from_line(const char* line, size_t* move, char* dest);
 void long_string_from_line(const char* line, size_t* move, wchar_t* dest);
 void** pointer_from_line(const char* line, size_t* move);
 int signed_num_from_line(const char* line, size_t* move);
+short short_signed_num_from_line(const char* line, size_t* move);
+long int long_signed_num_from_line(const char* line, size_t* move);
 
 char* string_cutter(char** str_coursor, const char* format_coursor);
 char* spec_translator(variables* var_spec, const char* format);
