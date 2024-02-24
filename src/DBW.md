@@ -26,3 +26,11 @@ So that's, what is done:
 
 feature/rk_jo_1 and feature/shadowmm merged 
 283 complex tests present
+
+## feature/rk_jo_2 last commit (25.02.24):
+This branch summery: FULL WORKABLE VERSION OF s21_sscanf!
+
+New branch reason:
+    The testing showed that it probably would be easier to change the structure of a buch of functions.
+    The problem is that this changes are so massive it can break everything.
+    I'm going to start a new branch for it.
