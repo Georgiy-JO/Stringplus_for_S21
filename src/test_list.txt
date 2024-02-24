@@ -371,7 +371,12 @@ s21_strtok
     test_strtok_longline_5
     test_strtok_longline_6
 
-
+s21_sscanf
+    test_sscanf_blanks
+    test_sscanf_unsigned_1
+    test_sscanf_unsigned_2
+    test_sscanf_unsigned_3
+    //test_sscanf_unsigned_4    !werror
 
 
 

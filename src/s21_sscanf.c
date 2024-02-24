@@ -43,7 +43,7 @@ int s21_sscanf(const char *str, const char *format, ...){
         variables var_spec={0, C_ZERO,C_ZERO,0};
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
-        for(size_t i=0;i<var_amount && *str_coursor!=C_ZERO && format_coursor!=NULL; zero_struct(&var_spec)){
+        for(size_t i=0;i<var_amount && *str_coursor!=C_ZERO && format_coursor!=NULL && str_coursor!=NULL; zero_struct(&var_spec)){
             //printf("\n1)$$%s$$%s$$\n",str_coursor, format_coursor );
             if(*format_coursor!=S21_SSCANF_PERCENT) {
                 format_coursor = string_cutter(&str_coursor,format_coursor);    //??format_coursor==NULL    --different lines in format and str
@@ -54,7 +54,7 @@ int s21_sscanf(const char *str, const char *format, ...){
                     i+=2;
                     format_coursor+=2;
                     if (*str_coursor==S21_SSCANF_PERCENT)        str_coursor++;
-                                                        //-?? proper error handler
+                    else         str_coursor=NULL;
                     //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                     continue;
                 }
@@ -351,6 +351,7 @@ void string_from_line(const char* line, size_t* move, char* dest){
     for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         *(dest+local_move)=*(line+local_move);
     }
+    *(dest+local_move)=0;
     if(*move==0)  *move=local_move;
 }
 void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
@@ -358,6 +359,7 @@ void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
     for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         *(dest+local_move)=(wchar_t)*(line+local_move);     //memset(   sizeof(wchar_t))
     }
+    *(dest+local_move)=0;
     if(*move==0)  *move=local_move;
 }
 void** pointer_from_line(const char* line, size_t* move){
@@ -453,13 +455,7 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
         }
         else                    loc_format=NULL;  
     }
-    
-    
-    
-
-
-    //error spec
-
+    else          loc_format=NULL; 
     return loc_format;
 }
 
