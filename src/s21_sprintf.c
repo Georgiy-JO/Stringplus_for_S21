@@ -449,12 +449,31 @@ int print_digit(long int argint, char* str, opts opt){
 	return copied_len;
 }
 
-int print_udigit(unsigned int arguint, char* str){
+int print_udigit(unsigned int arguint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
+	char full_digit_buffer[1024] = {'0'};
+	s21_memset(full_digit_buffer, '0', 1024);
+	int offset = 0;
+	int width = opt.width_digit;
 	int digit_len = get_digit_uint_len(arguint);
-	convert_digit_uint_to_str(arguint, integer_buffer);
-	s21_strncpy(str, integer_buffer, digit_len);
-	return digit_len;
+	int accuracy = opt.accuracy_digit;
+	if (accuracy < digit_len) accuracy = digit_len;
+	if (accuracy > width) width = accuracy;
+
+	offset += accuracy - digit_len;
+	convert_digit_uint_to_str(s21_abs(arguint), &(full_digit_buffer[offset]));
+
+	if (!opt.flag_minus){
+		add_width_int(integer_buffer, opt);
+		s21_strncpy(&(integer_buffer[width - accuracy]), full_digit_buffer, accuracy);
+	} else {
+		add_width_int(integer_buffer, opt);
+		s21_strncpy(integer_buffer, full_digit_buffer, accuracy);
+	}
+
+	int copied_len = s21_strlen(integer_buffer);
+	s21_strncpy(str, integer_buffer, copied_len);
+	return copied_len;
 }
 
 int print_float(double argfloat, int fractional_part_len, char* str,
@@ -516,7 +535,7 @@ int print(va_list args, opts opt, char* str){
 		offset += print_str(argstr, str);
 	}else if (opt.spec_u){
 		unsigned int arguint = (unsigned int)va_arg(args,int);
-		offset += print_udigit(arguint, str);
+		offset += print_udigit(arguint, str, opt);
 	}
 	return offset;
 }
