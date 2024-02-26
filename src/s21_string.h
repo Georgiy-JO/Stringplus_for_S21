@@ -66,6 +66,7 @@ void zero_struct(variables * var);
 size_t var_counting (const char *format);
 char* whitespace_romover (const char* a_string);
 
+long long int ultimate_int_from_line(const char* line, size_t* move);
 unsigned int uint_from_line(const char* line, size_t* move);
 size_t ulong_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);

@@ -124,16 +124,26 @@ char* whitespace_romover (const char* a_string){
     return loc_str;
 }
 
-
-unsigned int uint_from_line(const char* line, size_t* move){
-    unsigned int local_num=0;
+long long int ultimate_int_from_line(const char* line, size_t* move){
+    long long int local_num=0;
     size_t local_move=0;
+    int neg_flag=1;
+    if(*line=='-'){
+        local_move++;
+        neg_flag=-1;
+    }
     for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         local_num=local_num*10+char_to_num(*(line+local_move));
     }
     if(*move==0)  *move=local_move;
-    return local_num;
+    return local_num*neg_flag;
 }
+unsigned int uint_from_line(const char* line, size_t* move){
+    return (unsigned int)ultimate_int_from_line(line,move);
+}
+
+
+
 size_t ulong_from_line(const char* line, size_t* move){
     size_t local_num=0;
     size_t local_move=0;
