@@ -119,7 +119,7 @@ double s21_fabs(double dbl){
 	return dbl < 0 ? -dbl : dbl;
 }
 
-int get_digit_int_len(int digit){
+int get_digit_int_len(long int digit){
 	int len = 0;
 	do{
 		digit /= 10;
@@ -128,7 +128,7 @@ int get_digit_int_len(int digit){
 	return len;
 }
 
-int get_digit_uint_len(unsigned int digit){
+int get_digit_uint_len(unsigned long int digit){
 	int len = 0;
 	do{
 		digit /= 10;
@@ -137,7 +137,7 @@ int get_digit_uint_len(unsigned int digit){
 	return len;
 }
 
-int get_digit_sign(int digit){
+int get_digit_sign(long int digit){
 	return digit < 0 ? -1 : 1;
 }
 
@@ -178,7 +178,7 @@ int convert_digit_int_to_str(long int integer, char* str){
 	return 0;
 }
 
-int convert_digit_uint_to_str(unsigned int integer, char* str){
+int convert_digit_uint_to_str(unsigned long int integer, char* str){
 	int digit_len = get_digit_uint_len(integer);
 	int single_digit = 0;
 	char single_digit_char = 0;
@@ -451,7 +451,7 @@ int print_digit(long int argint, char* str, opts opt){
 	return copied_len;
 }
 
-int print_udigit(unsigned int arguint, char* str, opts opt){
+int print_udigit(unsigned long int arguint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
 	char full_digit_buffer[1024] = {'0'};
 	s21_memset(full_digit_buffer, '0', 1024);
@@ -463,7 +463,7 @@ int print_udigit(unsigned int arguint, char* str, opts opt){
 	if (accuracy > width) width = accuracy;
 
 	offset += accuracy - digit_len;
-	convert_digit_uint_to_str(s21_abs(arguint), &(full_digit_buffer[offset]));
+	convert_digit_uint_to_str(arguint, &(full_digit_buffer[offset]));
 
 	if (!opt.flag_minus){
 		add_width_int(integer_buffer, opt);
@@ -540,8 +540,14 @@ int print(va_list args, opts opt, char* str){
 		char* argstr = va_arg(args, char*);
 		offset += print_str(argstr, str);
 	}else if (opt.spec_u){
-		unsigned int arguint = (unsigned int)va_arg(args,int);
-		offset += print_udigit(arguint, str, opt);
+		unsigned long int arguint = (unsigned long int)va_arg(args, long int);
+		if (opt.length_h){
+			offset += print_udigit((unsigned short int)arguint, str, opt);
+		} else if (opt.length_l){
+			offset += print_udigit(arguint, str, opt);
+		} else {
+			offset += print_udigit((unsigned int)arguint, str, opt);
+		}
 	}
 	return offset;
 }
