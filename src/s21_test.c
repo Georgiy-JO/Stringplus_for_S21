@@ -4706,11 +4706,10 @@ START_TEST(test_sscanf_unsigned_3){
     char input_line_1[70]="\0";
     strcpy(input_line_1,input_line_0);
     char endd1[6]="start\0",endd2[6]="start\0";
-    printf("\nHERE\n");
+    //printf("\nHERE\n");
     unsigned int uintt1=1, uintt2=2, uintt3=3, uintt4=4, uintt6=1, uintt7=2, uintt8=3, uintt9=4, uintt5=5,uintt10=5;
     ck_assert_int_eq(sscanf(input_line_0,"%u%7u%u%u%u%s",&uintt1,&uintt2, &uintt5,&uintt3,&uintt4, endd1),s21_sscanf(input_line_1,"%u%7u%u%u%u%s",&uintt6,&uintt7,&uintt10,&uintt8,&uintt9, endd2));
-    
-    printf("\nHERE\n");
+    //printf("\nHERE\n");
     ck_assert_int_eq(uintt1,uintt6);
     ck_assert_uint_eq(uintt1,uintt6);
     ck_assert_int_eq(uintt2,uintt7);

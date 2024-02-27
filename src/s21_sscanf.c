@@ -126,7 +126,6 @@ char char_is_num (const char tmp){
 char char_is_hex (const char tmp){
     return ((tmp>='0' && tmp<='9') || s21_isinstr(tmp,HEXADECIMAL_BIG) || s21_isinstr(tmp,HEXADECIMAL_SMALL))? 1:0;
 }
-
 int char_to_num (const char n){
     return n-'0';
 }
@@ -674,7 +673,6 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 
 
 
-
 //dangerous parts:
 //  %*l*u
 //  %*5L3f
@@ -743,3 +741,5 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  %%  !!!
 //  %i     010 || 10 || 0x10 || 10A || -010 || -0X10 || -10 ||10a
 //  %*n
+//  %   (SPACE)
+//  e-6
