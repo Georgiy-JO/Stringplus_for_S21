@@ -5,6 +5,11 @@
 #include <stdarg.h>
 #include <stdlib.h>  //--allowed?
 #include <math.h>    //--allowed?
+//#include <limits.h>     //--allowed??
+
+
+
+
 
 #define size_t unsigned long int
 #define symbol unsigned char

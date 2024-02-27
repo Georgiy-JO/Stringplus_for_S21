@@ -13,7 +13,42 @@
 #define S21_SSCANF_SPACE ' '
 #define HEXADECIMAL_BIG "ABCDEF"
 #define HEXADECIMAL_SMALL "abcdef"
-#define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"      
+#define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"     
+
+#ifndef __INT_MAX__
+#define __INT_MAX__ 0x7fffffff   
+#endif
+#ifndef __UINT_MAX__
+#define __UINT_MAX__ __INT_MAX__* 2L + 1L
+#endif
+#ifndef __SHRT_MAX__
+#define __SHRT_MAX__ 0x7fff 
+#endif
+#ifndef __USHRT_MAX__
+#define __USHRT_MAX__ __SHRT_MAX__*2+1 
+#endif
+#ifndef __LONG_MAX__
+#define __LONG_MAX__ 0x7fffffffffffffffL 
+#endif
+#ifndef __ULONG_MAX__
+#define __ULONG_MAX__ __LONG_MAX__* 2UL + 1UL
+#endif
+#ifndef __CHAR_MAX__
+#define __CHAR_MAX__ 0x7f 
+#endif
+#ifndef __UCHAR_MAX__
+#define __UCHAR_MAX__ __CHAR_MAX__*2+1 
+#endif
+#ifndef __FLT_MAX__
+#define __FLT_MAX__ 3.40282346638528859811704183484516925e+38L 
+#endif
+#ifndef __DBL_MAX__
+#define __DBL_MAX__ (double)1.79769313486231570814527423731704357e+308L 
+#endif
+#ifndef __SIZE_T_MAX__
+#define __SIZE_T_MAX__ __ULONG_MAX__
+#endif
+
 
 #ifndef EOF
 #define EOF (-1)        
@@ -43,7 +78,7 @@ int s21_sscanf(const char *str, const char *format, ...){
         variables var_spec={0, C_ZERO,C_ZERO,0};
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
-        for(size_t i=0;i<var_amount && *str_coursor!=C_ZERO && format_coursor!=NULL && str_coursor!=NULL; zero_struct(&var_spec)){
+        for(size_t i=0; str_coursor!=NULL && format_coursor!=NULL && i<var_amount && *str_coursor!=C_ZERO ; zero_struct(&var_spec)){
             //printf("\n1)$$%s$$%s$$\n",str_coursor, format_coursor );
             if(*format_coursor!=S21_SSCANF_PERCENT) {
                 format_coursor = string_cutter(&str_coursor,format_coursor);    //??format_coursor==NULL    --different lines in format and str
@@ -55,9 +90,10 @@ int s21_sscanf(const char *str, const char *format, ...){
                     format_coursor+=2;
                     if (*str_coursor==S21_SSCANF_PERCENT)        str_coursor++;
                     else         str_coursor=NULL;
-                    //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
+                    //printf("\n3)$$%s$$%s$$\n",str_coursor, format_coursor );
                     continue;
                 }
+                
                 //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
@@ -139,70 +175,37 @@ long long int ultimate_int_from_line(const char* line, size_t* move){
     return local_num*neg_flag;
 }
 unsigned int uint_from_line(const char* line, size_t* move){
-    return (unsigned int)ultimate_int_from_line(line,move);
+    //printf("^^%ld",*move);
+    long long int loc=ultimate_int_from_line(line,move);
+    //printf("^^%lld^^%ld^^\n",loc, *move);
+    return (loc>__UINT_MAX__  || loc<-__UINT_MAX__)?  (unsigned int)-1: (unsigned int)loc; 
+    //return (unsigned int)ultimate_int_from_line(line,move);
 }
-
-
-
 size_t ulong_from_line(const char* line, size_t* move){
-    size_t local_num=0;
-    size_t local_move=0;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num;
+    long long int loc=ultimate_int_from_line(line,move);
+    return ((loc>0 && (unsigned long long int)loc>__SIZE_T_MAX__) || (loc<0 && (unsigned long long int)(-loc) > __SIZE_T_MAX__))?  (size_t)-1: (size_t)loc;
+    //return (size_t)ultimate_int_from_line(line,move);
 }
 unsigned short ushort_from_line(const char* line, size_t* move){
-    unsigned short local_num=0;
-    size_t local_move=0;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num;
+    long long int loc=ultimate_int_from_line(line,move);
+    return (loc>__USHRT_MAX__ || loc<__USHRT_MAX__)?  (unsigned short)-1: (unsigned short)loc;
+    //return (unsigned short)ultimate_int_from_line(line,move);
 }
 int int_from_line(const char* line, size_t* move){
-    int local_num=0;
-    size_t local_move=0;
-    int neg_flag=1;
-    if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
-    }
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num*neg_flag;
+    long long int loc=ultimate_int_from_line(line,move);
+    //printf("\n^^%lld^^\n",loc);
+    return (loc>__UINT_MAX__ || loc<-__UINT_MAX__)?  -1: (int)loc;
+    //return (int)ultimate_int_from_line(line,move);
 }
 long int long_from_line(const char* line, size_t* move){
-    long int local_num=0;
-    size_t local_move=0;
-    int neg_flag=1;
-    if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
-    }
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num*neg_flag;
+    long long int loc=ultimate_int_from_line(line,move);
+    return (loc>__LONG_MAX__ || loc<-__LONG_MAX__)?  -1: (long int)loc;
+    //return (long int)ultimate_int_from_line(line,move);
 }
 short int short_from_line(const char* line, size_t* move){
-    short int local_num=0;
-    size_t local_move=0;
-    int neg_flag=1;
-    if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
-    }
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num*neg_flag;
+    long long int loc=ultimate_int_from_line(line,move);
+    return (loc>__SHRT_MAX__ || loc<-__SHRT_MAX__)?  -1: (short int)loc;
+    //return (short int)ultimate_int_from_line(line,move);
 }
 unsigned int uoctal_from_line(const char* line, size_t* move){
     unsigned int local_num=0;
