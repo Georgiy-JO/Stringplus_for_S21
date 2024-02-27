@@ -485,26 +485,30 @@ int print_float(double argfloat, int fractional_part_len, char* str,
 	char final_buffer[1024] = {'\0'};
 	int offset = 0;
 	add_width_int(final_buffer, opt);
-	add_width_int(float_buffer, opt);
 	int width = opt.width_digit;
 	int floor_len = get_digit_int_len((int)argfloat);
 	int dot_char_offset = 1;
-	if (!opt.flag_minus){
-		if (width > floor_len + fractional_part_len){
-			offset = width - 
-				(floor_len + fractional_part_len) - 1 - dot_char_offset;
-		}
-	}
-	offset += add_sign_to_str(&(float_buffer[offset]),
+	int has_sign = 0;
+	has_sign = add_sign_to_str(&(float_buffer[0]),
 			fget_digit_sign(argfloat), opt);
-	floor_len+=offset;
-	convert_digit_int_to_str((int)s21_fabs(argfloat), &(float_buffer[offset]));
+	int digit_start_pos = 0;
+	if (has_sign) digit_start_pos = 1;
+	floor_len+=digit_start_pos;
+	convert_digit_int_to_str((int)s21_fabs(argfloat), &(float_buffer[digit_start_pos]));
 	double fract = s21_fabs(argfloat) - (int)s21_fabs(argfloat);
 	convert_digit_frational_part_to_str(fract, fractional_part_len,
 			float_fractional_buffer);
-	s21_strncpy(final_buffer, float_buffer, floor_len);
-	s21_strncpy(&(final_buffer[floor_len]), ".", 1);
-	s21_strncpy(&(final_buffer[floor_len + 1]), float_fractional_buffer,
+
+	if (!opt.flag_minus){
+		if (width > floor_len + fractional_part_len){
+			offset = width - 
+				(floor_len + fractional_part_len) - dot_char_offset;
+		}
+	}
+
+	s21_strncpy(&(final_buffer[offset]), float_buffer, floor_len);
+	s21_strncpy(&(final_buffer[offset + floor_len]), ".", 1);
+	s21_strncpy(&(final_buffer[offset + floor_len + 1]), float_fractional_buffer,
 			fractional_part_len);
 	int copied_len = s21_strlen(final_buffer);
 	s21_strncpy(str, final_buffer, copied_len);
