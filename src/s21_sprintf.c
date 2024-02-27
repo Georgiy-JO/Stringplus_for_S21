@@ -424,24 +424,26 @@ int print_digit(long int argint, char* str, opts opt){
 	char integer_buffer[1024] = {'\0'};
 	char full_digit_buffer[1024] = {'0'};
 	s21_memset(full_digit_buffer, '0', 1024);
-	int offset = 0;
 	int width = opt.width_digit;
 	int digit_len = get_digit_int_len(argint);
 	int accuracy = opt.accuracy_digit;
 	if (accuracy < digit_len) accuracy = digit_len;
-	if (accuracy >= width) width = accuracy + 1;
 
-	offset += add_sign_to_str(&(full_digit_buffer[offset]),
+	int has_sign = 0;
+	has_sign = add_sign_to_str(&(full_digit_buffer[0]),
 			get_digit_sign(argint), opt);
-	offset += accuracy - digit_len;
-	convert_digit_int_to_str(s21_abs(argint), &(full_digit_buffer[offset]));
+	int digit_start_pos = 0;
+	if (has_sign) digit_start_pos = 1;
+	convert_digit_int_to_str(s21_abs(argint), &(full_digit_buffer[accuracy - digit_len + digit_start_pos]));
 
+	int full_digit_len = accuracy + digit_start_pos;
 	if (!opt.flag_minus){
 		add_width_int(integer_buffer, opt);
-		s21_strncpy(&(integer_buffer[width - accuracy - 1]), full_digit_buffer, accuracy + 1);
+		if (full_digit_len > width) width = full_digit_len;
+		s21_strncpy(&(integer_buffer[width - full_digit_len]), full_digit_buffer, full_digit_len);
 	} else {
 		add_width_int(integer_buffer, opt);
-		s21_strncpy(integer_buffer, full_digit_buffer, accuracy + 1);
+		s21_strncpy(integer_buffer, full_digit_buffer, full_digit_len);
 	}
 
 	int copied_len = s21_strlen(integer_buffer);
