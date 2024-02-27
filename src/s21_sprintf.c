@@ -429,7 +429,7 @@ int print_digit(long int argint, char* str, opts opt){
 	int digit_len = get_digit_int_len(argint);
 	int accuracy = opt.accuracy_digit;
 	if (accuracy < digit_len) accuracy = digit_len;
-	if (accuracy > width) width = accuracy;
+	if (accuracy >= width) width = accuracy + 1;
 
 	offset += add_sign_to_str(&(full_digit_buffer[offset]),
 			get_digit_sign(argint), opt);
