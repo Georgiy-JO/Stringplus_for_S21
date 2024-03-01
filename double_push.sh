@@ -31,7 +31,7 @@ then
   new_tec_com=$((old_tec_com + 1))
   echo "$new_tec_com" > $VAR_FILE
   git add src
-  git commit -m"Technical commit"$new_tec_com": Minor changies."
+  git commit -m"Technical commit #"$new_tec_com": Minor changies."
   git push origin feature/rk_jo_rework_check
   echo ◑ ◔
   echo ╔═╗
