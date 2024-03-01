@@ -1,7 +1,5 @@
 #include "s21_string.h"
-#include "stdarg.h"
-#include <stdio.h>
-#include <string.h>
+#include <stdarg.h>
 
 #define S21_SPRINTF_FLAGS "-+ #0"
 #define S21_SPRINTF_WIDTH "0123456789*"
