@@ -5,11 +5,8 @@
 #include <stdarg.h>
 #include <stdlib.h>  //--allowed?
 #include <math.h>    //--allowed?
-//#include <limits.h>     //--allowed??
-
-
-
-
+//#include <limits.h>     //--allowed?
+//#include <stdint.h>     //--allowed?
 
 #define size_t unsigned long int
 #define symbol unsigned char
@@ -70,8 +67,10 @@ int small_hex_to_num (const char n);
 void zero_struct(variables * var);
 size_t var_counting (const char *format);
 char* whitespace_romover (const char* a_string);
+char can_read_spec_numbers (const char* str_coursor, size_t lenth);
+char can_read_spec_hex (const char* str_coursor, size_t lenth);
 
-long long int ultimate_int_from_line(const char* line, size_t* move);
+long double ultimate_int_from_line(const char* line, size_t* move);
 unsigned int uint_from_line(const char* line, size_t* move);
 size_t ulong_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);

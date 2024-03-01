@@ -13,7 +13,11 @@
 #define S21_SSCANF_SPACE ' '
 #define HEXADECIMAL_BIG "ABCDEF"
 #define HEXADECIMAL_SMALL "abcdef"
-#define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"     
+#define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"   
+
+#define S21_SSCANF_ZERO_SYMBOLS "+-"
+#define S21_SSCANF_FLOAT_SYMBOLS "eE"       //--??
+#define S21_SSCANF_HEX_ULTIMATE "ABCDEF0123456789abcdef"
 
 #ifndef __INT_MAX__
 #define __INT_MAX__ 0x7fffffff   
@@ -48,7 +52,6 @@
 #ifndef __SIZE_T_MAX__
 #define __SIZE_T_MAX__ __ULONG_MAX__
 #endif
-
 
 #ifndef EOF
 #define EOF (-1)        
@@ -98,11 +101,11 @@ int s21_sscanf(const char *str, const char *format, ...){
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
                 if(format_coursor!=NULL ){
-                    //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
+                    //printf("\n4)$$%s$$%s$$\n",str_coursor, format_coursor );
                     if(var_spec.spec=='n')  *(va_arg(var,int*))=str_coursor- str;
                     else{
                         str_coursor=var_filling(&var, var_spec, str_coursor);
-                        if(str_coursor!=NULL && var_spec.skip!=1)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?
+                        if(str_coursor!=NULL && var_spec.skip!=1)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?                        
                     }
                 }
   
@@ -158,27 +161,39 @@ char* whitespace_romover (const char* a_string){
     for(;char_is_whitespace(*loc_str);) {loc_str++;}
     return loc_str;
 }
+char can_read_spec_numbers (const char* str_coursor, size_t lenth){
+    return (s21_isinstr(*str_coursor,S21_SSCANF_DIGITS) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&s21_isinstr(*(str_coursor+1),S21_SSCANF_DIGITS)))? 1:0;
+}
+char can_read_spec_hex (const char* str_coursor, size_t lenth){
+    return (s21_isinstr(*str_coursor,S21_SSCANF_HEX_ULTIMATE) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&s21_isinstr(*(str_coursor+1),S21_SSCANF_HEX_ULTIMATE)))? 1:0;
+}
 
-long long int ultimate_int_from_line(const char* line, size_t* move){
-    long long int local_num=0;
+long double ultimate_int_from_line(const char* line, size_t* move){
+    long double local_num=0.0;
     size_t local_move=0;
-    int neg_flag=1;
+    double neg_flag=1.0, overflow_flag=0.0;
     if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
+        local_move++; 
+        neg_flag=-1.0;
     }
+    else if (*line=='+')    local_move++;
+    
     for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
+        //printf("===%c=%d===\n",*(line+local_move), char_is_num (*(line+local_move)));
+        if(local_num>=__ULONG_MAX__ || local_num*10+char_to_num(*(line+local_move))<local_num)    overflow_flag=1;
+        local_num=local_num*10.0+(double)char_to_num(*(line+local_move));
+        //printf("^^%.1Lf\n",local_num);
     }
-    if(*move==0)  *move=local_move;
+    //printf("=====\n");
+    //printf("^^%.1Lf\n",local_num);
+    if(*move==0 || *move>local_move)  *move=local_move;
+    if(overflow_flag)   local_num=-neg_flag;
+    //printf("^^%.1Lf\n",local_num);
+    //printf("<<^^>>%.1Lf\n",local_num*neg_flag);
     return local_num*neg_flag;
 }
 unsigned int uint_from_line(const char* line, size_t* move){
-    //printf("^^%ld",*move);
-    long long int loc=ultimate_int_from_line(line,move);
-    //printf("^^%lld^^%ld^^\n",loc, *move);
-    return (loc>__UINT_MAX__  || loc<-__UINT_MAX__)?  (unsigned int)-1: (unsigned int)loc; 
-    //return (unsigned int)ultimate_int_from_line(line,move);
+    return (unsigned int)ultimate_int_from_line(line,move);
 }
 size_t ulong_from_line(const char* line, size_t* move){
     long long int loc=ultimate_int_from_line(line,move);
@@ -191,10 +206,14 @@ unsigned short ushort_from_line(const char* line, size_t* move){
     //return (unsigned short)ultimate_int_from_line(line,move);
 }
 int int_from_line(const char* line, size_t* move){
-    long long int loc=ultimate_int_from_line(line,move);
-    //printf("\n^^%lld^^\n",loc);
-    return (loc>__UINT_MAX__ || loc<-__UINT_MAX__)?  -1: (int)loc;
-    //return (int)ultimate_int_from_line(line,move);
+//    printf("==%s\n",line);
+//    long int loc = 0;            
+//    loc = ultimate_int_from_line(line,move);
+//    printf(">>%d\n", loc);
+//    return  loc;
+
+    //return (loc>__INT_MAX__ || loc<-__INT_MAX__)?  -1: (int)loc;
+   return (long int) ultimate_int_from_line(line,move);                         //fucking hell!!! WTF?! FUCKING STUPID BUSTARDS! FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!
 }
 long int long_from_line(const char* line, size_t* move){
     long long int loc=ultimate_int_from_line(line,move);
@@ -293,7 +312,7 @@ long int long_hex_from_line(const char* line, size_t* move){
     if(*move==0)  *move=local_move;
     return local_num*neg_flag;
 }
-float float_from_line(const char* line, size_t* move){
+float float_from_line(const char* line, size_t* move){          //  %Lf   The argument is interpreted as a long double   %f - double
     float local_num=0;
     size_t local_move=0;
     int neg_flag=1;
@@ -471,7 +490,6 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
     return loc_format;
 }
 
-//%ld max -> 9223372036854775807 %d max -> 1535817955
 
 char* var_filling(va_list* var, variables var_spec, char* str_coursor)
 {
@@ -479,7 +497,11 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
     switch (var_spec.spec)
     {
     case 'u':
-        if(var_spec.skip==1){
+        if(!can_read_spec_numbers(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='l')            ulong_from_line(str_coursor,&move);
             else if (var_spec.length=='h')      ushort_from_line(str_coursor,&move);
             else                                uint_from_line(str_coursor,&move);
@@ -499,7 +521,11 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 'd':
-         if(var_spec.skip==1){
+        if(!can_read_spec_numbers(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='l')            long_from_line(str_coursor,&move);
             else if (var_spec.length=='h')      short_from_line(str_coursor,&move);
             else                                int_from_line(str_coursor,&move);
@@ -513,12 +539,16 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
                 *var_point=short_from_line(str_coursor,&move);
             }else{
                 int* var_point=va_arg(*var,int*);
-                *var_point=int_from_line(str_coursor,&move);
+                *var_point= int_from_line(str_coursor,&move);
             }
         }
         break;
     case 'i':
-        if(var_spec.skip==1){
+        if(!can_read_spec_numbers(str_coursor,move)&&!can_read_spec_hex(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='l')            long_signed_num_from_line(str_coursor,&move);
             else if (var_spec.length=='h')      short_signed_num_from_line(str_coursor,&move);
             else                                signed_num_from_line(str_coursor,&move);
@@ -537,7 +567,11 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 'o':       //? unsigned/signed
-        if(var_spec.skip==1){
+        if(!can_read_spec_numbers(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='l')            long_uoctal_from_line(str_coursor,&move);
             else if (var_spec.length=='h')      short_uoctal_from_line(str_coursor,&move);
             else                                uoctal_from_line(str_coursor,&move);
@@ -557,7 +591,11 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         break;
     case 'x':
     case 'X':
-        if(var_spec.skip==1){
+        if(!can_read_spec_hex(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='l')            long_hex_from_line(str_coursor,&move);
             else if (var_spec.length=='h')      short_hex_from_line(str_coursor,&move);
             else                                hex_from_line(str_coursor,&move);
@@ -580,7 +618,11 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
     case 'G':
     case 'e':
     case 'E':
-        if(var_spec.skip==1){
+        if(!can_read_spec_numbers(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1){
             if(var_spec.length=='L')            double_from_line(str_coursor,&move);
             else                                float_from_line(str_coursor,&move);
         }
@@ -626,16 +668,18 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 'p':
-        if(var_spec.skip==1)    pointer_from_line(str_coursor,&move);
+        if(!can_read_spec_hex(str_coursor,move)){
+            move=0;
+            str_coursor=NULL;
+        }
+        else if(var_spec.skip==1)    pointer_from_line(str_coursor,&move);
         else{
             void** var_point=va_arg(*var,void**);
             *var_point=pointer_from_line(str_coursor,&move);
         }
-        break; 
-    default:
-        /* ERROR code */
         break;
     }
+    //printf("$$%p1\n",str_coursor);
     return str_coursor+move;
 }
 
@@ -742,4 +786,8 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  %i     010 || 10 || 0x10 || 10A || -010 || -0X10 || -10 ||10a
 //  %*n
 //  %   (SPACE)
-//  e-6
+//  e-6         %f
+//  .5          %f
+//  -0x5 %3x
+//  -a6  %3x
+//  -g     %3x  
