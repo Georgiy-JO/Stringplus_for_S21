@@ -30,7 +30,7 @@ elif [ $1 -eq 9 ]
 then
   new_tec_com=$((old_tec_com + 1))
   echo "$new_tec_com" > $VAR_FILE
-  git add src
+  git add src double_push.variables.txt
   git commit -m"Technical commit #"$new_tec_com": Minor changies."
   git push origin feature/rk_jo_rework_check
   echo ◑ ◔

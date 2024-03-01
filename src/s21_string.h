@@ -54,13 +54,13 @@ int s21_sprintf(char *str, const char *format, ...);
 int s21_sscanf(const char *str, const char *format, ...);
 typedef struct variables variables; //is needed not to break the header file
 
-char char_is_invis (const char tmp);
+//char char_is_invis (const char tmp);
 char char_is_whitespace (const char tmp);
 char char_is_num (const char tmp);
 char char_is_hex (const char tmp);
 
 int char_to_num (const char n);
-char num_to_char (const int n);
+//char num_to_char (const int n);
 int big_hex_to_num (const char n);
 int small_hex_to_num (const char n);
 
@@ -70,13 +70,13 @@ char* whitespace_romover (const char* a_string);
 char can_read_spec_numbers (const char* str_coursor, size_t lenth);
 char can_read_spec_hex (const char* str_coursor, size_t lenth);
 
-long double ultimate_int_from_line(const char* line, size_t* move);
+long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow);
 unsigned int uint_from_line(const char* line, size_t* move);
-size_t ulong_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);
 int int_from_line(const char* line, size_t* move);
 long int long_from_line(const char* line, size_t* move);
 short int short_from_line(const char* line, size_t* move);
+size_t ulong_from_line(const char* line, size_t* move);
 unsigned int uoctal_from_line(const char* line, size_t* move);
 unsigned short short_uoctal_from_line(const char* line, size_t* move);
 size_t long_uoctal_from_line(const char* line, size_t* move);

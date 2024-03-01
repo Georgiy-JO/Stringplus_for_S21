@@ -372,11 +372,189 @@ s21_strtok
     test_strtok_longline_6
 
 s21_sscanf
+    9.0
     test_sscanf_blanks
+    9.1
     test_sscanf_unsigned_1
     test_sscanf_unsigned_2
     test_sscanf_unsigned_3
     //test_sscanf_unsigned_4    !werror
+    test_sscanf_unsigned_5
+    test_sscanf_unsigned_6
+    test_sscanf_unsigned_7
+    test_sscanf_unsigned_8
+    test_sscanf_unsigned_9
+    test_sscanf_unsigned_10
+    test_sscanf_unsigned_11
+    test_sscanf_unsigned_12
+    test_sscanf_unsigned_13
+    test_sscanf_unsigned_14
+    test_sscanf_unsigned_15
+    test_sscanf_unsigned_16
+    test_sscanf_unsigned_17
+    9.2
+    test_sscanf_int_1
+    test_sscanf_int_2
+    test_sscanf_int_3
+    //test_sscanf_int_4       !werror
+    test_sscanf_int_5
+    test_sscanf_int_6
+    test_sscanf_int_7
+    test_sscanf_int_8
+    test_sscanf_int_9
+    test_sscanf_int_10
+    test_sscanf_int_11
+    test_sscanf_int_12
+    test_sscanf_int_13
+    test_sscanf_int_14
+    test_sscanf_int_15
+    test_sscanf_int_16
+    test_sscanf_int_17
+    test_sscanf_int_18
+    test_sscanf_int_19
+    test_sscanf_int_20
+    test_sscanf_int_21
+    test_sscanf_int_22
+    test_sscanf_int_23
+    9.3
+    test_sscanf_unsigned_short_1
+    test_sscanf_unsigned_short_2
+    test_sscanf_unsigned_short_3
+    //test_sscanf_unsigned_short_4      !werror
+    test_sscanf_unsigned_short_5
+    test_sscanf_unsigned_short_6
+    test_sscanf_unsigned_short_7
+    test_sscanf_unsigned_short_8
+    test_sscanf_unsigned_short_9
+    test_sscanf_unsigned_short_10
+    test_sscanf_unsigned_short_11
+    test_sscanf_unsigned_short_12
+    test_sscanf_unsigned_short_13
+    test_sscanf_unsigned_short_14         //strange stuff
+    test_sscanf_unsigned_short_15         //strange stuff
+    test_sscanf_unsigned_short_16
+    test_sscanf_unsigned_short_17
+    test_sscanf_unsigned_short_18
+    test_sscanf_unsigned_short_19
+    test_sscanf_unsigned_short_20
+    test_sscanf_unsigned_short_21
+    test_sscanf_unsigned_short_22
+    test_sscanf_unsigned_short_23
+    test_sscanf_unsigned_short_24
+    test_sscanf_unsigned_short_25
+    test_sscanf_unsigned_short_26
+    test_sscanf_unsigned_short_27
+    test_sscanf_unsigned_short_28
+    test_sscanf_unsigned_short_29
+    test_sscanf_unsigned_short_30
+    9.4
+    test_sscanf_short_1
+    test_sscanf_short_2
+    test_sscanf_short_3
+    //test_sscanf_short_4      !werror
+    test_sscanf_short_5
+    test_sscanf_short_6
+    test_sscanf_short_7
+    test_sscanf_short_8
+    test_sscanf_short_9
+    test_sscanf_short_10
+    test_sscanf_short_11
+    test_sscanf_short_12
+    test_sscanf_short_13
+    test_sscanf_short_14
+    test_sscanf_short_15
+    test_sscanf_short_16
+    test_sscanf_short_17
+    test_sscanf_short_18
+    test_sscanf_short_19
+    test_sscanf_short_20
+    test_sscanf_short_21
+    test_sscanf_short_22
+    test_sscanf_short_23
+    test_sscanf_short_24
+    test_sscanf_short_25
+    test_sscanf_short_26
+    test_sscanf_short_27
+    test_sscanf_short_28
+    test_sscanf_short_29
+    test_sscanf_short_30
+    test_sscanf_short_31
+    test_sscanf_short_32
+    9.5
+    test_sscanf_unsigned_long_1
+    test_sscanf_unsigned_long_2
+    test_sscanf_unsigned_long_3
+    //test_sscanf_unsigned_long_4      !werror
+    test_sscanf_unsigned_long_5
+    test_sscanf_unsigned_long_6
+    test_sscanf_unsigned_long_7
+    test_sscanf_unsigned_long_8
+    test_sscanf_unsigned_long_9
+    test_sscanf_unsigned_long_10        //too big, too small - strange stuff
+    test_sscanf_unsigned_long_28        //too big, too small - strange stuff
+    test_sscanf_unsigned_long_11
+    test_sscanf_unsigned_long_12
+    test_sscanf_unsigned_long_13
+    test_sscanf_unsigned_long_14
+    test_sscanf_unsigned_long_15
+    test_sscanf_unsigned_long_16
+    test_sscanf_unsigned_long_17
+    test_sscanf_unsigned_long_18
+    test_sscanf_unsigned_long_19
+    test_sscanf_unsigned_long_20
+    test_sscanf_unsigned_long_21
+    test_sscanf_unsigned_long_22
+    test_sscanf_unsigned_long_23
+    test_sscanf_unsigned_long_24
+    test_sscanf_unsigned_long_25
+    test_sscanf_unsigned_long_26
+    test_sscanf_unsigned_long_27
+    test_sscanf_unsigned_long_29
+    test_sscanf_unsigned_long_30
+    test_sscanf_unsigned_long_31
+    test_sscanf_unsigned_long_32
+    test_sscanf_unsigned_long_33
+    test_sscanf_unsigned_long_34
+    9.6
+    test_sscanf_unsigned_long_1
+    test_sscanf_unsigned_long_2
+    test_sscanf_unsigned_long_3
+    //test_sscanf_unsigned_long_4      !werror
+    test_sscanf_unsigned_long_5
+    test_sscanf_unsigned_long_6
+    test_sscanf_unsigned_long_7
+    test_sscanf_unsigned_long_8
+    test_sscanf_unsigned_long_9
+    //test_sscanf_unsigned_long_10        //too big, too small - strange stuff
+    //test_sscanf_unsigned_long_26        //too big, too small - strange stuff
+    //test_sscanf_unsigned_long_28        //too big, too small - strange stuff
+    //test_sscanf_unsigned_long_34        //too big, too small - strange stuff
+    test_sscanf_unsigned_long_11
+    test_sscanf_unsigned_long_12
+    test_sscanf_unsigned_long_13
+    test_sscanf_unsigned_long_14
+    test_sscanf_unsigned_long_15
+    test_sscanf_unsigned_long_16
+    test_sscanf_unsigned_long_17
+    test_sscanf_unsigned_long_18
+    test_sscanf_unsigned_long_19
+    test_sscanf_unsigned_long_20
+    test_sscanf_unsigned_long_21
+    test_sscanf_unsigned_long_22
+    test_sscanf_unsigned_long_23
+    test_sscanf_unsigned_long_24
+    test_sscanf_unsigned_long_25
+    test_sscanf_unsigned_long_27
+    test_sscanf_unsigned_long_29
+    test_sscanf_unsigned_long_30
+    test_sscanf_unsigned_long_31
+    test_sscanf_unsigned_long_32
+    test_sscanf_unsigned_long_33
+
+
+
+
+
 
 
 
