@@ -5001,7 +5001,7 @@ START_TEST(test_spritf_f){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5012,7 +5012,7 @@ START_TEST(test_spritf_f_len){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5023,7 +5023,7 @@ START_TEST(test_spritf_f_acc){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5034,7 +5034,7 @@ START_TEST(test_spritf_f_len_acc1){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5045,7 +5045,7 @@ START_TEST(test_spritf_f_len_acc2){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%10.20f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5056,7 +5056,7 @@ START_TEST(test_spritf_f_len_acc_neg){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%-20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5068,7 +5068,7 @@ START_TEST(test_spritf_f_len_acc_plus){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%+20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5080,7 +5080,7 @@ START_TEST(test_spritf_f_len_acc_space){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "% 20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5091,7 +5091,7 @@ START_TEST(test_spritf_f_len_acc_neg_plus){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%-+20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
@@ -5102,7 +5102,7 @@ START_TEST(test_spritf_f_len_acc_neg_space){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
 	char format[] = "%- 20.10f";
-	float f = 21;
+	float f = 21.123123123123;
 	int expected = sprintf(buff_exp, format, f);
 	int result = s21_sprintf(buff_res, format, f);
 	ck_assert_int_eq(result, expected);
