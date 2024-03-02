@@ -5357,6 +5357,837 @@ START_TEST(test_sscanf_settings) {
 }
 */
 
+START_TEST(test_spritf_c){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%c";
+	char c = 21;
+	int expected = sprintf(buff_exp, format, c);
+	int result = s21_sprintf(buff_res, format, c);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_d_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_d_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_d_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10d";
+	int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_ld_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_ld_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_ld_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10ld";
+	long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_hd_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_hd_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hd_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10hd";
+	short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_f_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_f_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10f";
+	float f = 21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_s){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%s";;
+	char s[] = "SCHOOL21!:)";;
+	int expected = sprintf(buff_exp, format, s);
+	int result = s21_sprintf(buff_res, format, s);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_u_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_u_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_u_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10u";
+	unsigned int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_lu_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_lu_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_lu_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10lu";
+	unsigned long int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_acc){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len_acc1){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len_acc2){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%10.20hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len_acc_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_hu_len_acc_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%+20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+
+}
+
+START_TEST(test_spritf_hu_len_acc_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "% 20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len_acc_neg_plus){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%-+20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_hu_len_acc_neg_space){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%- 20.10hu";
+	unsigned short int d = 21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_multi){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%c %d %f %u %s";
+	char c = 'c';
+	int d = 123;
+	float f = 123.123123123;
+	unsigned int u = -123;
+	char s[] = "hello :)";
+	int expected = sprintf(buff_exp, format, c, d, f, u, s);
+	int result = s21_sprintf(buff_res, format, c, d, f, u, s);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_empty_format){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "";
+	int expected = sprintf(buff_exp, format);
+	int result = s21_sprintf(buff_res, format);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
 Suite *my_string_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -5762,6 +6593,91 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_sscanf_int_23);
     
 //      TEST_LIST
+
+	tcase_add_test(tc_core, test_spritf_c);
+
+	tcase_add_test(tc_core, test_spritf_d);
+	tcase_add_test(tc_core, test_spritf_d_len);
+	tcase_add_test(tc_core, test_spritf_d_acc);
+	tcase_add_test(tc_core, test_spritf_d_len_acc1);
+	tcase_add_test(tc_core, test_spritf_d_len_acc2);
+	tcase_add_test(tc_core, test_spritf_d_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_d_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_d_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_d_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_d_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_ld);
+	tcase_add_test(tc_core, test_spritf_ld_len);
+	tcase_add_test(tc_core, test_spritf_ld_acc);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc1);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc2);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_ld_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_hd);
+	tcase_add_test(tc_core, test_spritf_hd_len);
+	tcase_add_test(tc_core, test_spritf_hd_acc);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc1);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc2);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_hd_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_f);
+	tcase_add_test(tc_core, test_spritf_f_len);
+	tcase_add_test(tc_core, test_spritf_f_acc);
+	tcase_add_test(tc_core, test_spritf_f_len_acc1);
+	tcase_add_test(tc_core, test_spritf_f_len_acc2);
+	tcase_add_test(tc_core, test_spritf_f_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_f_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_f_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_f_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_f_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_s);
+
+	tcase_add_test(tc_core, test_spritf_u);
+	tcase_add_test(tc_core, test_spritf_u_len);
+	tcase_add_test(tc_core, test_spritf_u_acc);
+	tcase_add_test(tc_core, test_spritf_u_len_acc1);
+	tcase_add_test(tc_core, test_spritf_u_len_acc2);
+	tcase_add_test(tc_core, test_spritf_u_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_u_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_u_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_u_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_u_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_lu);
+	tcase_add_test(tc_core, test_spritf_lu_len);
+	tcase_add_test(tc_core, test_spritf_lu_acc);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc1);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc2);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_lu_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_hu);
+	tcase_add_test(tc_core, test_spritf_hu_len);
+	tcase_add_test(tc_core, test_spritf_hu_acc);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc1);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc2);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc_neg);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc_plus);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc_space);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc_neg_plus);
+	tcase_add_test(tc_core, test_spritf_hu_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_multi);
+	tcase_add_test(tc_core, test_spritf_empty_format);
+
     suite_add_tcase(s, tc_core);
     return s;
 }
