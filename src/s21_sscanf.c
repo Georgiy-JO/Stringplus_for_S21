@@ -53,13 +53,6 @@
 #define __SIZE_T_MAX__ __ULONG_MAX__
 #endif
 
-/////////////////////////
-//////////////////////////
-/////////////////////////
-/////////////////////////
-////////////////////////
-
-
 #ifndef EOF
 #define EOF (-1)        
 #endif
@@ -127,7 +120,7 @@ int s21_sscanf(const char *str, const char *format, ...){
 // char char_is_invis (const char tmp){
 //     return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
 // }
-char char_is_whitespace (const char tmp){ //9,10,11,12,13,32,0
+char char_is_whitespace (const char tmp){ //9,10,11,12,13,32,0 
     return ((tmp>=9 && tmp<=13) || tmp==32 || tmp==0)? 1:0;
 }
 char char_is_num (const char tmp){
@@ -188,19 +181,34 @@ long double ultimate_int_from_line(const char* line, size_t* move, char* overffl
     }
     else if (*line=='+')    local_move++;
     for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        //printf("===%c=%d===%Lf\n",*(line+local_move), char_is_num (*(line+local_move)), local_num);
         local_num=local_num*10.0+(double)char_to_num(*(line+local_move));
         if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0) || local_num*10+char_to_num(*(line+local_move))<local_num)    *overfflow=1;
-        //printf("===%c=%d===%Lf\n",*(line+local_move), char_is_num (*(line+local_move)), local_num);
-        //printf("^^%.1Lf\n",local_num);
-    }
-    //printf("=====\n");
-    //printf("^^%.1Lf\n",local_num);
+    }                                                                                       ^^^^^^^^^^^^^^^!!!!!!!!!!!11
     if(*move==0 || *move>local_move)  *move=local_move;
-    //printf("^^%.1Lf\n",local_num);
-    //printf("<<^^>>%.1Lf\n",local_num*neg_flag);
     return local_num*neg_flag;
 }
+long double ultimate_octal_from_line(const char* line, size_t* move/*, char* overfflow*/){
+    long double local_num=0.0;
+    size_t local_move=0;
+    double neg_flag=1.0;
+    size_t limit = __LONG_MAX__;
+    char overflow_flag=0;
+    // if (*overfflow) limit = __LONG_MAX__;
+    // *overfflow = 0;
+    if(*line=='-'){
+        local_move++; 
+        neg_flag=-1.0;
+    }
+    else if (*line=='+')    local_move++;
+    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+        local_num=local_num*8+char_to_num(*(line+local_move));
+        if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0))    overflow_flag=1;
+    }
+    if(*move==0 || *move>local_move)  *move=local_move;
+    if (overflow_flag==1)   local_num=neg_flag;
+    return local_num*neg_flag;
+}
+
 unsigned int uint_from_line(const char* line, size_t* move){
     char overfflow=0;
     unsigned int tmp=(unsigned int)ultimate_int_from_line(line,move,&overfflow);
@@ -231,6 +239,7 @@ size_t ulong_from_line(const char* line, size_t* move){
     size_t tmp=(size_t)ultimate_int_from_line(line,move,&overfflow);
     return (overfflow)? (size_t)-1:tmp;
 }
+
 
 
 

@@ -39,7 +39,7 @@ void *s21_insert(const char *src, const char *str, size_t start_index){
     //char* flag = NULL;
     char* out_str =NULL;
 
-    if(src_len>=start_index && start_index>=0)        out_str=(char*) calloc(src_len+str_len+1,sizeof(char));
+    if(src_len>=start_index)        out_str=(char*) calloc(src_len+str_len+1,sizeof(char));
     if(out_str!=NULL){
         s21_strncpy(out_str,src,start_index);
         s21_strncat(out_str,str,str_len);

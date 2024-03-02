@@ -71,6 +71,7 @@ char can_read_spec_numbers (const char* str_coursor, size_t lenth);
 char can_read_spec_hex (const char* str_coursor, size_t lenth);
 
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow);
+long double ultimate_octal_from_line(const char* line, size_t* move/*, char* overfflow*/);
 unsigned int uint_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);
 int int_from_line(const char* line, size_t* move);

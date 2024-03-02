@@ -1,20 +1,11 @@
 CC = gcc
-GENLAGS = -std=c11 -Wall -Wextra #-Werror 
+GENLAGS = -std=c11 -Wall -Wextra -Werror 
 COVLAGS =-fprofile-arcs -ftest-coverage #-g
 #CHLIB = -lcheck -lm #-lsubunit 
 CHLIB  = -lcheck -lm
 ifeq ($(OS), Linux)
-	LIBS += -lsubunit
+	CHLIB += -lsubunit
 endif
-
-#NEED TO FIND A WAY DO DO IT 
-# ifdef __APPLE__
-# CHLIB = -lcheck
-# endif
-# ifdef __linux__
-# CHLIB = -lcheck -lsubunit -lm
-# endif
-
 
 DFLAG = -D_POSIX_C_SOURCE=200809L
 
@@ -24,7 +15,7 @@ CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalid
 
 OBJDIR=odj
 COVOBJDIR=covodj
-SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c s21_sscanf.c
+SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c s21_sscanf.c s21_extra_functions.c
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
 
@@ -84,7 +75,7 @@ s21_string.tst.a: clear_o $(OBJ_FILES_COV)
 
 # build tests for report
 $(TEST_COV): $(COVLIBRARY) $(TEST_OBJ)
-	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(LIBS)
+	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(CHLIB)
 	rm -f *.o
 
 #run test for cov
