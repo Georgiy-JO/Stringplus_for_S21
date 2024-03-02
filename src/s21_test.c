@@ -5456,6 +5456,31 @@ START_TEST(test_spritf_hu_len_acc_neg_space){
 	ck_assert_str_eq(buff_res, buff_exp);
 }
 
+START_TEST(test_spritf_multi){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%c %d %f %u %s";
+	char c = 'c';
+	int d = 123;
+	float f = 123.123123123;
+	unsigned int u = -123;
+	char s[] = "hello :)";
+	int expected = sprintf(buff_exp, format, c, d, f, u, s);
+	int result = s21_sprintf(buff_res, format, c, d, f, u, s);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_empty_format){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "";
+	int expected = sprintf(buff_exp, format);
+	int result = s21_sprintf(buff_res, format);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
 Suite *my_string_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -5896,6 +5921,9 @@ Suite *my_string_suite(void) {
 	tcase_add_test(tc_core, test_spritf_hu_len_acc_space);
 	tcase_add_test(tc_core, test_spritf_hu_len_acc_neg_plus);
 	tcase_add_test(tc_core, test_spritf_hu_len_acc_neg_space);
+
+	tcase_add_test(tc_core, test_spritf_multi);
+	tcase_add_test(tc_core, test_spritf_empty_format);
 
     suite_add_tcase(s, tc_core);
     return s;
