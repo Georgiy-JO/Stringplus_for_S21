@@ -4,7 +4,7 @@ COVLAGS =-fprofile-arcs -ftest-coverage #-g
 #CHLIB = -lcheck -lm #-lsubunit 
 CHLIB  = -lcheck -lm
 ifeq ($(OS), Linux)
-	LIBS += -lsubunit
+	CHLIB += -lsubunit
 endif
 
 #NEED TO FIND A WAY DO DO IT 
@@ -84,7 +84,7 @@ s21_string.tst.a: clear_o $(OBJ_FILES_COV)
 
 # build tests for report
 $(TEST_COV): $(COVLIBRARY) $(TEST_OBJ)
-	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(LIBS)
+	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(CHLIB)
 	rm -f *.o
 
 #run test for cov
