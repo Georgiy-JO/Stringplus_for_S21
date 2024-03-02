@@ -6188,6 +6188,80 @@ START_TEST(test_spritf_empty_format){
 	ck_assert_str_eq(buff_res, buff_exp);
 }
 
+START_TEST(test_to_upper){
+	char str[] = "hello";
+	char* result = s21_to_upper(str);
+	char* expected = "HELLO";
+	ck_assert_str_eq(result, expected);
+	free(result);
+}
+
+START_TEST(test_to_upper_empty){
+	char str[] = "";
+	char* result = s21_to_upper(str);
+	char* expected = "";
+	ck_assert_str_eq(result, expected);
+}
+
+
+START_TEST(test_to_lower){
+	char str[] = "HELLO";
+	char* result = s21_to_lower(str);
+	char* expected = "hello";
+	ck_assert_str_eq(result, expected);
+	free(result);
+}
+
+START_TEST(test_to_lower_empty){
+	char str[] = "";
+	char* result = s21_to_lower(str);
+	char* expected = "";
+	ck_assert_str_eq(result, expected);
+}
+
+START_TEST(test_insert1){
+	char str1[] = "123";
+	char str2[] = "hello";
+	char* result = s21_insert(str1, str2, 2);
+	char* expected = "12hello3";
+	ck_assert_str_eq(result, expected);
+	free(result);
+}
+
+START_TEST(test_insert2){
+	char str1[] = "123";
+	char str2[] = "hello";
+	char* result = s21_insert(str1, str2, -1);
+	char* expected = NULL;
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_insert3){
+	char str1[] = "123";
+	char str2[] = "hello";
+	char* result = s21_insert(str1, str2, 123);
+	char* expected = NULL;
+	ck_assert_ptr_eq(result, expected);
+}
+
+START_TEST(test_trim1){
+	char str1[] = "hello there dude!";
+	char str2[] = "heled!";
+	char* result = s21_trim(str1, str2);
+	char* expected = "o there du";
+	ck_assert_str_eq(result, expected);
+	free(result);
+}
+
+START_TEST(test_trim2){
+	char str1[] = "hello there dude!";
+	char str2[] = "te";
+	char* result = s21_trim(str1, str2);
+	char* expected = "hello there dude!";
+	ck_assert_str_eq(result, expected);
+	free(result);
+}
+
 Suite *my_string_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -6677,6 +6751,19 @@ Suite *my_string_suite(void) {
 
 	tcase_add_test(tc_core, test_spritf_multi);
 	tcase_add_test(tc_core, test_spritf_empty_format);
+
+	tcase_add_test(tc_core, test_to_upper);
+	tcase_add_test(tc_core, test_to_upper_empty);
+
+	tcase_add_test(tc_core, test_to_lower);
+	tcase_add_test(tc_core, test_to_lower_empty);
+
+	tcase_add_test(tc_core, test_insert1);
+	tcase_add_test(tc_core, test_insert2);
+	tcase_add_test(tc_core, test_insert3);
+
+	tcase_add_test(tc_core, test_trim1);
+	tcase_add_test(tc_core, test_trim2);
 
     suite_add_tcase(s, tc_core);
     return s;
