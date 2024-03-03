@@ -6260,10 +6260,11 @@ START_TEST(test_to_upper3){
 }
 
 START_TEST(test_to_upper_empty){
-	const char* str = "";
+	char* str = "";
 	char* result = s21_to_upper(str);
 	char* expected = "";
 	ck_assert_str_eq(result, expected);
+	free(result);
 }
 
 START_TEST(test_to_lower){
@@ -6295,6 +6296,7 @@ START_TEST(test_to_lower_empty){
 	char* result = s21_to_lower(str);
 	char* expected = "";
 	ck_assert_str_eq(result, expected);
+	free(result);
 }
 
 START_TEST(test_insert1){
@@ -6328,6 +6330,7 @@ START_TEST(test_insert4){
 	char* result = s21_insert(str1, str2, 0);
 	char* expected = "hello";
 	ck_assert_str_eq(result, expected);
+	free(result);
 }
 
 START_TEST(test_trim1){
