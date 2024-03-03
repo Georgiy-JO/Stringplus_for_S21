@@ -248,15 +248,12 @@ size_t ulong_from_line(const char* line, size_t* move){
 unsigned int uoctal_from_line(const char* line, size_t* move){
     return (unsigned int) ultimate_octal_from_line(line,move); 
 }
-
-
 unsigned short short_uoctal_from_line(const char* line, size_t* move){
     return (long int) ultimate_octal_from_line(line,move); 
 }
 size_t long_uoctal_from_line(const char* line, size_t* move){
      return (size_t) ultimate_octal_from_line(line,move); 
 }
-
 
 
 int hex_from_line(const char* line, size_t* move){

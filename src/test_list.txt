@@ -607,6 +607,34 @@ s21_sscanf
     test_sscanf_unsigned_shirt_octal_30
     test_sscanf_unsigned_shirt_octal_31
     test_sscanf_unsigned_shirt_octal_32
+    9.9
+    test_sscanf_unsigned_long_octal_1
+    test_sscanf_unsigned_long_octal_2
+    test_sscanf_unsigned_long_octal_3
+    test_sscanf_unsigned_long_octal_4
+    test_sscanf_unsigned_long_octal_5
+    test_sscanf_unsigned_long_octal_6
+    test_sscanf_unsigned_long_octal_7
+    test_sscanf_unsigned_long_octal_9
+    test_sscanf_unsigned_long_octal_8
+    test_sscanf_unsigned_long_octal_10
+    test_sscanf_unsigned_long_octal_11
+    test_sscanf_unsigned_long_octal_12
+    test_sscanf_unsigned_long_octal_13          //      -1000000000000000000001   ====>overflow strange error
+    test_sscanf_unsigned_long_octal_14
+    test_sscanf_unsigned_long_octal_15
+    test_sscanf_unsigned_long_octal_16
+    test_sscanf_unsigned_long_octal_17
+    test_sscanf_unsigned_long_octal_18
+    test_sscanf_unsigned_long_octal_22
+    test_sscanf_unsigned_long_octal_25
+    test_sscanf_unsigned_long_octal_26
+    test_sscanf_unsigned_long_octal_27
+    test_sscanf_unsigned_long_octal_28
+    test_sscanf_unsigned_long_octal_29
+    test_sscanf_unsigned_long_octal_30
+    test_sscanf_unsigned_long_octal_31
+    test_sscanf_unsigned_long_octal_32
 
 
 
