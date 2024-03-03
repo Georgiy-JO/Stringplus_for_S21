@@ -1,0 +1,69 @@
+CC = gcc
+CFLAGS = -Wall -Wextra  -std=c11 -fprofile-arcs -ftest-coverage -g #-c
+LIBS = -lcheck -lm
+VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
+#VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt ./
+CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalidFunctionArg --force 
+DFLAG = -D_POSIX_C_SOURCE=200809L
+
+SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c s21_sscanf.c s21_extra_functions.c
+HEAD_FILE = s21_string.h
+OBJ_FILES = $(SRC_FILES:.c=.o)
+
+# static lib
+LIBRARY = $(HEAD_FILE:.h=.a)     #s21_math.a
+# tests
+EXECUTABLE = s21_tests
+
+# test src
+TEST_SRC = s21_test.c
+TEST_OBJ = $(TEST_SRC:.c=.o)
+
+# format src
+SRC_CL=../materials/linters/.clang-format
+
+all: s21_math.a $(EXECUTABLE) test gcov_report
+
+# build static lib
+s21_math.a: $(OBJ_FILES)
+	ar rcs $(LIBRARY) $(OBJ_FILES)
+
+# build tests
+$(EXECUTABLE): $(LIBRARY) $(TEST_OBJ)
+	$(CC) $(CFLAGS) $(DFLAG) $(TEST_OBJ) -o $(EXECUTABLE) $(LIBRARY) $(LIBS)
+
+%.o: %.c $(HEAD_FILE)
+	$(CC) $(CFLAGS) $(DFLAG) -c $< -o $@
+
+# run tests
+test: $(EXECUTABLE)
+	rm -f *.o
+	./$(EXECUTABLE)
+
+# coverage test
+coverage: test
+	gcov $(SRC_FILES) $(TEST_SRC)
+
+
+gcov_report: coverage
+	gcovr -r . --html --html-details -o coverage_report.html
+	rm -f *.gc* *.o
+
+valgrind: $(EXECUTABLE)
+	$(VALG)$(EXECUTABLE)
+	rm -f *.gc* *.o
+
+cpp_check: 
+	$(CPPCH) *.c *.h
+
+# format code style
+clang_all:
+	cp $(SRC_CL) .clang-format
+	clang-format -i *.c
+	clang-format -i *.h
+	rm -f .clang-format
+
+clean:
+	rm -f $(EXECUTABLE) $(LIBRARY) *.gc* *.html *.css *.o
+
+.PHONY: all test clean s21_math.a gcov_report
