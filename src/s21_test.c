@@ -6405,6 +6405,12 @@ START_TEST(test_strerror2){
 	ck_assert_str_eq(result, expected);
 }
 
+START_TEST(test_strerror3){
+	char* result = s21_strerror(-1);
+	char* expected = strerror(-1);
+	ck_assert_str_eq(result, expected);
+}
+
 Suite *my_string_suite(void) {
     Suite *s;
     TCase *tc_core;
@@ -6925,6 +6931,7 @@ Suite *my_string_suite(void) {
 
 	tcase_add_test(tc_core, test_strerror);
 	tcase_add_test(tc_core, test_strerror2);
+	tcase_add_test(tc_core, test_strerror3);
 
     suite_add_tcase(s, tc_core);
     return s;
