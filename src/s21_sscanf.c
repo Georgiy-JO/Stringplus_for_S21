@@ -182,8 +182,8 @@ long double ultimate_int_from_line(const char* line, size_t* move, char* overffl
     else if (*line=='+')    local_move++;
     for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         local_num=local_num*10.0+(double)char_to_num(*(line+local_move));
-        if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0) || local_num*10+char_to_num(*(line+local_move))<local_num)    *overfflow=1;
-    }                                                                                       ^^^^^^^^^^^^^^^!!!!!!!!!!!11
+        if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0))    *overfflow=1;
+    }                                                                                  
     if(*move==0 || *move>local_move)  *move=local_move;
     return local_num*neg_flag;
 }
@@ -191,7 +191,7 @@ long double ultimate_octal_from_line(const char* line, size_t* move/*, char* ove
     long double local_num=0.0;
     size_t local_move=0;
     double neg_flag=1.0;
-    size_t limit = __LONG_MAX__;
+    size_t limit = __ULONG_MAX__;
     char overflow_flag=0;
     // if (*overfflow) limit = __LONG_MAX__;
     // *overfflow = 0;
@@ -208,7 +208,6 @@ long double ultimate_octal_from_line(const char* line, size_t* move/*, char* ove
     if (overflow_flag==1)   local_num=neg_flag;
     return local_num*neg_flag;
 }
-
 unsigned int uint_from_line(const char* line, size_t* move){
     char overfflow=0;
     unsigned int tmp=(unsigned int)ultimate_int_from_line(line,move,&overfflow);
@@ -244,32 +243,16 @@ size_t ulong_from_line(const char* line, size_t* move){
 
 
 unsigned int uoctal_from_line(const char* line, size_t* move){
-    unsigned int local_num=0;
-    size_t local_move=0;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*8+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num;
+    return (unsigned int) ultimate_octal_from_line(line,move); 
 }
 unsigned short short_uoctal_from_line(const char* line, size_t* move){
-    unsigned short local_num=0;
-    size_t local_move=0;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*8+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num;
+    return (long int) ultimate_octal_from_line(line,move); 
 }
 size_t long_uoctal_from_line(const char* line, size_t* move){
-    size_t local_num=0;
-    size_t local_move=0;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*8+char_to_num(*(line+local_move));
-    }
-    if(*move==0)  *move=local_move;
-    return local_num;
+     return (size_t) ultimate_octal_from_line(line,move); 
 }
+
+
 int hex_from_line(const char* line, size_t* move){
     int local_num=0;
     unsigned int temp_digit=0;
