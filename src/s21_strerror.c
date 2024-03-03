@@ -3,7 +3,7 @@
 #define S21_ERRLIST_SIZE 134
 
 #ifdef __linux__
-const char *errunknown = "Unknown error";
+const char errunknown[14] = "Unknown error";
 const char *errlist[S21_ERRLIST_SIZE] = 
 {
 	"Success",
@@ -144,7 +144,7 @@ const char *errlist[S21_ERRLIST_SIZE] =
 #endif
 
 #ifdef __APPLE__
-const char *errunknown = "Unknown error";
+const char errunknown[15] = "Unknown error:";
 const char *errlist[S21_ERRLIST_SIZE] = 
 {
 	"Undefined error: 0",
@@ -286,9 +286,11 @@ const char *errlist[S21_ERRLIST_SIZE] =
 
 char *s21_strerror(int errnum)
 {
+	static char err[1024] = {0};
 	if (errnum >= 0 && errnum <= S21_ERRLIST_SIZE){
 		return (char*)errlist[errnum];
 	} else {
-		return (char*)errunknown;
+		s21_sprintf(err, "%s %d", errunknown, errnum);
+		return (char*)err;
 	}
 }
