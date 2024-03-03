@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Wextra  -std=c11 -fprofile-arcs -ftest-coverage -g #-c
-LIBS = -lcheck -lsubunit -lm
+LIBS = -lcheck -lm
 VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
 #VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt ./
 CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalidFunctionArg --force 
@@ -30,7 +30,7 @@ s21_math.a: $(OBJ_FILES)
 
 # build tests
 $(EXECUTABLE): $(LIBRARY) $(TEST_OBJ)
-	$(CC) $(CFLAGS) $(DFLAG) $(TEST_OBJ) -o $(EXECUTABLE) -L. -l:$(LIBRARY) $(LIBS)
+	$(CC) $(CFLAGS) $(DFLAG) $(TEST_OBJ) -o $(EXECUTABLE) $(LIBRARY) $(LIBS)
 
 %.o: %.c $(HEAD_FILE)
 	$(CC) $(CFLAGS) $(DFLAG) -c $< -o $@
