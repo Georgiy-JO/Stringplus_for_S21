@@ -7,7 +7,8 @@
 #define S21_SPRINTF_LENGTH "hl"
 #define S21_SPRINTF_SPEC "cdfsu"
 #define S21_SPRINTF_DIGITS "0123456789"
-#define S21_SPRINTF_DEFAULE_ACCURACY 6
+#define S21_SPRINTF_DEFAULT_ACCURACY 6
+#define S21_SPRINTF_DEFAULT_BUFFER_SIZE 1024
 
 typedef struct opts {
 	//specs
@@ -347,9 +348,9 @@ int add_width_int(char* str, opts opt){
 }
 
 int print_digit(long int argint, char* str, opts opt){
-	char integer_buffer[1024] = {'\0'};
-	char full_digit_buffer[1024] = {'0'};
-	s21_memset(full_digit_buffer, '0', 1024);
+	char integer_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+	char full_digit_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'0'};
+	s21_memset(full_digit_buffer, '0', S21_SPRINTF_DEFAULT_BUFFER_SIZE);
 	int width = opt.width_digit;
 	int digit_len = get_digit_int_len(argint);
 	int accuracy = opt.accuracy_digit;
@@ -378,9 +379,9 @@ int print_digit(long int argint, char* str, opts opt){
 }
 
 int print_udigit(unsigned long int arguint, char* str, opts opt){
-	char integer_buffer[1024] = {'\0'};
-	char full_digit_buffer[1024] = {'0'};
-	s21_memset(full_digit_buffer, '0', 1024);
+	char integer_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+	char full_digit_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'0'};
+	s21_memset(full_digit_buffer, '0', S21_SPRINTF_DEFAULT_BUFFER_SIZE);
 	int offset = 0;
 	int width = opt.width_digit;
 	int digit_len = get_digit_uint_len(arguint);
@@ -406,9 +407,9 @@ int print_udigit(unsigned long int arguint, char* str, opts opt){
 
 int print_float(double argfloat, int fractional_part_len, char* str,
 		opts opt){
-	char float_buffer[1024] = {'\0'};
-	char float_fractional_buffer[1024] = {'\0'};
-	char final_buffer[1024] = {'\0'};
+	char float_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+	char float_fractional_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+	char final_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
 	int offset = 0;
 	add_width_int(final_buffer, opt);
 	int width = opt.width_digit;
@@ -458,7 +459,7 @@ int print(va_list args, opts opt, char* str){
 	}
 	else if (opt.spec_f){
 		double argfloat = va_arg(args, double);
-		int accuracy = S21_SPRINTF_DEFAULE_ACCURACY;
+		int accuracy = S21_SPRINTF_DEFAULT_ACCURACY;
 		if (opt.accuracy_digit != 0) accuracy = opt.accuracy_digit;
 		offset += print_float(argfloat, accuracy ,str, opt);
 	}
