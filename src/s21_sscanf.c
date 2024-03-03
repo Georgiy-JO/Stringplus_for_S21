@@ -117,6 +117,7 @@ int s21_sscanf(const char *str, const char *format, ...){
     return var_number;
 }
 
+
 // char char_is_invis (const char tmp){
 //     return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
 // }
