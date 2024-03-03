@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include "s21_string.h"
 #include <check.h>
 #include <stdlib.h>
 #include <time.h>
+#include "s21_string.h"
 
 
 #define NULL_LINE "\0"  //2+
@@ -5715,6 +5715,28 @@ START_TEST(test_spritf_f){
 	ck_assert_str_eq(buff_res, buff_exp);
 }
 
+START_TEST(test_spritf_f_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%f";
+	float f = -21.123123123123;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_f_half){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%f";
+	float f = -21.000005;
+	int expected = sprintf(buff_exp, format, f);
+	int result = s21_sprintf(buff_res, format, f);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
 START_TEST(test_spritf_f_len){
 	char buff_exp[100] = {0};
 	char buff_res[100] = {0};
@@ -6188,6 +6210,27 @@ START_TEST(test_spritf_empty_format){
 	ck_assert_str_eq(buff_res, buff_exp);
 }
 
+START_TEST(test_spritf_d_neg){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%d";
+	int d = -21;
+	int expected = sprintf(buff_exp, format, d);
+	int result = s21_sprintf(buff_res, format, d);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
+START_TEST(test_spritf_per){
+	char buff_exp[100] = {0};
+	char buff_res[100] = {0};
+	char format[] = "%%";
+	int expected = sprintf(buff_exp, format);
+	int result = s21_sprintf(buff_res, format);
+	ck_assert_int_eq(result, expected);
+	ck_assert_str_eq(buff_res, buff_exp);
+}
+
 START_TEST(test_to_upper){
 	char str[] = "hello";
 	char* result = s21_to_upper(str);
@@ -6261,6 +6304,7 @@ START_TEST(test_trim2){
 	ck_assert_str_eq(result, expected);
 	free(result);
 }
+
 
 Suite *my_string_suite(void) {
     Suite *s;
@@ -6671,6 +6715,7 @@ Suite *my_string_suite(void) {
 	tcase_add_test(tc_core, test_spritf_c);
 
 	tcase_add_test(tc_core, test_spritf_d);
+	tcase_add_test(tc_core, test_spritf_d_neg);
 	tcase_add_test(tc_core, test_spritf_d_len);
 	tcase_add_test(tc_core, test_spritf_d_acc);
 	tcase_add_test(tc_core, test_spritf_d_len_acc1);
@@ -6704,6 +6749,8 @@ Suite *my_string_suite(void) {
 	tcase_add_test(tc_core, test_spritf_hd_len_acc_neg_space);
 
 	tcase_add_test(tc_core, test_spritf_f);
+	tcase_add_test(tc_core, test_spritf_f_neg);
+	tcase_add_test(tc_core, test_spritf_f_half);
 	tcase_add_test(tc_core, test_spritf_f_len);
 	tcase_add_test(tc_core, test_spritf_f_acc);
 	tcase_add_test(tc_core, test_spritf_f_len_acc1);
@@ -6751,6 +6798,8 @@ Suite *my_string_suite(void) {
 
 	tcase_add_test(tc_core, test_spritf_multi);
 	tcase_add_test(tc_core, test_spritf_empty_format);
+
+	tcase_add_test(tc_core, test_spritf_per);
 
 	tcase_add_test(tc_core, test_to_upper);
 	tcase_add_test(tc_core, test_to_upper_empty);

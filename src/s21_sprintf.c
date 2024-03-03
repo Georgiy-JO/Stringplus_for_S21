@@ -1,11 +1,11 @@
 #include "s21_string.h"
 #include <stdarg.h>
 
-#define S21_SPRINTF_FLAGS "-+ #0"
+#define S21_SPRINTF_FLAGS "-+ "
 #define S21_SPRINTF_WIDTH "0123456789*"
 #define S21_SPRINTF_ACCURACY "0123456789*"
-#define S21_SPRINTF_LENGTH "hlL"
-#define S21_SPRINTF_SPEC "cdieEfgGosuxXpn"
+#define S21_SPRINTF_LENGTH "hl"
+#define S21_SPRINTF_SPEC "cdfsu"
 #define S21_SPRINTF_DIGITS "0123456789"
 #define S21_SPRINTF_DEFAULE_ACCURACY 6
 
@@ -50,15 +50,6 @@ typedef struct opts {
 
 int is_start(char ch){
 	return ch == '%' ? 1 : 0;
-}
-
-int count_percent_signs(const char* format){
-	int len = s21_strlen(format);
-	int count = 0;
-	for (int i = 0; i < len; i++){
-		if (format[i] == '%') count++;
-	}
-	return count;
 }
 
 int is_flag(char ch){
@@ -172,7 +163,6 @@ int convert_digit_int_to_str(long int integer, char* str){
 		single_digit_char = convert_digit_int_to_char(single_digit);
 		str[digit_len - i - 1] = single_digit_char;
 	}
-	//str[digit_len + sign_offset] = '\0';
 	return 0;
 }
 
@@ -186,7 +176,6 @@ int convert_digit_uint_to_str(unsigned long int integer, char* str){
 		single_digit_char = convert_digit_int_to_char(single_digit);
 		str[digit_len - i - 1] = single_digit_char;
 	}
-	//str[digit_len] = '\0';
 	return 0;
 }
 
@@ -202,18 +191,8 @@ int convert_digit_frational_part_to_str(double frac, int len, char* str){
 		single_digit_char = convert_digit_int_to_char(single_digit);
 		str[i] = single_digit_char;
 	}
-	//str[len] = '\0';
 	return 0;
 }
-
-// c d i e E f g G  o s u x X p n  [spec]
-// - + ' ' # 0 [flags]
-// (digit)  * [width]
-// .(digit) .* [accuracy]
-// h l L [length]
-
-// %[flags][width][.accuracy][length][spec]
-
 
 int flag_to_struct(opts* optarg, char ch){
 	int status = 0;
@@ -228,14 +207,6 @@ int flag_to_struct(opts* optarg, char ch){
 		case ' ':
 			localoptarg.flag_space = 1;
 			break;
-		case '#':
-			localoptarg.flag_hash = 1;
-			break;
-		case '0':
-			localoptarg.flag_zero = 1;
-			break;
-		default:
-			status = -1;
 	}
 	*optarg = localoptarg;
 	return status;
@@ -251,11 +222,6 @@ int length_to_struct(opts* optarg, char ch){
 		case 'l':
 			localoptarg.length_l = 1;
 			break;
-		case 'L':
-			localoptarg.length_L = 1;
-			break;
-		default:
-			status = -1;
 	}
 	*optarg = localoptarg;
 	return status;
@@ -271,26 +237,8 @@ int spec_to_struct(opts* optarg, char ch){
 		case 'd':
 			localoptarg.spec_d = 1;
 			break;
-		case 'i':
-			localoptarg.spec_i = 1;
-			break;
-		case 'e':
-			localoptarg.spec_e = 1;
-			break;
-		case 'E':
-			localoptarg.spec_E = 1;
-			break;
 		case 'f':
 			localoptarg.spec_f = 1;
-			break;
-		case 'g':
-			localoptarg.spec_g = 1;
-			break;
-		case 'G':
-			localoptarg.spec_G = 1;
-			break;
-		case 'o':
-			localoptarg.spec_o = 1;
 			break;
 		case 's':
 			localoptarg.spec_s = 1;
@@ -298,20 +246,6 @@ int spec_to_struct(opts* optarg, char ch){
 		case 'u':
 			localoptarg.spec_u = 1;
 			break;
-		case 'x':
-			localoptarg.spec_x = 1;
-			break;
-		case 'X':
-			localoptarg.spec_X = 1;
-			break;
-		case 'p':
-			localoptarg.spec_p = 1;
-			break;
-		case 'n':
-			localoptarg.spec_n = 1;
-			break;
-		default:
-			status = -1;
 	}
 	*optarg = localoptarg;
 	return status;
@@ -362,9 +296,6 @@ int get_opts(opts* optarg, const char* format){
 		if (is_digit(format[offset])){
 			offset += get_full_number(&(format[offset]), &number);
 			width_digit_to_struct(&localoptarg, number);
-		}else {
-			localoptarg.width_any = 1;
-			offset++;
 		}
 	}
 	//accuracy
@@ -374,9 +305,6 @@ int get_opts(opts* optarg, const char* format){
 			if (is_digit(format[offset])){
 				offset += get_full_number(&(format[offset]), &number);
 				accuracy_digit_to_struct(&localoptarg, number);
-			} else {
-				localoptarg.accuracy_any = 1;
-				offset++;
 			}
 		}
 	}
@@ -559,9 +487,6 @@ int print_percentage_char(char* str){
 
 int s21_sprintf(char *str, const char *format, ...){
 	int count = 0;
-	if(str == NULL){
-		return -1;
-	}
 	va_list args;
 	va_start(args, format);
 	int len = s21_strlen(format);
