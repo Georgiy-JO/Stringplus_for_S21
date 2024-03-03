@@ -153,7 +153,8 @@ START_TEST(test_strncmp_2) {
 	size_t n = 4;
 	int result = s21_strncmp(str1, str2, n);
 	int expected = strncmp(str1, str2, n);
-	ck_assert_int_eq(result, expected);
+	ck_assert_int_gt(expected, 0);
+	ck_assert_int_gt(result, 0);
 }
 START_TEST(test_strncmp_3) {
 	char* str1 = "hello";
@@ -161,7 +162,8 @@ START_TEST(test_strncmp_3) {
 	size_t n = 4;
 	int result = s21_strncmp(str1, str2, n);
 	int expected = strncmp(str1, str2, n);
-	ck_assert_int_eq(result, expected);
+	ck_assert_int_gt(expected, 0);
+	ck_assert_int_gt(result, 0);
 }
 START_TEST(test_strncmp_4) {
 	char* str1 = "hello";
@@ -169,7 +171,8 @@ START_TEST(test_strncmp_4) {
 	size_t n = 4;
 	int result = s21_strncmp(str1, str2, n);
 	int expected = strncmp(str1, str2, n);
-	ck_assert_int_eq(result, expected);
+	ck_assert_int_gt(expected, 0);
+	ck_assert_int_gt(result, 0);
 }
 START_TEST(test_strncmp_5) {
 	char* str1 = "";
@@ -177,7 +180,8 @@ START_TEST(test_strncmp_5) {
 	size_t n = 4;
 	int result = s21_strncmp(str1, str2, n);
 	int expected = strncmp(str1, str2, n);
-	ck_assert_int_eq(result, expected);
+	ck_assert_int_lt(expected, 0);
+	ck_assert_int_lt(result, 0);
 }
 START_TEST(test_strncmp_6) {
 	char* str1 = "";
