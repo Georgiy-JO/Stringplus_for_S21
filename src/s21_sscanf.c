@@ -127,6 +127,9 @@ char char_is_whitespace (const char tmp){ //9,10,11,12,13,32,0
 char char_is_num (const char tmp){
     return (tmp>='0' && tmp<='9')? 1:0;
 }
+char char_is_oct (const char tmp){
+    return (tmp>='0' && tmp<='7')? 1:0;
+}
 char char_is_hex (const char tmp){
     return ((tmp>='0' && tmp<='9') || s21_isinstr(tmp,HEXADECIMAL_BIG) || s21_isinstr(tmp,HEXADECIMAL_SMALL))? 1:0;
 }
@@ -165,6 +168,9 @@ char* whitespace_romover (const char* a_string){
 char can_read_spec_numbers (const char* str_coursor, size_t lenth){
     return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_num(*(str_coursor+1))))? 1:0;
 }
+char can_read_spec_oct (const char* str_coursor, size_t lenth){
+    return (char_is_oct(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_oct(*(str_coursor+1))))? 1:0;
+}
 char can_read_spec_hex (const char* str_coursor, size_t lenth){
     return (char_is_hex(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_hex(*(str_coursor+1))))? 1:0;
 }
@@ -201,12 +207,12 @@ long double ultimate_octal_from_line(const char* line, size_t* move/*, char* ove
         neg_flag=-1.0;
     }
     else if (*line=='+')    local_move++;
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+    for(;char_is_oct (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         local_num=local_num*8+char_to_num(*(line+local_move));
         if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0))    overflow_flag=1;
     }
     if(*move==0 || *move>local_move)  *move=local_move;
-    if (overflow_flag==1)   local_num=neg_flag;
+    if (overflow_flag==1)   local_num=-neg_flag;
     return local_num*neg_flag;
 }
 unsigned int uint_from_line(const char* line, size_t* move){
@@ -239,19 +245,18 @@ size_t ulong_from_line(const char* line, size_t* move){
     size_t tmp=(size_t)ultimate_int_from_line(line,move,&overfflow);
     return (overfflow)? (size_t)-1:tmp;
 }
-
-
-
-
 unsigned int uoctal_from_line(const char* line, size_t* move){
     return (unsigned int) ultimate_octal_from_line(line,move); 
 }
+
+
 unsigned short short_uoctal_from_line(const char* line, size_t* move){
     return (long int) ultimate_octal_from_line(line,move); 
 }
 size_t long_uoctal_from_line(const char* line, size_t* move){
      return (size_t) ultimate_octal_from_line(line,move); 
 }
+
 
 
 int hex_from_line(const char* line, size_t* move){
@@ -491,8 +496,6 @@ char* spec_translator(variables* var_spec, const char* format){             //ad
     else          loc_format=NULL; 
     return loc_format;
 }
-
-
 char* var_filling(va_list* var, variables var_spec, char* str_coursor)
 {
     size_t move=var_spec.width;
@@ -569,7 +572,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 'o':       //? unsigned/signed
-        if(!can_read_spec_numbers(str_coursor,move)){
+        if(!can_read_spec_oct(str_coursor,move)){
             move=0;
             str_coursor=NULL;
         }

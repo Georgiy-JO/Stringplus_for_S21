@@ -57,6 +57,7 @@ typedef struct variables variables; //is needed not to break the header file
 //char char_is_invis (const char tmp);
 char char_is_whitespace (const char tmp);
 char char_is_num (const char tmp);
+char char_is_oct (const char tmp);
 char char_is_hex (const char tmp);
 
 int char_to_num (const char n);
@@ -68,6 +69,7 @@ void zero_struct(variables * var);
 size_t var_counting (const char *format);
 char* whitespace_romover (const char* a_string);
 char can_read_spec_numbers (const char* str_coursor, size_t lenth);
+char can_read_spec_oct (const char* str_coursor, size_t lenth);
 char can_read_spec_hex (const char* str_coursor, size_t lenth);
 
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow);
