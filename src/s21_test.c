@@ -30,6 +30,7 @@
 //s21_strcspn -->6.0-6.4
 //s21_strpbrk -->7.0-7.4
 //s21_strtok -->8.0-8.4
+//s21_sscanf -->9.0-9.
 
 /*  //(*5)  TOO LONG　LINES CHECK  -- HOW?!
 
@@ -4653,7 +4654,7 @@ START_TEST(test_strtok_longline_6) {
     }
 }
 //s21_sscanf
-//9.0
+//9.0   //elevator
 START_TEST(test_sscanf_blanks){
     char input_line_0[]="5  55 \n\t\n  -555                     zpep\t  \n 5555end\0";
     char input_line_1[70]="\0";
@@ -5265,8 +5266,7 @@ START_TEST(test_sscanf_int_23){
     ck_assert_int_eq(intt1,intt6);
     ck_assert_int_eq(intt2,intt7);
     ck_assert_str_eq(endd1,endd2);
-}
-/*
+}/*
 //werror
 START_TEST(test_sscanf_int_4){
     char input_line_0[]="111111  11223344556677889900111222333444555  -55555  5555.444  end\0";
@@ -8054,7 +8054,7 @@ START_TEST(test_sscanf_unsigned_short_octal_31){
     ck_assert_int_eq(ushortt2,ushortt7);
     ck_assert_str_eq(endd1,endd2);
 }
-//9.8       //elevator
+//9.9       //elevator
 START_TEST(test_sscanf_unsigned_long_octal_1){
     char input_line_0[]="1111155  11223344556677000111222333444555  -555555  55545.444  end\0";
     char input_line_1[100]="\0";
@@ -8483,13 +8483,1361 @@ START_TEST(test_sscanf_unsigned_long_octal_32){
     ck_assert_int_eq(ulongg2,ulongg7);
     ck_assert_str_eq(endd1,endd2);
 }
-
-
-
-
-
 //9.10     //elevator
+START_TEST(test_sscanf_hexadecimal_1){
+    char input_line_0[]="11afd1  112233445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_2){
+    char input_line_0[]="11afd1  112233445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%%%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%%%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}    
+START_TEST(test_sscanf_hexadecimal_3){
+    char input_line_0[]="11afd1  %112233445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%%%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%%%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}    
+//interesting fact: in original sscanf(str,"%xhello",&sf1);     -->>Error!!
+START_TEST(test_sscanf_hexadecimal_4){
+    char input_line_0[]="11afd1 hello 11223a3445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4, intt5=5,intt10=5;
+    ck_assert_int_eq(sscanf(input_line_0,"%x hello%7X%x%x%x%s",&intt1,&intt2,&intt5,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x hello%7X%x%x%x%s",&intt6,&intt7,&intt10,&intt8,&intt9, endd2));
+    sscanf(input_line_0,"%x hello%7X%x%x%x%s",&intt1,&intt2,&intt5,&intt3,&intt4, endd1);
+    s21_sscanf(input_line_1,"%xhello%7X%x%x%x%s",&intt6,&intt7,&intt10,&intt8,&intt9, endd2);
+    
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_int_eq(intt5,intt10);
+    ck_assert_str_eq(endd1,endd2);
+}  
+START_TEST(test_sscanf_hexadecimal_5){
+    char input_line_0[]="11afd1  112233445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt6=1,intt7=2, intt8=3;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*x%x%x%s",&intt1,&intt2,&intt3, endd1),s21_sscanf(input_line_1,"%x%*x%x%x%s",&intt6,&intt7,&intt8, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_str_eq(endd1,endd2);
+}   
+START_TEST(test_sscanf_hexadecimal_6){
+    char input_line_0[]="11afd1  112233445566aaafffecce2233344f555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*26X%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*26X%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}     
+START_TEST(test_sscanf_hexadecimal_7){
+    char input_line_0[]="11afd1  112233445566aaafffecce22333444555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*24x%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*24x%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}  
+START_TEST(test_sscanf_hexadecimal_8){
+    char input_line_0[]="ABCDEF  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25X%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25X%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_9){
+    char input_line_0[]="abcdef  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_10){
+    char input_line_0[]="ABCDEF  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25X%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25X%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_11){
+    char input_line_0[]="       abcdef  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%x%x%x%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%x%x%x%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_12){
+    char input_line_0[]="  05.5  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25X%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25X%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_13){
+    char input_line_0[]="0  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_14){
+    char input_line_0[]="7fffffff  112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25X%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25X%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_15){
+    char input_line_0[]="-7fffffff 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_16){
+    char input_line_0[]="-80000005 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_17){
+    char input_line_0[]="+80000005 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_18){
+    char input_line_0[]="+7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_19){
+    char input_line_0[]="-7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_20){
+    char input_line_0[]="8000000000000000 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+/*
+//too big !
+START_TEST(test_sscanf_hexadecimal_21){
+    char input_line_0[]="8000000000000003 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%X%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+*/
+START_TEST(test_sscanf_hexadecimal_22){
+    char input_line_0[]="0x7745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_23){
+    char input_line_0[]="-0x7745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_24){
+    char input_line_0[]="-x7745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_hexadecimal_25){
+    char input_line_0[]="+x7745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_26){
+    char input_line_0[]="+07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_27){
+    char input_line_0[]="xx07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_28){
+    char input_line_0[]="00x07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_29){
+    char input_line_0[]="0xx07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_30){
+    char input_line_0[]="+-0x07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_31){
+    char input_line_0[]="--07745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_32){
+    char input_line_0[]="+0x7745f 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%x%*25x%X%X%X%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%x%*25x%X%X%X%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_33){
+    char input_line_0[]="   92ff37203685 55Ad5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%5X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%5X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_34){
+    char input_line_0[]="   92a33                    55Ad5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8x%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8x%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_35){
+    char input_line_0[]="   +92233a567                    55Ad5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%6X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%6X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_36){
+    char input_line_0[]="   92233a567                    55Ad5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8x%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8x%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_37){
+    char input_line_0[]="  -.6                   -0.6 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_38){
+    char input_line_0[]="  .6                   -0.6 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8x%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8x%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_39){
+    char input_line_0[]="  -g                   -0.6 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_40){
+    char input_line_0[]="  0xg                  -4294967304 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_41){
+    char input_line_0[]="  -0x                   -4294967304 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_42){
+    char input_line_0[]="  +0x5                   -4296fg04 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_43){
+    char input_line_0[]="  +0xf                   -4296fg04 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_44){
+    char input_line_0[]="  +0xd                   -0x5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%3x%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%3x%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_45){
+    char input_line_0[]="  +0                   0X5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%X%2X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%X%2X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+/*          //randome bullshit
+START_TEST(test_sscanf_hexadecimal_46){
+    char input_line_0[]="  0X5                   -4296fg04 end\0";
+    char input_line_1[]="  0X5                   -4296fg04 end\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    //ck_assert_int_eq(sscanf(input_line_0,"%2x%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%2x%X%s",&intt6,&intt7,endd2));
+    printf("%s\n",input_line_1);
+    sscanf(input_line_1,"%2x%X%s",&intt1,&intt2, endd1);
+    s21_sscanf(input_line_0,"%2x%X%s",&intt6,&intt7,endd2);
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_hexadecimal_47){
+    char input_line_0[]="  -0x5                   g-4296fg04 end\0";
+    char input_line_1[40]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[10]="start\0",endd2[10]="start\0";
+    int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%3x%X%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%3x%X%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+*/
+//9.11    //elevator
+START_TEST(test_sscanf_short_hexadecimal_1){
+    char input_line_0[]="11af  112233445566aaafffecce22333444555  -55AD  BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%hX%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_5){
+    char input_line_0[]="11af  112233445566aaafffecce22333444555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt6=1,intt7=2, intt8=3;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*x%hx%hx%s",&intt1,&intt2,&intt3, endd1),s21_sscanf(input_line_1,"%hx%*x%hx%hx%s",&intt6,&intt7,&intt8, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_str_eq(endd1,endd2);
+}   
+START_TEST(test_sscanf_short_hexadecimal_6){
+    char input_line_0[]="11af  112233445566aaafffecce22333447555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*29X%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*29X%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}     
+START_TEST(test_sscanf_short_hexadecimal_7){
+    char input_line_0[]="11af  112233445566aaafffecce22333444555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*24x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*24x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}  
+START_TEST(test_sscanf_short_hexadecimal_8){
+    char input_line_0[]="7ABC  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30X%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30X%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    //printf("%d\n",intt6);
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_9){
+    char input_line_0[]="7abc  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_10){
+    char input_line_0[]="7ABC  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30X%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30X%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_11){
+    char input_line_0[]="       7abc 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_12){
+    char input_line_0[]="  05.5  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30X%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30X%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_13){
+    char input_line_0[]="0  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_14){
+    char input_line_0[]="7fff  112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30X%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30X%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_15){
+    char input_line_0[]="-7fff 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_16){
+    char input_line_0[]="-8000 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_17){
+    char input_line_0[]="+8000 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_18){
+    char input_line_0[]="+7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hx%*30x%hx%hx%hx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hx%*30x%hx%hx%hx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_19){
+    char input_line_0[]="-7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_20){
+    char input_line_0[]="8000000000000000 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_22){
+    char input_line_0[]="0x7745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_23){
+    char input_line_0[]="-0x7745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_24){
+    char input_line_0[]="-x7745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_short_hexadecimal_25){
+    char input_line_0[]="+x7745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_26){
+    char input_line_0[]="+07745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_27){
+    char input_line_0[]="xx0774 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_28){
+    char input_line_0[]="00x0774 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_29){
+    char input_line_0[]="0xx0774 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_32){
+    char input_line_0[]="+0x7745 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%*30x%hX%hX%hX%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%hX%*30x%hX%hX%hX%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_33){
+    char input_line_0[]="   92ff37203685 55AD end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%3hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%3hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_34){
+    char input_line_0[]="   72a3                    55AD end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8hx%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8hx%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_35){
+    char input_line_0[]="   +923a567                    55AD end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%4hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%4hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_40){
+    char input_line_0[]="  0xg                  -4294967304 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_41){
+    char input_line_0[]="  -0x                   -4294 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_42){
+    char input_line_0[]="  +0x5                   -4296 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_43){
+    char input_line_0[]="  +0xf                   -4296 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_44){
+    char input_line_0[]="  +0xd                   -0x5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%3hx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%3hx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_short_hexadecimal_45){
+    char input_line_0[]="  +0                   0X5 end\0";
+    char input_line_1[70]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    short int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%hX%2hX%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%hX%2hX%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+//9.12    //elevator 
+START_TEST(test_sscanf_long_hexadecimal_1){
+    char input_line_0[]="11abcdef98  112233445566aaafffecce22333444555  -55AD  BB5.44C4  end\0";
+    char input_line_1[80]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3, intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_5){
+    char input_line_0[]="11abcdef98  112233445566aaafffecce22333444555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt6=1,intt7=2, intt8=3;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*x%lx%lx%s",&intt1,&intt2,&intt3, endd1),s21_sscanf(input_line_1,"%lx%*x%lx%lx%s",&intt6,&intt7,&intt8, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_str_eq(endd1,endd2);
+}   
+START_TEST(test_sscanf_long_hexadecimal_7){
+    char input_line_0[]="11abcdef98  112233445566aaafffecce22333447555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%10lX%*x%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%10lX%*x%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}     
+START_TEST(test_sscanf_long_hexadecimal_6){
+    char input_line_0[]="11abcdef98  112233445566aaafffecce22333447555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*15X%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*15X%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}   
+START_TEST(test_sscanf_long_hexadecimal_8){
+    char input_line_0[]="7ABCAFF  112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20X%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20X%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    //printf("%d\n",intt6);
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_9){
+    char input_line_0[]="7abcAFF  112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_12){
+    char input_line_0[]="  05.5  112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20X%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20X%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_13){
+    char input_line_0[]="0  112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_16){
+    char input_line_0[]="-8000000000000000 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_17){
+    char input_line_0[]="+8000000000000000 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_18){
+    char input_line_0[]="+7fffffffffffffff 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_19){
+    char input_line_0[]="-7fffffffffffffff 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_22){
+    char input_line_0[]="0x774adadad5 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_23){
+    char input_line_0[]="-0x77adad45 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_24){
+    char input_line_0[]="-x774adad5 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+} 
+START_TEST(test_sscanf_long_hexadecimal_25){
+    char input_line_0[]="+x774aaa5 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_26){
+    char input_line_0[]="+077ddd45 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4  end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1,intt2=2,intt3=3,intt4=4,intt6=1,intt7=2, intt8=3,intt9=4;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%*20x%lx%lx%lx%s",&intt1,&intt2,&intt3,&intt4, endd1),s21_sscanf(input_line_1,"%lx%*20x%lx%lx%lx%s",&intt6,&intt7,&intt8,&intt9, endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_int_eq(intt3,intt8);
+    ck_assert_int_eq(intt4,intt9);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_33){
+    char input_line_0[]="   92ff37203685 55AD end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%5lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%5lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_34){
+    char input_line_0[]="   72a3                    55AD end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_35){
+    char input_line_0[]="   +923a567                    55AD end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%8lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%8lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_40){
+    char input_line_0[]="  0xg                  -4294967304 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_41){
+    char input_line_0[]="  -0x                   -4294 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_42){
+    char input_line_0[]="  +0x5                   -4296 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_43){
+    char input_line_0[]="  +0xf                   -4296 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_44){
+    char input_line_0[]="  +0xd                   -0x5 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%3lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%3lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
+START_TEST(test_sscanf_long_hexadecimal_45){
+    char input_line_0[]="  +0                   0X5 end\0";
+    char input_line_1[95]="\0";
+    strcpy(input_line_1,input_line_0);
+    char endd1[6]="start\0",endd2[6]="start\0";
+    long int intt1=1, intt2=2, intt7=2, intt6=1;
+    ck_assert_int_eq(sscanf(input_line_0,"%lx%2lx%s",&intt1,&intt2, endd1),s21_sscanf(input_line_1,"%lx%2lx%s",&intt6,&intt7,endd2));
+    ck_assert_int_eq(intt1,intt6);
+    ck_assert_int_eq(intt2,intt7);
+    ck_assert_str_eq(endd1,endd2);
+}
 
+//9.13    //elevator
 
 Suite *my_string_suite(void) {
     Suite *s;
@@ -9104,8 +10452,114 @@ Suite *my_string_suite(void) {
     tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_30);
     tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_31);
     tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_32);
-
-
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_1);    
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_2);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_3);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_4);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_5);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_6);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_7);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_8);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_9);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_10);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_11);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_12);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_13);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_14);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_15);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_16);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_17);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_18);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_19);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_20);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_22);
+    // tcase_add_test(tc_core, test_sscanf_hexadecimal_21);         //too big !
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_23);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_24);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_25);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_26);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_27);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_28);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_29);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_30);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_31);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_32);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_33);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_34);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_35);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_36);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_37);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_38);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_39);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_40);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_41);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_42);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_43);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_44);
+    tcase_add_test(tc_core, test_sscanf_hexadecimal_45);   
+    //tcase_add_test(tc_core, test_sscanf_hexadecimal_46);       //randome bullshit
+    //tcase_add_test(tc_core, test_sscanf_hexadecimal_47);       //randome bullshit
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_1);  
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_5);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_6);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_7);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_8);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_9);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_10);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_11);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_12);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_13);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_14);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_15);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_16);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_17);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_18);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_19);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_20);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_22);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_23);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_24);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_25);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_26);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_27);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_28);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_29);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_32);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_33);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_34);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_35);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_40);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_41);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_42);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_43);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_44);
+    tcase_add_test(tc_core, test_sscanf_short_hexadecimal_45);    
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_1);  
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_5);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_6);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_7);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_8);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_9);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_12);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_13);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_16);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_17);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_18);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_19);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_22);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_23);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_24);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_25);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_26);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_33);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_34);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_35);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_40);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_41);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_42);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_43);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_44);
+    tcase_add_test(tc_core, test_sscanf_long_hexadecimal_45);  
 
 
 //elevator

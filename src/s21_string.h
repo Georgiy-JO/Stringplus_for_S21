@@ -59,6 +59,8 @@ char char_is_whitespace (const char tmp);
 char char_is_num (const char tmp);
 char char_is_oct (const char tmp);
 char char_is_hex (const char tmp);
+char char_is_big_hexes (const char tmp);
+char char_is_small_hexes (const char tmp);
 
 int char_to_num (const char n);
 //char num_to_char (const int n);
@@ -73,7 +75,8 @@ char can_read_spec_oct (const char* str_coursor, size_t lenth);
 char can_read_spec_hex (const char* str_coursor, size_t lenth);
 
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow);
-long double ultimate_octal_from_line(const char* line, size_t* move/*, char* overfflow*/);
+long double ultimate_octal_from_line(const char* line, size_t* move);
+long double ultimate_hex_from_line(const char* line, size_t* move);
 unsigned int uint_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);
 int int_from_line(const char* line, size_t* move);
