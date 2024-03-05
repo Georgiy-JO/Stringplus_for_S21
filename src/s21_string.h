@@ -96,7 +96,6 @@ int hex_from_line(const char* line, size_t* move);
 short int short_hex_from_line(const char* line, size_t* move);
 long int long_hex_from_line(const char* line, size_t* move);
 double double_from_line(const char* line, size_t* move);
-long double long_double_from_line(const char* line, size_t* move);
 char char_from_line(const char* line, size_t* move);
 wint_t long_char_from_line(const char* line, size_t* move);
 void string_from_line(const char* line, size_t* move, char* dest);

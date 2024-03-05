@@ -215,6 +215,7 @@ long double my_spesial_pow(double n, double m){
     }
     return res;
 }
+
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow){
     long double local_num=0.0;
     size_t local_move=0;
@@ -371,9 +372,7 @@ long int long_hex_from_line(const char* line, size_t* move){
 double double_from_line(const char* line, size_t* move){        
     return (double) ultimate_double_from_line(line,move);
 }
-long double long_double_from_line(const char* line, size_t* move){
-    return  ultimate_double_from_line(line,move);
-}
+
 
 
 
