@@ -172,16 +172,49 @@ char* whitespace_romover (const char* a_string){
     for(;char_is_whitespace(*loc_str);) {loc_str++;}
     return loc_str;
 }
-char can_read_spec_numbers (const char* str_coursor, size_t lenth){
-    return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_num(*(str_coursor+1))))? 1:0;
+char can_read_spec_numbers (const char* str_coursor, size_t length){
+    return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& length!=1&&char_is_num(*(str_coursor+1))))? 1:0;
 }
-char can_read_spec_oct (const char* str_coursor, size_t lenth){
-    return (char_is_oct(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_oct(*(str_coursor+1))))? 1:0;
+// char can_read_spec_double (const char* str_coursor, size_t length){
+//     return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&&             (  (length!=1&&char_is_num(*(str_coursor+1))) ||       (length!=2&&*(str_coursor+1)=='.'&&char_is_num(*(str_coursor+2)) )       )               )      ||    ((*str_coursor)== '.' && length!=1 && char_is_num(*(str_coursor+1)) )  )? 1:0;
+// }
+char can_read_spec_double (const char* str_coursor, size_t length){
+    if(char_is_num(*str_coursor))   return 1;
+    else if (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS) && length!=1 && char_is_num(*(str_coursor+1)))   return 1;
+    else if (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS) && length>2 && (*(str_coursor+1))=='.' && char_is_num(*(str_coursor+2)))   return 1;
+    else if ((*str_coursor)== '.' && length!=1 && char_is_num(*(str_coursor+1)))   return 1;
+    else return 0;
 }
-char can_read_spec_hex (const char* str_coursor, size_t lenth){
-    return (char_is_hex(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& lenth!=1&&char_is_hex(*(str_coursor+1))))? 1:0;
+char can_read_spec_oct (const char* str_coursor, size_t length){
+    return (char_is_oct(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& length!=1&&char_is_oct(*(str_coursor+1))))? 1:0;
 }
-
+char can_read_spec_hex (const char* str_coursor, size_t length){
+    return (char_is_hex(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& length!=1&&char_is_hex(*(str_coursor+1))))? 1:0;
+}
+char mantissa_switch(const char* line, const size_t local_move, const size_t move){
+    // if(local_move!=move){
+    //     if(*(line+local_move)=='e' || *(line+local_move)=='E'){
+    //         if(char_is_num (*(line+local_move+1)))  return 1;
+    //         else if (s21_isinstr(*(line+local_move+1),S21_SSCANF_ZERO_SYMBOLS)) return 1;
+    //     }
+    // }
+    // return 0;
+    return (    (local_move!=move||move==0) && (*(line+local_move)=='e' || *(line+local_move)=='E') && (char_is_num (*(line+local_move+1)) || s21_isinstr(*(line+local_move+1),S21_SSCANF_ZERO_SYMBOLS))    )? 1:0;
+}
+long double my_spesial_pow(double n, double m){
+    long double res=1;
+    if(m>0){
+        for(int i=0;i<m;i++){
+            res*=n;
+        }
+    }
+    else if (m<0){
+        for(int i=0;i>m;i--){
+            res/=n;
+        }
+    }
+    return res;
+}
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow){
     long double local_num=0.0;
     size_t local_move=0;
@@ -220,7 +253,7 @@ long double ultimate_octal_from_line(const char* line, size_t* move){
     if (overflow_flag==1)   local_num=-neg_flag;
     return local_num*neg_flag;
 }
-long double ultimate_hex_from_line(const char* line, size_t* move/*, char* overfflow*/){
+long double ultimate_hex_from_line(const char* line, size_t* move){
     long double local_num=0.0;
     double single_digit=0;
     size_t local_move=0;
@@ -247,6 +280,46 @@ long double ultimate_hex_from_line(const char* line, size_t* move/*, char* overf
     if (overflow_flag==1)   local_num=-neg_flag;
     return local_num*neg_flag;
 }
+long double ultimate_double_from_line(const char* line, size_t* move){          //strtold() from stdlib.h
+    long double local_num=0.0;
+    size_t local_move=0;
+    double  neg_flag=1.0; 
+    
+    if(*line=='-'){
+        local_move++; 
+        neg_flag=-1.0;
+    }
+    else if (*line=='+')    local_move++;
+    //printf("1)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
+    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+        local_num=local_num*10.0+(long double)char_to_num(*(line+local_move));
+    }
+    //printf("1.1)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
+    if(*(line+local_move)=='.' && (local_move!=(*move) || (*move)==0)){
+       //printf("2)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
+        local_move++;
+        for(double i=1;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++, i++){
+            local_num=local_num+(long double)(char_to_num(*(line+local_move)))/(my_spesial_pow(10.0,i));
+        }
+    }
+    if(mantissa_switch(line, local_move, *move)){
+
+        //printf("3)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
+        local_move++;
+        double mantiss_num=0, decimal_sign_flag=1;
+        if(*(line+local_move)=='-')     decimal_sign_flag=-1;
+        if(s21_isinstr(*(line+local_move),S21_SSCANF_ZERO_SYMBOLS)) local_move++;
+        for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
+            mantiss_num=mantiss_num*10+(double)char_to_num(*(line+local_move));
+        }
+        mantiss_num*=decimal_sign_flag;
+        local_num=local_num*my_spesial_pow(10.0,mantiss_num);
+    }
+    //printf("4)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
+    if(*move==0 || *move>local_move)  *move=local_move;
+    return local_num*(long double)neg_flag;
+}
+
 unsigned int uint_from_line(const char* line, size_t* move){
     char overfflow=0;
     unsigned int tmp=(unsigned int)ultimate_int_from_line(line,move,&overfflow);
@@ -295,67 +368,15 @@ short int short_hex_from_line(const char* line, size_t* move){
 long int long_hex_from_line(const char* line, size_t* move){
     return (long int) ultimate_hex_from_line(line,move);
 }
-
-
-
-
-float float_from_line(const char* line, size_t* move){          //  %Lf   The argument is interpreted as a long double   %f - double
-    float local_num=0;
-    size_t local_move=0;
-    int neg_flag=1;
-    if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
-    }
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*(line+local_move)=='.'){
-        local_move++;
-        for(float i=1;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++, i++){
-            local_num=local_num+(float)(char_to_num(*(line+local_move)))/(pow(10.0,i));
-        }
-    }
-    if((*(line+local_move)=='e' || *(line+local_move)=='E') && char_is_num (*(line+local_move+1))){
-        local_move++;
-        float mantiss_num=0;
-        for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-            mantiss_num=mantiss_num*10+char_to_num(*(line+local_move));
-        }
-        local_num=local_num*pow(10.0,mantiss_num);
-        //printf("\n============%f===========\n",local_num);
-    }
-    if(*move==0)  *move=local_move;
-    return local_num*neg_flag;
+double double_from_line(const char* line, size_t* move){        
+    return (double) ultimate_double_from_line(line,move);
 }
-double double_from_line(const char* line, size_t* move){
-    double local_num=0;
-    size_t local_move=0;
-    int neg_flag=1;
-    if(*line=='-'){
-        local_move++;
-        neg_flag=-1;
-    }
-    for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        local_num=local_num*10+char_to_num(*(line+local_move));
-    }
-    if(*(line+local_move)=='.'){
-        local_move++;
-        for(float i=1;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++, i++){
-            local_num=local_num+(float)(char_to_num(*(line+local_move)))/(pow(10.0,i));
-        }
-    }
-    if((*(line+local_move)=='e' || *(line+local_move)=='E') && char_is_num (*(line+local_move+1))){
-        local_move++;
-        float mantiss_num=0;
-        for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-            mantiss_num=mantiss_num*10+char_to_num(*(line+local_move));
-        }
-        local_num=local_num*pow(10.0,mantiss_num);
-    }
-    if(*move==0)  *move=local_move;
-    return local_num*neg_flag;
+long double long_double_from_line(const char* line, size_t* move){
+    return  ultimate_double_from_line(line,move);
 }
+
+
+
 char char_from_line(const char* line, size_t* move){
     if(*move==0)  *move=1;
     return *line;
@@ -444,7 +465,7 @@ char* spec_translator(variables* var_spec, const char* format){
     }
     //float (eEfgG)
     else if (s21_isinstr(*loc_format,S21_SSCANF_FLOAT_SPEC)){
-        if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"L"))
+        if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"Ll"))
         {
             var_spec->spec=*loc_format;
             loc_format++;
@@ -603,21 +624,24 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
     case 'G':
     case 'e':
     case 'E':
-        if(!can_read_spec_numbers(str_coursor,move)){
+        if(!can_read_spec_double(str_coursor,move)){
             move=0;
             str_coursor=NULL;
         }
         else if(var_spec.skip==1){
-            if(var_spec.length=='L')            double_from_line(str_coursor,&move);
-            else                                float_from_line(str_coursor,&move);
+            if(var_spec.length=='L')            ultimate_double_from_line(str_coursor,&move);
+            else                                double_from_line(str_coursor,&move);
         }
         else{
             if(var_spec.length=='L'){
+                long double* var_point=va_arg(*var,long double*);
+                *var_point=ultimate_double_from_line(str_coursor,&move);
+            }else if(var_spec.length=='l'){
                 double* var_point=va_arg(*var,double*);
-                *var_point=double_from_line(str_coursor,&move);
-            }else {
+                *var_point=(double)ultimate_double_from_line(str_coursor,&move);
+            }else{
                 float* var_point=va_arg(*var,float*);
-                *var_point=float_from_line(str_coursor,&move);
+                *var_point=double_from_line(str_coursor,&move);
                 //printf("\n===%f=%ld===\n", *var_point, move);
             }
         }
@@ -778,3 +802,4 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
 //  -a6  %3x
 //  -g     %3x  
 //  problems before reading anything!!!
+//  -.5     %0f

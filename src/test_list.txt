@@ -746,7 +746,106 @@ s21_sscanf
     test_sscanf_long_hexadecimal_43
     test_sscanf_long_hexadecimal_44
     test_sscanf_long_hexadecimal_45
-
+    9.13
+    test_sscanf_float_1
+    test_sscanf_float_3
+    test_sscanf_float_4
+    test_sscanf_float_5
+    test_sscanf_float_6
+    test_sscanf_float_7
+    test_sscanf_float_8
+    test_sscanf_float_9
+    test_sscanf_float_10
+    test_sscanf_float_11
+    test_sscanf_float_12
+    test_sscanf_float_13
+    test_sscanf_float_14
+    test_sscanf_float_15
+    test_sscanf_float_16
+    test_sscanf_float_17
+    test_sscanf_float_2
+    test_sscanf_float_18
+    test_sscanf_float_19
+    test_sscanf_float_20
+    test_sscanf_float_21
+    test_sscanf_float_22
+    test_sscanf_float_23
+    test_sscanf_float_24
+    test_sscanf_float_25
+    test_sscanf_float_26
+    9.14
+    test_sscanf_float_g_1
+    test_sscanf_float_g_2
+    test_sscanf_float_g_3
+    test_sscanf_float_g_4
+    test_sscanf_float_g_5
+    test_sscanf_float_g_6
+    test_sscanf_float_g_7
+    test_sscanf_float_g_8
+    test_sscanf_float_g_9
+    test_sscanf_float_g_10
+    test_sscanf_float_G_1
+    test_sscanf_float_G_2
+    test_sscanf_float_G_3
+    test_sscanf_float_G_4
+    test_sscanf_float_G_5
+    test_sscanf_float_G_6
+    test_sscanf_float_G_7
+    test_sscanf_float_G_8
+    test_sscanf_float_G_9
+    test_sscanf_float_G_10
+    test_sscanf_float_e_1
+    test_sscanf_float_e_2
+    test_sscanf_float_e_3
+    test_sscanf_float_e_4
+    test_sscanf_float_e_5
+    test_sscanf_float_e_6
+    test_sscanf_float_e_7
+    test_sscanf_float_e_8
+    test_sscanf_float_e_9
+    test_sscanf_float_e_10
+    test_sscanf_float_E_1
+    test_sscanf_float_E_2
+    test_sscanf_float_E_3
+    test_sscanf_float_E_4
+    test_sscanf_float_E_5
+    test_sscanf_float_E_6
+    test_sscanf_float_E_7
+    test_sscanf_float_E_8
+    test_sscanf_float_E_9
+    test_sscanf_float_E_10
+    9.15
+    test_sscanf_long_double_1
+    test_sscanf_long_double_3   //!!    (long_double splitting)
+    test_sscanf_long_double_4   //!!    (long_double splitting)
+    test_sscanf_long_double_5   //!!    (long_double splitting)
+    test_sscanf_long_double_6   //!!    (long_double splitting)
+    test_sscanf_long_double_7   //!!    (long_double splitting)
+    test_sscanf_long_double_8   //!!    (long_double splitting)
+    test_sscanf_long_double_9   //!!    (long_double splitting)
+    test_sscanf_long_double_10   //!!    (long_double splitting)
+    test_sscanf_long_double_11   //!!    (long_double splitting)
+    test_sscanf_long_double_12
+    test_sscanf_long_double_13
+    test_sscanf_long_double_14
+    test_sscanf_long_double_15
+    test_sscanf_long_double_16
+    test_sscanf_long_double_17
+    test_sscanf_long_double_2
+    test_sscanf_long_double_18   //!!    (long_double splitting)
+    test_sscanf_long_double_19   //!!    (long_double splitting)
+    test_sscanf_long_double_20   //!!    (long_double splitting)
+    test_sscanf_long_double_21   //!!    (long_double splitting)
+    test_sscanf_long_double_22
+    test_sscanf_long_double_23
+    test_sscanf_long_double_24
+    test_sscanf_long_double_25
+    test_sscanf_long_double_26   //!!    (long_double splitting)
+    test_sscanf_long_double_27   //!!    (long_double splitting)
+    test_sscanf_long_double_28   //!!    (long_double splitting)
+    test_sscanf_long_double_29   //!!    (long_double splitting)
+    test_sscanf_long_double_30   //!!    (long_double splitting)
+    9.16
 
 
 

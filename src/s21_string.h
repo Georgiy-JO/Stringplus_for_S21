@@ -6,7 +6,8 @@
 #include <stdlib.h>  //--allowed?
 #include <math.h>    //--allowed?
 //#include <limits.h>     //--allowed?
-//#include <stdint.h>     //--allowed?
+//#include <stdint.h>     //--allowed?=
+
 
 #define size_t unsigned long int
 #define symbol unsigned char
@@ -71,12 +72,17 @@ void zero_struct(variables * var);
 size_t var_counting (const char *format);
 char* whitespace_romover (const char* a_string);
 char can_read_spec_numbers (const char* str_coursor, size_t lenth);
+char can_read_spec_double (const char* str_coursor, size_t lenth);
 char can_read_spec_oct (const char* str_coursor, size_t lenth);
 char can_read_spec_hex (const char* str_coursor, size_t lenth);
+char mantissa_switch(const char* line, const size_t local_move, const size_t move);
+long double my_spesial_pow(double n, double m);
 
 long double ultimate_int_from_line(const char* line, size_t* move, char* overfflow);
 long double ultimate_octal_from_line(const char* line, size_t* move);
 long double ultimate_hex_from_line(const char* line, size_t* move);
+long double ultimate_double_from_line(const char* line, size_t* move);
+long double ultimate_double_from_line(const char* line, size_t* move);
 unsigned int uint_from_line(const char* line, size_t* move);
 unsigned short ushort_from_line(const char* line, size_t* move);
 int int_from_line(const char* line, size_t* move);
@@ -89,8 +95,8 @@ size_t long_uoctal_from_line(const char* line, size_t* move);
 int hex_from_line(const char* line, size_t* move);
 short int short_hex_from_line(const char* line, size_t* move);
 long int long_hex_from_line(const char* line, size_t* move);
-float float_from_line(const char* line, size_t* move);
 double double_from_line(const char* line, size_t* move);
+long double long_double_from_line(const char* line, size_t* move);
 char char_from_line(const char* line, size_t* move);
 wint_t long_char_from_line(const char* line, size_t* move);
 void string_from_line(const char* line, size_t* move, char* dest);

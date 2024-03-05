@@ -61,11 +61,11 @@ where:
 | 1 |  |  | ✔ |  | c | Character | Character |
 | 2 |  |  | ✔ | ✔ | d | Signed decimal integer | Signed decimal integer |
 | 3 |  |  | ✔ |  | i | Signed decimal integer | Signed integer (may be decimal, octal or hexadecimal) |
-| 4 |  |  | ✔ |  | e | Scientific notation (mantissa/exponent) using e character (the output of the numbers must match up to e-6) | Decimal floating point or scientific notation (mantissa/exponent) |
-| 5 |  |  | ✔ |  | E | Scientific notation (mantissa/exponent) using E character | Decimal floating point or scientific notation (mantissa/exponent) |
-| 6 |  |  | ✔ |  | f | Decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
-| 7 |  |  | ✔ |  | g | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
-| 8 |  |  | ✔ |  | G | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
+| 4 |  |  | ✔ | ✔ | e | Scientific notation (mantissa/exponent) using e character (the output of the numbers must match up to e-6) | Decimal floating point or scientific notation (mantissa/exponent) |
+| 5 |  |  | ✔ | ✔ | E | Scientific notation (mantissa/exponent) using E character | Decimal floating point or scientific notation (mantissa/exponent) |
+| 6 |  |  | ✔ | ✔ | f | Decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
+| 7 |  |  | ✔ | ✔ | g | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
+| 8 |  |  | ✔ | ✔ | G | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 9 |  |  | ✔ | ✔ | o | Unsigned octal | Unsigned octal |
 | 10 |  |  | ✔ |  | s | String of characters | String of characters |
 | 11 |  |  | ✔ | ✔ | u | Unsigned decimal integer | Unsigned decimal integer |
@@ -105,7 +105,7 @@ where:
 | --- | --- | --- | --- | --- | --- | --- |
 | 1 |  |  | ✔ | ✔ | h | The argument is interpreted as a short int or unsigned short int (only applies to integer specifiers: i, d, o, u, x and X). |
 | 2 |  |  | ✔ | ✔ | l | The argument is interpreted as a long int or unsigned long int for integer specifiers (i, d, o, u, x and X), and as a wide character or wide character string for specifiers c and s. |
-| 3 |  |  | ✔ |  | L | The argument is interpreted as a long double (only applies to floating point specifiers − e, E, f, g and G). |
+| 3 |  |  | ✔ | ✔ | L | The argument is interpreted as a long double (only applies to floating point specifiers − e, E, f, g and G). |
 
 ### Special string processing functions (from the String class in C#)
 
