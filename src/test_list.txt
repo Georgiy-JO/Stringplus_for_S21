@@ -1068,7 +1068,7 @@ s21_sscanf
     test_sscanf_strange_tests_42
 
 
-                                         //     *if input_line==NULL    original--> segmentation fault
+        *if input_line==NULL    original--> segmentation fault
 
 
 

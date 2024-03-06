@@ -45,10 +45,31 @@ FULL WORKABLE & CHECKED VERSION OF s21_sscanf WITH TESTS!
 
     Issue: the version is not optimal.
     Next:   Optimization of the s21_sscanf.c;
-            Clang-foemat;
+            Clang-format;
             Valgrind;
             Gcov;
             Makefile issues.
 
     PS. This branch is fully operational, has a lot of commented "printfs", due to that is usefull for troubleshooting.
     PSS. %c && %lc  -- are not working properly and prbaly never will.
+
+## feature/rk_jo_final(06.03.24):
+This branch summery: The final vesion for my self.
+
+This branch last commit:
+Step_3. ~FINAL FORM~
+        Commit with some author's comments.
+            Note: This commit is for myself.
+    
+    Status:     s21_sscanf works;
+                Tests for "s21_sscanf" are done;
+                Oprimization finished;
+                Uninformative comments cleaned;
+                Debugging comments cleaned.
+    
+    Next:   Clang-format;
+            Valgrind;
+            Gcov;
+            Makefile issues.
+
+    *%c && %lc  -- are not working properly and prbaly never will.
