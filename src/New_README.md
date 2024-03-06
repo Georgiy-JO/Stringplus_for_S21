@@ -58,22 +58,22 @@ where:
 
 | No. | Sprintf Done | Sprintf Checked | Sscanf Done | Sscanf Checked | Specifier | sprintf output | sscanf output |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 |  |  | ✔ |  | c | Character | Character |
+| 1 |  |  | ✔ | ✔(-) | c | Character | Character |
 | 2 |  |  | ✔ | ✔ | d | Signed decimal integer | Signed decimal integer |
-| 3 |  |  | ✔ |  | i | Signed decimal integer | Signed integer (may be decimal, octal or hexadecimal) |
+| 3 |  |  | ✔ | ✔ | i | Signed decimal integer | Signed integer (may be decimal, octal or hexadecimal) |
 | 4 |  |  | ✔ | ✔ | e | Scientific notation (mantissa/exponent) using e character (the output of the numbers must match up to e-6) | Decimal floating point or scientific notation (mantissa/exponent) |
 | 5 |  |  | ✔ | ✔ | E | Scientific notation (mantissa/exponent) using E character | Decimal floating point or scientific notation (mantissa/exponent) |
 | 6 |  |  | ✔ | ✔ | f | Decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 7 |  |  | ✔ | ✔ | g | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 8 |  |  | ✔ | ✔ | G | Uses the shortest representation of decimal floating point | Decimal floating point or scientific notation (mantissa/exponent) |
 | 9 |  |  | ✔ | ✔ | o | Unsigned octal | Unsigned octal |
-| 10 |  |  | ✔ |  | s | String of characters | String of characters |
+| 10 |  |  | ✔ | ✔ | s | String of characters | String of characters |
 | 11 |  |  | ✔ | ✔ | u | Unsigned decimal integer | Unsigned decimal integer |
 | 12 |  |  | ✔ | ✔ | x | Unsigned hexadecimal integer | Unsigned hexadecimal integer (any letters) |
 | 13 |  |  | ✔ | ✔ | X | Unsigned hexadecimal integer (capital letters) | Unsigned hexadecimal integer (any letters) |
-| 14 |  |  | ✔ |  | p | Pointer address | Pointer address |
-| 15 |  |  | ✔ |  | n | Number of characters printed until %n occurs | Number of characters scanned until %n occurs |
-| 16 |  |  | ✔ |  | % | Character % | Character % |
+| 14 |  |  | ✔ | ✔ | p | Pointer address | Pointer address |
+| 15 |  |  | ✔ | ✔ | n | Number of characters printed until %n occurs | Number of characters scanned until %n occurs |
+| 16 |  |  | ✔ | ✔ | % | Character % | Character % |
 
 ### sprintf Flags
 
@@ -89,8 +89,8 @@ where:
 
 | No. | Sprintf Done | Sprintf Checked | Sscanf Done | Sscanf Checked |	Width | Description |
 | --- | --- | --- | --- | --- | --- | --- |
-| 1	|  |  | ✔ |  | (number) | Minimum number of characters to be printed. If the value to be printed is shorter than this number, the result is padded with blank spaces. The value is not truncated even if the result is larger. |
-| 2 |  |  | ✔ |  | * | In sprintf the * sign means, that the width is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted. In sscanf the * sign placed after % and before the format specifier reads data of the specified type, but suppresses their assignment. |
+| 1	|  |  | ✔ | ✔ | (number) | Minimum number of characters to be printed. If the value to be printed is shorter than this number, the result is padded with blank spaces. The value is not truncated even if the result is larger. |
+| 2 |  |  | ✔ | ✔ | * | In sprintf the * sign means, that the width is not specified in the format string, but as an additional integer value argument preceding the argument that has to be formatted. In sscanf the * sign placed after % and before the format specifier reads data of the specified type, but suppresses their assignment. |
 
 ### sprintf Precision Description
 

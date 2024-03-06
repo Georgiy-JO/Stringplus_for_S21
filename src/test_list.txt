@@ -890,6 +890,140 @@ s21_sscanf
     test_sscanf_long_double_E_8
     test_sscanf_long_double_E_9
     test_sscanf_long_double_E_10
+    9.17
+    test_sscanf_i_1
+    test_sscanf_i_2
+    test_sscanf_i_3
+    test_sscanf_i_4
+    test_sscanf_i_5
+    test_sscanf_i_6
+    test_sscanf_i_7
+    test_sscanf_i_8
+    test_sscanf_i_9
+    test_sscanf_i_10
+    test_sscanf_i_11
+    test_sscanf_i_12
+    test_sscanf_i_13
+    test_sscanf_i_14
+    test_sscanf_i_15
+    test_sscanf_i_16
+    test_sscanf_i_17
+    test_sscanf_i_18
+    test_sscanf_i_19
+    test_sscanf_i_20
+    test_sscanf_i_21
+    test_sscanf_i_22
+    test_sscanf_i_23
+    test_sscanf_i_24
+    test_sscanf_i_25
+    test_sscanf_i_26
+    test_sscanf_i_27
+    test_sscanf_i_28
+    test_sscanf_i_29
+    test_sscanf_i_30
+    test_sscanf_i_31
+    test_sscanf_i_32
+    test_sscanf_i_33
+    test_sscanf_i_34
+    test_sscanf_i_35
+    test_sscanf_i_36
+    test_sscanf_i_37
+    test_sscanf_i_38
+    test_sscanf_i_39
+    test_sscanf_i_40
+    test_sscanf_i_41
+    test_sscanf_i_42
+    test_sscanf_i_43
+    test_sscanf_i_44
+    test_sscanf_i_45
+    9.18
+    test_sscanf_long_and_short_i_1
+    test_sscanf_long_and_short_i_2
+    test_sscanf_long_and_short_i_3
+    test_sscanf_long_and_short_i_4
+    test_sscanf_long_and_short_i_5
+    test_sscanf_long_and_short_i_6
+    test_sscanf_long_and_short_i_7
+    test_sscanf_long_and_short_i_8
+    test_sscanf_long_and_short_i_9
+    test_sscanf_long_and_short_i_10
+    test_sscanf_long_and_short_i_11
+    test_sscanf_long_and_short_i_12
+    test_sscanf_long_and_short_i_13
+    test_sscanf_long_and_short_i_14
+    test_sscanf_long_and_short_i_15
+    test_sscanf_long_and_short_i_16
+    test_sscanf_long_and_short_i_17
+    test_sscanf_long_and_short_i_18
+    test_sscanf_long_and_short_i_19
+    test_sscanf_long_and_short_i_20
+    test_sscanf_long_and_short_i_21
+    test_sscanf_long_and_short_i_22
+    test_sscanf_long_and_short_i_23
+    test_sscanf_long_and_short_i_24
+    test_sscanf_long_and_short_i_25
+    test_sscanf_long_and_short_i_26
+    test_sscanf_long_and_short_i_27
+    test_sscanf_long_and_short_i_28
+    test_sscanf_long_and_short_i_29
+    test_sscanf_long_and_short_i_30
+    9.19
+    test_sscanf_pointer_1
+    test_sscanf_pointer_2
+    test_sscanf_pointer_3
+    test_sscanf_pointer_4
+    test_sscanf_pointer_5
+    test_sscanf_pointer_6
+    test_sscanf_pointer_7
+    test_sscanf_pointer_8
+    test_sscanf_pointer_9
+    test_sscanf_pointer_10
+    test_sscanf_pointer_11
+    test_sscanf_pointer_12
+    test_sscanf_pointer_13
+    test_sscanf_pointer_14
+    test_sscanf_pointer_15
+    9.20
+    test_sscanf_char_and_long_char_1
+    test_sscanf_char_and_long_char_8
+    test_sscanf_char_and_long_char_10
+    test_sscanf_char_and_long_char_11
+    test_sscanf_char_and_long_char_18
+    test_sscanf_char_and_long_char_20
+    //test_sscanf_char_and_long_char_2          //does not work in my architecture
+    //test_sscanf_char_and_long_char_3          //does not work in my architecture
+    //test_sscanf_char_and_long_char_4          //does not work in my architecture
+    //test_sscanf_char_and_long_char_5          //does not work in my architecture
+    //test_sscanf_char_and_long_char_6          //does not work in my architecture
+    //test_sscanf_char_and_long_char_7          //does not work in my architecture
+    //test_sscanf_char_and_long_char_9          //does not work in my architecture
+    test_sscanf_char_and_long_char_12
+    test_sscanf_char_and_long_char_13
+    test_sscanf_char_and_long_char_14
+    test_sscanf_char_and_long_char_15
+    test_sscanf_char_and_long_char_16
+    test_sscanf_char_and_long_char_17
+    test_sscanf_char_and_long_char_19
+    9.21
+    test_sscanf_string_and_long_string_1
+    test_sscanf_string_and_long_string_2
+    test_sscanf_string_and_long_string_3
+    test_sscanf_string_and_long_string_4
+    test_sscanf_string_and_long_string_5
+    test_sscanf_string_and_long_string_6
+    test_sscanf_string_and_long_string_7
+    test_sscanf_string_and_long_string_8
+    test_sscanf_string_and_long_string_9
+    test_sscanf_string_and_long_string_10
+    test_sscanf_string_and_long_string_11
+    test_sscanf_string_and_long_string_12
+    test_sscanf_string_and_long_string_13
+    test_sscanf_string_and_long_string_14
+    9.22
+    9.23
+
+
+
 
 
 

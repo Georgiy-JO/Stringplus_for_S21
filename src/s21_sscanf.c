@@ -100,6 +100,7 @@ int s21_sscanf(const char *str, const char *format, ...){
                 //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
+                //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 if(format_coursor!=NULL ){
                     //printf("\n4)$$%s$$%s$$\n",str_coursor, format_coursor );
                     if(var_spec.spec=='n')  *(va_arg(var,int*))=str_coursor- str;
@@ -241,6 +242,7 @@ long double ultimate_octal_from_line(const char* line, size_t* move){
     double neg_flag=1.0;
     size_t limit = __ULONG_MAX__;
     char overflow_flag=0;
+    //printf(".Here>%s\n",line);
     if(*line=='-'){
         local_move++; 
         neg_flag=-1.0;
@@ -261,8 +263,6 @@ long double ultimate_hex_from_line(const char* line, size_t* move){
     double neg_flag=1.0;
     char overflow_flag=0;
     size_t limit = __ULONG_MAX__;
-    // if (*overfflow) limit = __LONG_MAX__;
-    // *overfflow = 0;
     if(*line=='-'){
         local_move++; 
         neg_flag=-1.0;
@@ -320,7 +320,6 @@ long double ultimate_double_from_line(const char* line, size_t* move){          
     if(*move==0 || *move>local_move)  *move=local_move;
     return local_num*(long double)neg_flag;
 }
-
 unsigned int uint_from_line(const char* line, size_t* move){
     char overfflow=0;
     unsigned int tmp=(unsigned int)ultimate_int_from_line(line,move,&overfflow);
@@ -372,54 +371,23 @@ long int long_hex_from_line(const char* line, size_t* move){
 double double_from_line(const char* line, size_t* move){        
     return (double) ultimate_double_from_line(line,move);
 }
-
-
-
-
-char char_from_line(const char* line, size_t* move){
-    if(*move==0)  *move=1;
-    return *line;
-}
-wint_t long_char_from_line(const char* line, size_t* move){
-    if(*move==0)  *move=1;
-    return (wint_t)(*line);
-}
-void string_from_line(const char* line, size_t* move, char* dest){
-    size_t local_move=0;
-    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        *(dest+local_move)=*(line+local_move);
-    }
-    *(dest+local_move)=0;
-    if(*move==0)  *move=local_move;
-}
-void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
-    size_t local_move=0;
-    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
-        *(dest+local_move)=(wchar_t)*(line+local_move);     //memset(   sizeof(wchar_t))
-    }
-    *(dest+local_move)=0;
-    if(*move==0)  *move=local_move;
-}
-void** pointer_from_line(const char* line, size_t* move){
-    size_t local_num=0;
-    local_num= long_hex_from_line(line,move);
-    return (void*)local_num;
-}
 int signed_num_from_line(const char* line, size_t* move){
+    //printf(".Here>%s\n",line);
     int local_num=0;
     size_t local_move=0;
-    if(*line=='-')  local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num=hex_from_line(line,move);
-    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=uoctal_from_line(line,move);      //signed!!!!?
+    if(*line=='-' || *line=='+')  local_move++;
+    //printf(">>%d>>%d>>%d>>%d\n",*(line+local_move)=='0',(*(line+local_move+1)=='x' || *(line+local_move+1)=='X'), char_is_hex (*(line+local_move+2)), (*move==0 || (*move-local_move)>=2));
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_hex (*(line+local_move+2)) && ((*move-local_move)>=2 || *move==0))    local_num=hex_from_line(line,move);
+    else if (*(line+local_move)=='0') local_num=uoctal_from_line(line,move);
     else    local_num=int_from_line(line,move);
     return local_num;
 }
 short short_signed_num_from_line(const char* line, size_t* move){
     short local_num=0;
     size_t local_move=0;
-    if(*line=='-')  local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num=short_hex_from_line(line,move);
-    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=short_uoctal_from_line(line,move);      //signed!!!!?
+    if(*line=='-' || *line=='+')  local_move++;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_hex (*(line+local_move+2)) && ((*move-local_move)>=2 || *move==0))    local_num=short_hex_from_line(line,move);
+    else if (*(line+local_move)=='0') local_num=short_uoctal_from_line(line,move);
     else    local_num=short_from_line(line,move);
     return local_num;
 }
@@ -427,10 +395,44 @@ long int long_signed_num_from_line(const char* line, size_t* move){
     long int local_num=0;
     size_t local_move=0;
     if(*line=='-')  local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_num (*(line+local_move+2)))    local_num= long_hex_from_line(line,move);
-    else if (*(line+local_move)=='0' && char_is_num (*(line+local_move+1))) local_num=long_uoctal_from_line(line,move);      //signed!!!!?
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_hex (*(line+local_move+2))&& ((*move-local_move)>=2 || *move==0))    local_num= long_hex_from_line(line,move);
+    else if (*(line+local_move)=='0' /*&& char_is_oct (*(line+local_move+1))*/) local_num=long_uoctal_from_line(line,move);
     else    local_num=long_from_line(line,move);
     return local_num;
+}
+void** pointer_from_line(const char* line, size_t* move){
+    size_t local_num=0;
+    local_num= long_hex_from_line(line,move);
+    return (void*)local_num;
+}
+char char_from_line(const char* line, size_t* move){                     //does not work in my architecture
+    if(*move==0)  *move=1;
+    return *line;
+}
+wint_t long_char_from_line(const char* line, size_t* move){          //does not work in my architecture
+    if(*move==0)  *move=1;
+    return (wint_t)(*line);
+}
+void string_from_line(const char* line, size_t* move, char* dest){
+    size_t local_move=0;
+    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0) && *(line+local_move)!=C_ZERO;local_move++){
+        *(dest+local_move)=*(line+local_move);
+    }
+    *(dest+local_move)=0;
+    if(*move==0 || *move>local_move)  *move=local_move;
+}
+void long_string_from_line(const char* line, size_t* move, wchar_t* dest){
+    size_t local_move=0;
+    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0) && *(line+local_move)!=C_ZERO;local_move++){
+        *(dest+local_move)=(wchar_t)*(line+local_move);     //memset(   sizeof(wchar_t))
+    }
+    *(dest+local_move)=0;
+    if(*move==0 || *move>local_move)  *move=local_move;
+}
+void string_from_line_skip(const char* line, size_t* move){
+    size_t local_move=0;
+    for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0) && *(line+local_move)!=C_ZERO;local_move++);
+    if(*move==0 || *move>local_move)  *move=local_move;
 }
 
 // format be like: %[*][width][length]specifier. -->%*10lu                   
@@ -485,19 +487,18 @@ char* spec_translator(variables* var_spec, const char* format){
     {
         if (var_spec->length==C_ZERO)
         {
-            if (var_spec->width!=0 && *loc_format=='n')                     loc_format=NULL;
-            else{
-                var_spec->spec=*loc_format;
-                loc_format++;
-            }
+            //if (var_spec->width!=0 && *loc_format=='n')                     loc_format=NULL;
+            
+            var_spec->spec=*loc_format;
+            loc_format++;
+            
         }
         else                    loc_format=NULL;  
     }
     else          loc_format=NULL; 
     return loc_format;
 }
-char* var_filling(va_list* var, variables var_spec, char* str_coursor)
-{
+char* var_filling(va_list* var, variables var_spec, char* str_coursor){
     size_t move=var_spec.width;
     switch (var_spec.spec)
     {
@@ -549,7 +550,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 'i':
-        if(!can_read_spec_numbers(str_coursor,move)&&!can_read_spec_hex(str_coursor,move)){
+        if(!can_read_spec_numbers(str_coursor,move)){
             move=0;
             str_coursor=NULL;
         }
@@ -661,10 +662,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor)
         }
         break;
     case 's':
-        if(var_spec.skip==1){
-            if(var_spec.length=='l'){   wchar_t* var_point=NULL;         long_string_from_line(str_coursor,&move,var_point);}
-            else{ char* var_point=NULL;                               string_from_line(str_coursor,&move,var_point);}
-        }
+        if(var_spec.skip==1)        string_from_line_skip(str_coursor,&move);
         else{
             if(var_spec.length=='l'){
                 wchar_t* var_point=va_arg(*var,wchar_t*);
@@ -717,7 +715,7 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
         }
         else   loc_form_cours = NULL;          //EOF??  //if strings before % in format and in str does not match
     }
-    loc_str_cours=whitespace_romover(loc_str_cours);
+    //loc_str_cours=whitespace_romover(loc_str_cours);
     //printf("\n|||%d++++%s|||\n",*loc_str_cours,  loc_form_cours);
     *str_coursor = loc_str_cours;
     return loc_form_cours;
