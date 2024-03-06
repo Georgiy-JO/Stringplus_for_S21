@@ -69,7 +69,7 @@ typedef struct variables
 } variables;
 
 int s21_sscanf(const char *str, const char *format, ...){
-	if(str == NULL || format==NULL)     return ERROR;          //EOF??
+	if(str == NULL || format==NULL || str[0]==C_ZERO)     return ERROR;          //EOF??
     size_t var_amount =0;
     size_t var_number=0;
     var_amount=var_counting(format);
@@ -96,16 +96,17 @@ int s21_sscanf(const char *str, const char *format, ...){
                     //printf("\n3)$$%s$$%s$$\n",str_coursor, format_coursor );
                     continue;
                 }
-                
                 //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1));      //???format_coursor==NULL         --spec error
                 //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
-                if(format_coursor!=NULL ){
+                if(format_coursor!=NULL && *str_coursor!=C_ZERO){
                     //printf("\n4)$$%s$$%s$$\n",str_coursor, format_coursor );
-                    if(var_spec.spec=='n')  *(va_arg(var,int*))=str_coursor- str;
-                    else{
+                    if(var_spec.spec=='n')  {
+                        if (var_spec.skip!=1)   *(va_arg(var,int*))=str_coursor- str;
+                    }else{
                         str_coursor=var_filling(&var, var_spec, str_coursor);
+                        //printf("\n5)$$%s$$%s$$\n",str_coursor, format_coursor );
                         if(str_coursor!=NULL && var_spec.skip!=1)   var_number++;                       //????str_coursor!=NULL           --reading/wrighting var error?                        
                     }
                 }
@@ -123,7 +124,7 @@ int s21_sscanf(const char *str, const char *format, ...){
 //     return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
 // }
 char char_is_whitespace (const char tmp){ //9,10,11,12,13,32,0 
-    return ((tmp>=9 && tmp<=13) || tmp==32 || tmp==0)? 1:0;
+    return ((tmp>=9 && tmp<=13) || tmp==32 /*|| tmp==0*/)? 1:0;
 }
 char char_is_num (const char tmp){
     return (tmp>='0' && tmp<='9')? 1:0;
@@ -200,7 +201,7 @@ char mantissa_switch(const char* line, const size_t local_move, const size_t mov
     //     }
     // }
     // return 0;
-    return (    (local_move!=move||move==0) && (*(line+local_move)=='e' || *(line+local_move)=='E') && (char_is_num (*(line+local_move+1)) || s21_isinstr(*(line+local_move+1),S21_SSCANF_ZERO_SYMBOLS))    )? 1:0;
+    return (    (local_move!=move||move==0) && (*(line+local_move)=='e' || *(line+local_move)=='E') /*&& (char_is_num (*(line+local_move+1)) || char_is_whitespace(*(line+local_move+1)))*/   )? 1:0;
 }
 long double my_spesial_pow(double n, double m){
     long double res=1;
@@ -242,7 +243,6 @@ long double ultimate_octal_from_line(const char* line, size_t* move){
     double neg_flag=1.0;
     size_t limit = __ULONG_MAX__;
     char overflow_flag=0;
-    //printf(".Here>%s\n",line);
     if(*line=='-'){
         local_move++; 
         neg_flag=-1.0;
@@ -257,6 +257,7 @@ long double ultimate_octal_from_line(const char* line, size_t* move){
     return local_num*neg_flag;
 }
 long double ultimate_hex_from_line(const char* line, size_t* move){
+    //printf(".Here>%s\n",line);    
     long double local_num=0.0;
     double single_digit=0;
     size_t local_move=0;
@@ -268,7 +269,8 @@ long double ultimate_hex_from_line(const char* line, size_t* move){
         neg_flag=-1.0;
     }
     else if (*line=='+')    local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && (char_is_hex (*(line+local_move+2))|| char_is_whitespace(*(line+local_move+2))))    local_move+=2;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && (char_is_hex (*(line+local_move+2))|| char_is_whitespace(*(line+local_move+2))) /*&& (*move==0 || *move-local_move>2)*/)    local_move+=2;
+    //printf(".Here>%s\n",line);  
     for(;char_is_hex (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         if(char_is_big_hexes(*(line+local_move))) single_digit= big_hex_to_num (*(line+local_move));
         else if (char_is_small_hexes(*(line+local_move))) single_digit= small_hex_to_num (*(line+local_move));
@@ -304,7 +306,6 @@ long double ultimate_double_from_line(const char* line, size_t* move){          
         }
     }
     if(mantissa_switch(line, local_move, *move)){
-
         //printf("3)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
         local_move++;
         double mantiss_num=0, decimal_sign_flag=1;
@@ -434,6 +435,25 @@ void string_from_line_skip(const char* line, size_t* move){
     for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0) && *(line+local_move)!=C_ZERO;local_move++);
     if(*move==0 || *move>local_move)  *move=local_move;
 }
+ /*
+    %ls && &lc
+            wint_t is not necessarily an unsigned integer type. It is typically defined as an integer type capable of representing any 
+            valid value of wchar_t, as well as an additional distinct value to represent the end-of-file indicator for wide-character 
+            streams (WEOF).
+            The C standard doesn't specify the exact underlying type of wint_t. Its size and signedness can vary depending on the 
+            platform and the compiler implementation.
+            On most systems, wint_t is defined in <wchar.h> as an integer type, but whether it's signed or unsigned can vary. 
+            You would need to consult the documentation or the specific implementation of your compiler to determine its 
+            characteristics on your system.
+
+            %c- int which is internally converted to unsigned char
+            %lc - wint_t
+            %s - pointer to zero-terminated array of char
+            %ls - pointer to zero-terminated array of wchar_t
+
+            typedef unsigned int wint_t
+            typedef int wchar_t
+*/
 
 // format be like: %[*][width][length]specifier. -->%*10lu                   
 char* spec_translator(variables* var_spec, const char* format){
@@ -488,7 +508,6 @@ char* spec_translator(variables* var_spec, const char* format){
         if (var_spec->length==C_ZERO)
         {
             //if (var_spec->width!=0 && *loc_format=='n')                     loc_format=NULL;
-            
             var_spec->spec=*loc_format;
             loc_format++;
             
@@ -616,6 +635,7 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor){
             }else{
                 int* var_point=va_arg(*var,int*);
                 *var_point=hex_from_line(str_coursor,&move);
+                //printf("^^%d^^\n",*var_point);
             }
         }
         break;
@@ -689,7 +709,6 @@ char* var_filling(va_list* var, variables var_spec, char* str_coursor){
     if(move==0) str_coursor=NULL;
     return str_coursor+move;
 }
-
 //compare according to the format line and cut string between %
 char* string_cutter(char** str_coursor, const char* format_coursor){
     char* loc_str_cours = *str_coursor;
@@ -721,82 +740,3 @@ char* string_cutter(char** str_coursor, const char* format_coursor){
     return loc_form_cours;
 }
 
-
-
-
-//dangerous parts:
-//  %*l*u
-//  %*5L3f
-//  width (%10lu) --> 19-max 20-error reading but taking as much numbers as needed   --- check big numbers/negatives/zero
-//  %*5Llf
-//  %*5fd   or   %*5Ld
-//  %lu     but     -12345
-//  %d", a <float> ); --??
-//  %1d     -12345          --> "-"??
-//  %2d     -12345  --> "-1" || "-12"
-//  does %ld || %hd effect how much numbers will be read?
-//  %lu      num more that size_t ?? 
-//  %u       num more that unsigned int ??
-//  %o      --unsigned?!
-//  %x && %x        for     0xa || 0xA || a || A
-//  %2x         0xa || a
-//  %1x         0xa || a
-//  cientific notation (mantissa/exponent)   ==  10e10?
-//  for presise are float and double
-//  0.5   0.5e2=50    0.5E2=50     0.5e =0.5    0.5e2 (%fe2)=50   100  100.5
-//  sscanf("%f %f %f", &num1, &num2);
-//  sscanf("%f ", num1);
-//  f==g==G==e==E ???? Decimal floating point or scientific notation (mantissa/exponent)
-//  lc-? ls-?
-            /*
-            wint_t is not necessarily an unsigned integer type. It is typically defined as an integer type capable of representing any 
-            valid value of wchar_t, as well as an additional distinct value to represent the end-of-file indicator for wide-character 
-            streams (WEOF).
-            The C standard doesn't specify the exact underlying type of wint_t. Its size and signedness can vary depending on the 
-            platform and the compiler implementation.
-            On most systems, wint_t is defined in <wchar.h> as an integer type, but whether it's signed or unsigned can vary. 
-            You would need to consult the documentation or the specific implementation of your compiler to determine its 
-            characteristics on your system.
-
-            %c- int which is internally converted to unsigned char
-            %lc - wint_t
-            %s - pointer to zero-terminated array of char
-            %ls - pointer to zero-terminated array of wchar_t
-
-            typedef unsigned int wint_t
-            typedef int wchar_t
-
-
-            */
-//  wint_t char_from_line   char->wint_t ????????????
-//  check some japaneses and other symbols
-
-
-//  really??
-            /*
-            The %s format specifier in sscanf will read characters from the input string str until it encounters 
-            a whitespace character (space, tab, newline, etc.) or until it reaches the end of the string.
-
-            0-32
-            or
-            0,9,10,11,12,13,32      --  checked!!!
-            */
-//  %7G --\t %3lc
-//  in format: does not matter: 0-32    or  0,9,10,11,12,13,32
-//  errors in writing into veriables
-//  %p  0x7ffdd251f78c  || 7ffdd251f78c     || 0XFFFFFFFFFFFF //0xFFFFFFFFFFFFFFFF
-//  0x7ffdd251f78c  || 7ffdd251f78c ||  f78c  ==> 0x7ffdd251f78c || 0x7ffdd251f78c || 0xf78c
-//  %lp     --?
-//  %ln ||  %5n
-//  %n ==>sscanf=?
-//  %%  !!!
-//  %i     010 || 10 || 0x10 || 10A || -010 || -0X10 || -10 ||10a
-//  %*n
-//  %   (SPACE)
-//  e-6         %f
-//  .5          %f
-//  -0x5 %3x
-//  -a6  %3x
-//  -g     %3x  
-//  problems before reading anything!!!
-//  -.5     %0f
