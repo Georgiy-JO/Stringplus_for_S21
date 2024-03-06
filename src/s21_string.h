@@ -1,12 +1,9 @@
 #ifndef S21_STRING
 #define S21_STRING
 
-//Needed for sscanf && sprintf && S.String.P.F.
 #include <stdarg.h>
-#include <stdlib.h>  //--allowed?
-#include <math.h>    //--allowed?
-//#include <limits.h>     //--allowed?
-//#include <stdint.h>     //--allowed?=
+#include <stdlib.h>
+#include <math.h> 
 
 
 #define size_t unsigned long int
@@ -53,9 +50,8 @@ int s21_sprintf(char *str, const char *format, ...);
 
 //sscanf - reads formatted input from a string.
 int s21_sscanf(const char *str, const char *format, ...);
-typedef struct variables variables; //is needed not to break the header file
+typedef struct variables variables;
 
-//char char_is_invis (const char tmp);
 char char_is_whitespace (const char tmp);
 char char_is_num (const char tmp);
 char char_is_oct (const char tmp);
@@ -64,7 +60,6 @@ char char_is_big_hexes (const char tmp);
 char char_is_small_hexes (const char tmp);
 
 int char_to_num (const char n);
-//char num_to_char (const int n);
 int big_hex_to_num (const char n);
 int small_hex_to_num (const char n);
 

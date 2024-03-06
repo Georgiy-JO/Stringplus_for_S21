@@ -1,6 +1,6 @@
 CC = gcc
-GENLAGS = -std=c11 -Wall -Wextra #-Werror 
-COVLAGS =-fprofile-arcs -ftest-coverage #-g
+GENLAGS = -std=c11 -Wall -Wextra -Werror 
+COVLAGS =-fprofile-arcs -ftest-coverage -g
 CHLIB  = -lcheck -lm #-lsubunit
 ifeq ($(OS), Linux)
 	CHLIB += -lsubunit

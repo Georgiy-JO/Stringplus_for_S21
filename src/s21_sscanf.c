@@ -8,50 +8,19 @@
 #define S21_SSCANF_SKIP '*'
 #define S21_SSCANF_PERCENT '%'
 #define HEXADECIMAL_BIG "ABCDEF"
-#define HEXADECIMAL_SMALL "abcdef"
-// #define WHITESPACES   {9,10,11,12,13,32,0}  //"\t\n\v\f\r\0"   
-
+#define HEXADECIMAL_SMALL "abcdef"  
 #define S21_SSCANF_ZERO_SYMBOLS "+-"
-//#define S21_SSCANF_HEX_ULTIMATE "ABCDEF0123456789abcdef"
 
-#ifndef __INT_MAX__
-#define __INT_MAX__ 0x7fffffff   
-#endif
-#ifndef __UINT_MAX__
-#define __UINT_MAX__ __INT_MAX__* 2L + 1L
-#endif
-#ifndef __SHRT_MAX__
-#define __SHRT_MAX__ 0x7fff 
-#endif
-#ifndef __USHRT_MAX__
-#define __USHRT_MAX__ __SHRT_MAX__*2+1 
-#endif
 #ifndef __LONG_MAX__
 #define __LONG_MAX__ 0x7fffffffffffffffL 
 #endif
 #ifndef __ULONG_MAX__
 #define __ULONG_MAX__ __LONG_MAX__* 2UL + 1UL                       
 #endif
-#ifndef __CHAR_MAX__
-#define __CHAR_MAX__ 0x7f 
-#endif
-#ifndef __UCHAR_MAX__
-#define __UCHAR_MAX__ __CHAR_MAX__*2+1 
-#endif
-#ifndef __FLT_MAX__
-#define __FLT_MAX__ 3.40282346638528859811704183484516925e+38L 
-#endif
-#ifndef __DBL_MAX__
-#define __DBL_MAX__ (double)1.79769313486231570814527423731704357e+308L 
-#endif
-#ifndef __SIZE_T_MAX__
-#define __SIZE_T_MAX__ __ULONG_MAX__
-#endif
 
 #ifndef EOF
 #define EOF (-1)        
 #endif
-// #define ERROR (-1)       //EOF??         https://www.tutorialspoint.com/c_standard_library/c_function_sscanf.htm
 
 typedef struct variables{
     char skip;
@@ -68,7 +37,6 @@ int s21_sscanf(const char *str, const char *format, ...){
     if(var_amount){
         va_list var;
         va_start(var, format);
-
         variables var_spec={0, C_ZERO,C_ZERO,0};
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
@@ -103,11 +71,8 @@ int s21_sscanf(const char *str, const char *format, ...){
     return var_number;
 }
 
-// char char_is_invis (const char tmp){
-//     return ((tmp<=32 && tmp>=1) || tmp==127)? 1:0;
-// }
 char char_is_whitespace (const char tmp){           //9,10,11,12,13,32,0 
-    return ((tmp>=9 && tmp<=13) || tmp==32 /*|| tmp==0*/)? 1:0;
+    return ((tmp>=9 && tmp<=13) || tmp==32)? 1:0;
 }
 char char_is_num (const char tmp){
     return (tmp>='0' && tmp<='9')? 1:0;
@@ -128,9 +93,6 @@ char char_is_small_hexes (const char tmp){
 int char_to_num (const char n){
     return n-'0';
 }
-// char num_to_char (const int n){
-//     return n +'0';
-// }
 int big_hex_to_num (const char n){
     return n - 'A'+10;
 }
@@ -181,7 +143,7 @@ char mantissa_switch(const char* line, const size_t local_move, const size_t mov
     //     }
     // }
     // return 0;
-    return (    (local_move!=move||move==0) && (*(line+local_move)=='e' || *(line+local_move)=='E') /*&& (char_is_num (*(line+local_move+1)) || char_is_whitespace(*(line+local_move+1)))*/   )? 1:0;
+    return (    (local_move!=move||move==0) && (*(line+local_move)=='e' || *(line+local_move)=='E'))? 1:0;
 }
 long double my_spesial_pow(double n, double m){
     long double res=1;
@@ -248,7 +210,7 @@ long double ultimate_hex_from_line(const char* line, size_t* move){
         neg_flag=-1.0;
     }
     else if (*line=='+')    local_move++;
-    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && (char_is_hex (*(line+local_move+2))|| char_is_whitespace(*(line+local_move+2))) /*&& (*move==0 || *move-local_move>2)*/)    local_move+=2;
+    if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && (char_is_hex (*(line+local_move+2))|| char_is_whitespace(*(line+local_move+2))))    local_move+=2;
     for(;char_is_hex (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         if(char_is_big_hexes(*(line+local_move))) single_digit= big_hex_to_num (*(line+local_move));
         else if (char_is_small_hexes(*(line+local_move))) single_digit= small_hex_to_num (*(line+local_move));
@@ -264,7 +226,6 @@ long double ultimate_double_from_line(const char* line, size_t* move){          
     long double local_num=0.0;
     size_t local_move=0;
     double  neg_flag=1.0; 
-    
     if(*line=='-'){
         local_move++; 
         neg_flag=-1.0;
@@ -298,7 +259,7 @@ unsigned int uint_from_line(const char* line, size_t* move){
     unsigned int tmp=(unsigned int)ultimate_int_from_line(line,move,&overfflow);
     return (overfflow)? (unsigned int)-1:tmp;
 }
-unsigned short ushort_from_line(const char* line, size_t* move){    //99999999999999999>x>-9999999999999999 ????
+unsigned short ushort_from_line(const char* line, size_t* move){
     char overfflow=0;
     long int tmp=(long int)ultimate_int_from_line(line,move,&overfflow);
     return (overfflow)? (long int)-1:tmp;
@@ -306,7 +267,7 @@ unsigned short ushort_from_line(const char* line, size_t* move){    //9999999999
 int int_from_line(const char* line, size_t* move){
     char overfflow=0;
     long int tmp=(long int)ultimate_int_from_line(line,move,&overfflow);
-    return (overfflow)? (long int)-1:tmp;                         //fucking hell!!! WTF?! FUCKING STUPID BUSTARDS! FUUUUUUUUUUUUUUUUUUUUUUUUUUUUUCK!
+    return (overfflow)? (long int)-1:tmp; 
 }
 long int long_from_line(const char* line, size_t* move){
     char overfflow=1;
@@ -367,7 +328,7 @@ long int long_signed_num_from_line(const char* line, size_t* move){
     size_t local_move=0;
     if(*line=='-')  local_move++;
     if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && char_is_hex (*(line+local_move+2))&& ((*move-local_move)>=2 || *move==0))    local_num= long_hex_from_line(line,move);
-    else if (*(line+local_move)=='0' /*&& char_is_oct (*(line+local_move+1))*/) local_num=long_uoctal_from_line(line,move);
+    else if (*(line+local_move)=='0') local_num=long_uoctal_from_line(line,move);
     else    local_num=long_from_line(line,move);
     return local_num;
 }
@@ -405,25 +366,6 @@ void string_from_line_skip(const char* line, size_t* move){
     for(; !char_is_whitespace(*(line+local_move))&&(local_move < (*move) || (*move)==0) && *(line+local_move)!=C_ZERO;local_move++);
     if(*move==0 || *move>local_move)  *move=local_move;
 }
- /*
-    %ls && &lc
-        wint_t is not necessarily an unsigned integer type. It is typically defined as an integer type capable of representing any 
-        valid value of wchar_t, as well as an additional distinct value to represent the end-of-file indicator for wide-character 
-        streams (WEOF).
-        The C standard doesn't specify the exact underlying type of wint_t. Its size and signedness can vary depending on the 
-        platform and the compiler implementation.
-        On most systems, wint_t is defined in <wchar.h> as an integer type, but whether it's signed or unsigned can vary. 
-        You would need to consult the documentation or the specific implementation of your compiler to determine its 
-        characteristics on your system.
-
-        %c- int which is internally converted to unsigned char
-        %lc - wint_t
-        %s - pointer to zero-terminated array of char
-        %ls - pointer to zero-terminated array of wchar_t
-
-        typedef unsigned int wint_t
-        typedef int wchar_t
-*/
 
 size_t u_filler(va_list* var, variables var_spec, char* str_coursor){
     size_t move=var_spec.width;
@@ -575,24 +517,20 @@ size_t p_filler(va_list* var, variables var_spec, char* str_coursor){
 // format be like: %[*][width][length]specifier.                 
 char* spec_translator(variables* var_spec, const char* format){
     char* loc_format=(char*) format;
-    //skip(*)
     if(*loc_format==S21_SSCANF_SKIP){
         var_spec->skip=1;
         loc_format++;
     }
-    //width (nums)
     if(char_is_num (*loc_format)){
         size_t num_temp=0;
         char overfflow=0;
         var_spec->width=(size_t) ultimate_int_from_line(loc_format,&num_temp, &overfflow);
         loc_format=loc_format+num_temp;
     }
-    //length (hlL)
     if(s21_isinstr(*loc_format,S21_SSCANF_LENGTH)){
         var_spec->length=*loc_format;
         loc_format++;
     }
-    //int (diouxX)
     if(s21_isinstr(*loc_format,S21_SSCANF_INT_SPEC)){
         if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"hl"))
         {
@@ -601,7 +539,6 @@ char* spec_translator(variables* var_spec, const char* format){
         }
         else                    loc_format=NULL;
     }
-    //float (eEfgG)
     else if (s21_isinstr(*loc_format,S21_SSCANF_FLOAT_SPEC)){
         if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"Ll"))
         {
@@ -610,7 +547,6 @@ char* spec_translator(variables* var_spec, const char* format){
         }
         else                    loc_format=NULL;
     }
-    //char (cs)
     else if (s21_isinstr(*loc_format,S21_SSCANF_CHAR_SPEC)){
         if (var_spec->length==C_ZERO||s21_isinstr(var_spec->length,"l"))
         {
@@ -619,7 +555,6 @@ char* spec_translator(variables* var_spec, const char* format){
         }
         else                    loc_format=NULL;
     }
-    //spesial(pn)
     else if (s21_isinstr(*loc_format,S21_SSCANF_SPECIAL_SPEC))
     {
         if (var_spec->length==C_ZERO)
