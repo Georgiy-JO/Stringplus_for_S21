@@ -106,6 +106,16 @@ short short_signed_num_from_line(const char* line, size_t* move);
 long int long_signed_num_from_line(const char* line, size_t* move);
 void string_from_line_skip(const char* line, size_t* move);
 
+size_t u_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t d_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t i_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t o_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t x_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t i_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t c_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t s_filler(va_list* var, variables var_spec, char* str_coursor);
+size_t p_filler(va_list* var, variables var_spec, char* str_coursor);
+
 char* string_cutter(char** str_coursor, const char* format_coursor);
 char* spec_translator(variables* var_spec, const char* format);
 char* var_filling(va_list* var, variables var_spec, char* str_coursor);
