@@ -1,4 +1,3 @@
-//#include <stdio.h>      //debug
 #include "s21_string.h"
 
 #define S21_SSCANF_LENGTH "hlL"
@@ -73,9 +72,7 @@ int s21_sscanf(const char *str, const char *format, ...){
         variables var_spec={0, C_ZERO,C_ZERO,0};
         char *str_coursor=(char*) str;
         char *format_coursor=(char*)format;
-        //printf("\n0)$$%s$$%s$$\n",str_coursor, format_coursor );
         for(size_t i=0; str_coursor!=NULL && format_coursor!=NULL && i<var_amount && *str_coursor!=C_ZERO ; zero_struct(&var_spec)){
-            //printf("\n1)$$%s$$%s$$\n",str_coursor, format_coursor );
             if(*format_coursor!=S21_SSCANF_PERCENT) {
                 format_coursor = string_cutter(&str_coursor,format_coursor); 
             }
@@ -86,26 +83,20 @@ int s21_sscanf(const char *str, const char *format, ...){
                     format_coursor+=2;
                     if (*str_coursor==S21_SSCANF_PERCENT)        str_coursor++;
                     else         str_coursor=NULL;
-                    //printf("\n3)$$%s$$%s$$\n",str_coursor, format_coursor );
                     continue;
                 }
-                //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 i++;
                 format_coursor=spec_translator(&var_spec, (format_coursor+1)); 
-                //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
                 if(format_coursor!=NULL && *str_coursor!=C_ZERO){
-                    //printf("\n4)$$%s$$%s$$\n",str_coursor, format_coursor );
                     if(var_spec.spec=='n')  {
                         if (var_spec.skip!=1)   *(va_arg(var,int*))=str_coursor- str;
                     }else{
                         str_coursor=var_filling(&var, var_spec, str_coursor);
-                        //printf("\n5)$$%s$$%s$$\n",str_coursor, format_coursor );
                         if(str_coursor!=NULL && var_spec.skip!=1)   var_number++;                 
                     }
                 }
   
             }
-            //printf("\n2)$$%s$$%s$$\n",str_coursor, format_coursor );
         }
         va_end(var);         
     }
@@ -169,9 +160,6 @@ char* whitespace_romover (const char* a_string){
 char can_read_spec_numbers (const char* str_coursor, size_t length){
     return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&& length!=1&&char_is_num(*(str_coursor+1))))? 1:0;
 }
-// char can_read_spec_double (const char* str_coursor, size_t length){
-//     return (char_is_num(*str_coursor) || (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS)&&             (  (length!=1&&char_is_num(*(str_coursor+1))) ||       (length!=2&&*(str_coursor+1)=='.'&&char_is_num(*(str_coursor+2)) )       )               )      ||    ((*str_coursor)== '.' && length!=1 && char_is_num(*(str_coursor+1)) )  )? 1:0;
-// }
 char can_read_spec_double (const char* str_coursor, size_t length){
     if(char_is_num(*str_coursor))   return 1;
     else if (s21_isinstr(*str_coursor,S21_SSCANF_ZERO_SYMBOLS) && length!=1 && char_is_num(*(str_coursor+1)))   return 1;
@@ -248,8 +236,7 @@ long double ultimate_octal_from_line(const char* line, size_t* move){
     if (overflow_flag==1)   local_num=-neg_flag;
     return local_num*neg_flag;
 }
-long double ultimate_hex_from_line(const char* line, size_t* move){
-    //printf(".Here>%s\n",line);    
+long double ultimate_hex_from_line(const char* line, size_t* move){  
     long double local_num=0.0;
     double single_digit=0;
     size_t local_move=0;
@@ -262,7 +249,6 @@ long double ultimate_hex_from_line(const char* line, size_t* move){
     }
     else if (*line=='+')    local_move++;
     if(*(line+local_move)=='0' && (*(line+local_move+1)=='x' || *(line+local_move+1)=='X') && (char_is_hex (*(line+local_move+2))|| char_is_whitespace(*(line+local_move+2))) /*&& (*move==0 || *move-local_move>2)*/)    local_move+=2;
-    //printf(".Here>%s\n",line);  
     for(;char_is_hex (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         if(char_is_big_hexes(*(line+local_move))) single_digit= big_hex_to_num (*(line+local_move));
         else if (char_is_small_hexes(*(line+local_move))) single_digit= small_hex_to_num (*(line+local_move));
@@ -271,7 +257,6 @@ long double ultimate_hex_from_line(const char* line, size_t* move){
         if(local_num>limit || ((size_t)local_num==limit &&neg_flag==-1.0))    overflow_flag=1;        
     }
     if(*move==0 || *move>local_move)  *move=local_move;
-    //printf(">>>>%d>>%f>>>%Lf\n", overflow_flag,neg_flag, local_num);
     if (overflow_flag==1)   local_num=-neg_flag;
     return local_num*neg_flag;
 }
@@ -285,20 +270,16 @@ long double ultimate_double_from_line(const char* line, size_t* move){          
         neg_flag=-1.0;
     }
     else if (*line=='+')    local_move++;
-    //printf("1)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
     for(;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++){
         local_num=local_num*10.0+(long double)char_to_num(*(line+local_move));
     }
-    //printf("1.1)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
     if(*(line+local_move)=='.' && (local_move!=(*move) || (*move)==0)){
-       //printf("2)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
         local_move++;
         for(double i=1;char_is_num (*(line+local_move))&&(local_move < (*move) || (*move)==0);local_move++, i++){
             local_num=local_num+(long double)(char_to_num(*(line+local_move)))/(my_spesial_pow(10.0,i));
         }
     }
     if(mantissa_switch(line, local_move, *move)){
-        //printf("3)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
         local_move++;
         double mantiss_num=0, decimal_sign_flag=1;
         if(*(line+local_move)=='-')     decimal_sign_flag=-1;
@@ -309,7 +290,6 @@ long double ultimate_double_from_line(const char* line, size_t* move){          
         mantiss_num*=decimal_sign_flag;
         local_num=local_num*my_spesial_pow(10.0,mantiss_num);
     }
-    //printf("4)>>%ld>>%Lf>>%s\n",local_move,local_num,(line+local_move));
     if(*move==0 || *move>local_move)  *move=local_move;
     return local_num*(long double)neg_flag;
 }
