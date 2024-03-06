@@ -34,3 +34,21 @@ New branch reason:
     The testing showed that it probably would be easier to change the structure of a buch of functions.
     The problem is that this changes are so massive it can break everything.
     I'm going to start a new branch for it.
+
+## feature/rk_jo_rework_check(06.03.24):
+This branch summery: 
+FULL WORKABLE & CHECKED VERSION OF s21_sscanf WITH TESTS!
+   
+    Commit:
+        Working version of s21_sscanf.c;
+        All the tests done.
+
+    Issue: the version is not optimal.
+    Next:   Optimization of the s21_sscanf.c;
+            Clang-foemat;
+            Valgrind;
+            Gcov;
+            Makefile issues.
+
+    PS. This branch is fully operational, has a lot of commented "printfs", due to that is usefull for troubleshooting.
+    PSS. %c && %lc  -- are not working properly and prbaly never will.
