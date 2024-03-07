@@ -48,12 +48,12 @@ then
   echo "$new_tec_com" > $VAR_FILE
   git add src double_push.variables.txt
   git commit -m"Technical commit #"$new_tec_com": Minor changies."
-  git push origin feature/rk_jo_rework_check
+  git push origin feature/rk_jo_release
   echo ◑ ◔
   echo ╔═╗
   echo ║▓▒░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
   echo ╚═╝
-  git push origin2 feature/rk_jo_rework_check
+  git push origin2 feature/rk_jo_release
 else
   echo ERROR command
 fi
