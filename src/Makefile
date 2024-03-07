@@ -11,7 +11,7 @@ DFLAG = -D_POSIX_C_SOURCE=200809L
 
 VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --log-file=RESULT_VALGRIND.txt ./
 #VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt ./
-CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalidFunctionArg --force 
+CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalidFunctionArg --force --checkers-report=RESULT_CPPCHECK.txt
 
 #code files
 SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c s21_sscanf.c s21_extra_functions.c
@@ -93,7 +93,7 @@ valgrind: $(TESTS)
 
 #code check 2
 cpp_check: 
-	$(CPPCH) *.c *.h
+	$(CPPCH) *.h $(SRC_FILES)
 
 # format code style
 clang_all:
@@ -104,7 +104,7 @@ clang_all:
 
 #Service stages------------------------------------------------------------------------------------------------------------------------------------
 clear:
-	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt
+	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt RESULT_CPPCHECK.txt
 clear_o:
 	rm -f *.o
 
