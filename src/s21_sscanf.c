@@ -129,7 +129,7 @@ char can_read_spec_double(const char* str_coursor, size_t length) {
   else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) && length != 1 &&
            char_is_num(*(str_coursor + 1)))
     return 1;
-  else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) && length > 2 &&
+  else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) && (length > 2 || length==0)&& 
            (*(str_coursor + 1)) == '.' && char_is_num(*(str_coursor + 2)))
     return 1;
   else if ((*str_coursor) == '.' && length != 1 &&
@@ -154,14 +154,6 @@ char can_read_spec_hex(const char* str_coursor, size_t length) {
 }
 char mantissa_switch(const char* line, const size_t local_move,
                      const size_t move) {
-  // if(local_move!=move){
-  //     if(*(line+local_move)=='e' || *(line+local_move)=='E'){
-  //         if(char_is_num (*(line+local_move+1)))  return 1;
-  //         else if (s21_isinstr(*(line+local_move+1),S21_SSCANF_ZERO_SYMBOLS))
-  //         return 1;
-  //     }
-  // }
-  // return 0;
   return ((local_move != move || move == 0) &&
           (*(line + local_move) == 'e' || *(line + local_move) == 'E'))
              ? 1
@@ -638,14 +630,14 @@ char* spec_translator(variables* var_spec, const char* format) {
     if (var_spec->length == C_ZERO || s21_isinstr(var_spec->length, "Ll")) {
       var_spec->spec = *loc_format;
       loc_format++;
-    } else
-      loc_format = NULL;
+    } /*else
+      loc_format = NULL;*/
   } else if (s21_isinstr(*loc_format, S21_SSCANF_CHAR_SPEC)) {
     if (var_spec->length == C_ZERO || s21_isinstr(var_spec->length, "l")) {
       var_spec->spec = *loc_format;
       loc_format++;
-    } else
-      loc_format = NULL;
+    } /*else
+      loc_format = NULL;*/
   } else if (s21_isinstr(*loc_format, S21_SSCANF_SPECIAL_SPEC)) {
     if (var_spec->length == C_ZERO) {
       var_spec->spec = *loc_format;
