@@ -322,7 +322,7 @@ int int_from_line(const char* line, size_t* move) {
 long int long_from_line(const char* line, size_t* move) {
   char overfflow = 1;
   long int tmp = (long int)ultimate_int_from_line(line, move, &overfflow);
-  return (overfflow) ? (long int)__LONG_MAX__ : tmp;
+  return (overfflow) ? (long int)/*__LONG_MAX__*/-1 : tmp;
 }
 short int short_from_line(const char* line, size_t* move) {
   char overfflow = 0;
