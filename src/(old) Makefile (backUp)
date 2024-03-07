@@ -13,14 +13,17 @@ VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track
 #VALG = valgrind --tool=memcheck  --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose --log-file=RESULT_VALGRIND.txt ./
 CPPCH = cppcheck --enable=all --suppress=missingIncludeSystem --suppress=invalidFunctionArg --force 
 
-#code files
 SRC_FILES = s21_len.c s21_cpy_cat.c s21_memset.c s21_delta_ln2.c s21_strtok.c s21_memchr.c s21_memcmp.c s21_strchr.c s21_strncmp.c s21_strrchr.c s21_strstr.c s21_strerror.c s21_sprintf.c s21_sscanf.c s21_extra_functions.c
+SRC_FILES_COV = $(SRC_FILES)
 HEAD_FILE = s21_string.h
 TEST_SRC= s21_test.c
+#OBJDIR = object
 
 #object files
 OBJ_FILES = $(SRC_FILES:.c=.o)
+#OBJ_FILES = $(SRC_FILES:.c=$(OBJDIR)/.o)
 TEST_OBJ = $(TEST_SRC:.c=.o)
+#OBJ_FILES_COV = $(SRC_FILES_COV:.c=.o)
 
 # static libs: usual and for tests report
 LIBRARY = $(HEAD_FILE:.h=.a)
@@ -33,13 +36,16 @@ TEST_COV = $(TEST_SRC:.c=_cov)
 # format src
 SRC_CL=../materials/linters/.clang-format
 
-#Target-specific Variable
-$(TESTS): GENLAGS := $(GENLAGS)
-s21_string.a: GENLAGS := $(GENLAGS)
-$(TEST_COV): GENLAGS := $(GENLAGS) $(COVLAGS)
-s21_string.tst.a: GENLAGS := $(GENLAGS) $(COVLAGS)
-
 all: s21_string.a
+#Hand_tests_(temp)-------------------------------------------------------------------------------------------------------------------
+tester: $(LIBRARY) tester.o
+	$(CC) $(GENLAGS) $(DFLAG) tester.o -o tester $(LIBRARY)
+	rm -f *.o
+#	 ./tester
+
+tester.o:tester.c
+	$(CC) $(GENLAGS) $(DFLAG) -c tester.c
+
 #Library_creation_+_tests-----------------------------------------------------------------------------------------------------------
 # build static lib
 s21_string.a: clear_o $(OBJ_FILES)
@@ -48,6 +54,7 @@ s21_string.a: clear_o $(OBJ_FILES)
 
 # build tests with usual lib
 $(TESTS): $(LIBRARY) $(TEST_OBJ)
+#	$(CC) $(GENLAGS) $(DFLAG) $(TEST_OBJ) -o $(TESTS) $(LIBRARY) $(CHLIB)
 	$(CC) $(GENLAGS) $(DFLAG) $(TEST_OBJ) -o $@ $(LIBRARY) $(CHLIB)
 	rm -f *.o
 
@@ -55,7 +62,10 @@ $(TESTS): $(LIBRARY) $(TEST_OBJ)
 $(OBJ_FILES):%.o: %.c $(HEAD_FILE)
 	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@
 
-$(TEST_OBJ):%.o: %.c				#might be not needed
+# $(TEST_OBJ):$(TEST_SRC)
+# 	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@ $(CHLIB)
+
+$(TEST_OBJ):%.o: %.c
 	$(CC) $(GENLAGS) $(DFLAG) -c $< -o $@ $(CHLIB)
 
 # run tests
@@ -64,18 +74,22 @@ test: $(TESTS)
 
 #Coverage_stages-------------------------------------------------------------------------------------------------------------------
 # build static lib for tests report
-s21_string.tst.a: clear_o $(OBJ_FILES)
-	ar rcs $(COVLIBRARY) $(OBJ_FILES)
+s21_string.tst.a: clear_o 	$(OBJ_FILES_COV)
+	ar rcs $(COVLIBRARY) $(OBJ_FILES_COV)
 	rm -f *.o	
 
 # build tests for report
 $(TEST_COV): $(COVLIBRARY) $(TEST_OBJ)
-	$(CC) $(GENLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(CHLIB)
+	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) $(TEST_OBJ) -o $(TEST_COV) $(COVLIBRARY) $(CHLIB)
 	rm -f *.o
 
 #run test for cov
 test_cov: $(TEST_COV)
 	./$(TEST_COV)
+
+#object for test report
+$(OBJ_FILES_COV):%.o: %.c $(HEAD_FILE)							#$(OBJDIR_COV)/%.o
+	$(CC) $(GENLAGS) $(COVLAGS) $(DFLAG) -c $< -o $@
 
 # coverage
 coverage: test_cov
@@ -102,9 +116,11 @@ clang_all:
 	clang-format -i *.h
 	rm -f .clang-format
 
-#Service stages------------------------------------------------------------------------------------------------------------------------------------
+#------------------------------------------------------------------------------------------------------------------------------------
+
 clear:
-	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt
+	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt tester $(OBJDIR)/%.o
+#tester-temp
 clear_o:
 	rm -f *.o
 
