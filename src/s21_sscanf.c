@@ -232,8 +232,7 @@ long double ultimate_hex_from_line(const char* line, size_t* move) {
     local_move++;
   if (*(line + local_move) == '0' &&
       (*(line + local_move + 1) == 'x' || *(line + local_move + 1) == 'X') &&
-      (char_is_hex(*(line + local_move + 2)) ||
-       char_is_whitespace(*(line + local_move + 2))))
+      (char_is_whitespace(*(line + local_move + 2)) || char_is_hex(*(line + local_move + 2))))
     local_move += 2;
   for (; char_is_hex(*(line + local_move)) &&
          (local_move < (*move) || (*move) == 0);
