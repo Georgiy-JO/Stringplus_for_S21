@@ -5166,79 +5166,6 @@ START_TEST(test_sscanf_unsigned_short_12) {
   ck_assert_int_eq(ushortt4, ushortt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_short_13) {
-  char input_line_0[] =
-      "9223372036854775807  11223344556677889900111222333444555  -55555  "
-      "5555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned short ushortt1 = 1, ushortt2 = 2, ushortt3 = 3, ushortt4 = 4,
-                 ushortt6 = 1, ushortt7 = 2, ushortt8 = 3, ushortt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hu%*31u%hu%hu%hu%s", &ushortt1,
-                          &ushortt2, &ushortt3, &ushortt4, endd1),
-                   s21_sscanf(input_line_1, "%hu%*31u%hu%hu%hu%s", &ushortt6,
-                              &ushortt7, &ushortt8, &ushortt9, endd2));
-  ck_assert_uint_eq(ushortt1, ushortt6);
-  ck_assert_int_eq(ushortt1, ushortt6);
-  ck_assert_uint_eq(ushortt2, ushortt7);
-  ck_assert_int_eq(ushortt2, ushortt7);
-  ck_assert_uint_eq(ushortt3, ushortt8);
-  ck_assert_int_eq(ushortt3, ushortt8);
-  ck_assert_uint_eq(ushortt4, ushortt9);
-  ck_assert_int_eq(ushortt4, ushortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_short_14) {
-  char input_line_0[] =
-      "5 -9999999999999999  11223344556677889900111222333444555  -55555  "
-      "5555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned short ushortt1 = 1, ushortt2 = 2, ushortt3 = 3, ushortt4 = 4,
-                 ushortt6 = 1, ushortt7 = 2, ushortt8 = 3, ushortt9 = 4,
-                 ushortt5 = 5, ushortt10 = 5;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%hu%hu%*31u%hu%hu%hu%s", &ushortt5, &ushortt1,
-             &ushortt2, &ushortt3, &ushortt4, endd1),
-      s21_sscanf(input_line_1, "%hu%hu%*31u%hu%hu%hu%s", &ushortt10, &ushortt6,
-                 &ushortt7, &ushortt8, &ushortt9, endd2));
-  ck_assert_uint_eq(ushortt5, ushortt10);
-  ck_assert_int_eq(ushortt5, ushortt10);
-  ck_assert_uint_eq(ushortt1, ushortt6);
-  ck_assert_int_eq(ushortt1, ushortt6);
-  ck_assert_uint_eq(ushortt2, ushortt7);
-  ck_assert_int_eq(ushortt2, ushortt7);
-  ck_assert_uint_eq(ushortt3, ushortt8);
-  ck_assert_int_eq(ushortt3, ushortt8);
-  ck_assert_uint_eq(ushortt4, ushortt9);
-  ck_assert_int_eq(ushortt4, ushortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_short_15) {
-  char input_line_0[] =
-      "99999999999999999  11223344556677889900111222333444555  -55555  "
-      "5555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned short ushortt1 = 1, ushortt2 = 2, ushortt3 = 3, ushortt4 = 4,
-                 ushortt6 = 1, ushortt7 = 2, ushortt8 = 3, ushortt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hu%*31u%hu%hu%hu%s", &ushortt1,
-                          &ushortt2, &ushortt3, &ushortt4, endd1),
-                   s21_sscanf(input_line_1, "%hu%*31u%hu%hu%hu%s", &ushortt6,
-                              &ushortt7, &ushortt8, &ushortt9, endd2));
-  ck_assert_uint_eq(ushortt1, ushortt6);
-  ck_assert_int_eq(ushortt1, ushortt6);
-  ck_assert_uint_eq(ushortt2, ushortt7);
-  ck_assert_int_eq(ushortt2, ushortt7);
-  ck_assert_uint_eq(ushortt3, ushortt8);
-  ck_assert_int_eq(ushortt3, ushortt8);
-  ck_assert_uint_eq(ushortt4, ushortt9);
-  ck_assert_int_eq(ushortt4, ushortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_short_16) {
   char input_line_0[] = "   922337203685 55555 end\0";
   char input_line_1[70] = "\0";
@@ -5681,65 +5608,7 @@ START_TEST(test_sscanf_short_12) {
   ck_assert_int_eq(shortt4, shortt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_short_13) {
-  char input_line_0[] =
-      "9223372036854775807  11223344556677889900111222333444555  -5555  "
-      "5555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  short shortt1 = 1, shortt2 = 2, shortt3 = 3, shortt4 = 4, shortt6 = 1,
-        shortt7 = 2, shortt8 = 3, shortt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hd%*31d%hd%hd%hd%s", &shortt1,
-                          &shortt2, &shortt3, &shortt4, endd1),
-                   s21_sscanf(input_line_1, "%hd%*31d%hd%hd%hd%s", &shortt6,
-                              &shortt7, &shortt8, &shortt9, endd2));
-  ck_assert_int_eq(shortt1, shortt6);
-  ck_assert_int_eq(shortt2, shortt7);
-  ck_assert_int_eq(shortt3, shortt8);
-  ck_assert_int_eq(shortt4, shortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 
-START_TEST(test_sscanf_short_14) {
-  char input_line_0[] =
-      "5 -9999999999999999  11223344556677889900111222333444555  -5555  "
-      "5555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  short shortt1 = 1, shortt2 = 2, shortt3 = 3, shortt4 = 4, shortt6 = 1,
-        shortt7 = 2, shortt8 = 3, shortt9 = 4, shortt5 = 5, shortt10 = 5;
-  ck_assert_int_eq(sscanf(input_line_0, "%hd%hd%*31d%hd%hd%hd%s", &shortt5,
-                          &shortt1, &shortt2, &shortt3, &shortt4, endd1),
-                   s21_sscanf(input_line_1, "%hd%hd%*31d%hd%hd%hd%s", &shortt10,
-                              &shortt6, &shortt7, &shortt8, &shortt9, endd2));
-  ck_assert_int_eq(shortt5, shortt10);
-  ck_assert_int_eq(shortt1, shortt6);
-  ck_assert_int_eq(shortt2, shortt7);
-  ck_assert_int_eq(shortt3, shortt8);
-  ck_assert_int_eq(shortt4, shortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_short_15) {
-  char input_line_0[] =
-      "99999999999999999  11223344556677889900111222333444555  -5555  5555.444 "
-      " end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  short shortt1 = 1, shortt2 = 2, shortt3 = 3, shortt4 = 4, shortt6 = 1,
-        shortt7 = 2, shortt8 = 3, shortt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hd%*31d%hd%hd%hd%s", &shortt1,
-                          &shortt2, &shortt3, &shortt4, endd1),
-                   s21_sscanf(input_line_1, "%hd%*31d%hd%hd%hd%s", &shortt6,
-                              &shortt7, &shortt8, &shortt9, endd2));
-  ck_assert_int_eq(shortt1, shortt6);
-  ck_assert_int_eq(shortt2, shortt7);
-  ck_assert_int_eq(shortt3, shortt8);
-  ck_assert_int_eq(shortt4, shortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 
 START_TEST(test_sscanf_short_31) {
   char input_line_0[] =
@@ -6011,28 +5880,6 @@ START_TEST(test_sscanf_unsigned_long_5) {
   ck_assert_int_eq(ulongg3, ulongg8);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_long_6) {
-  char input_line_0[] =
-      "1111155  11223344556677889900111222333444555  -555555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*16u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*16u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_long_8) {
   char input_line_0[] =
       "1111155  11223344556677889900111222333444555  -532456755555  55545.444  "
@@ -6056,167 +5903,6 @@ START_TEST(test_sscanf_unsigned_long_8) {
   ck_assert_int_eq(ulongg4, ulongg9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_long_9) {
-  char input_line_0[] =
-      "2147483647   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_24) {
-  char input_line_0[] =
-      "-2147483647   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_25) {
-  char input_line_0[] =
-      "9223372036854775807   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_26) {
-  char input_line_0[] =
-      "-9223372036854775807   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_27) {
-  char input_line_0[] =
-      "9223372036854775999   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_29) {
-  char input_line_0[] =
-      "18446744073709551615   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u\n\n%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_11) {
-  char input_line_0[] =
-      "0   11223344556677889900111222333444555  -532456755555  55545.444  "
-      "end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_long_12) {
   char input_line_0[] =
       "  05.5   11223344556677889900111222333444555  -532456755555  55545.444  "
@@ -6229,173 +5915,6 @@ START_TEST(test_sscanf_unsigned_long_12) {
   ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu\t\t%lu%lu%s", &ulongg1,
                           &ulongg2, &ulongg3, &ulongg4, endd1),
                    s21_sscanf(input_line_1, "%lu%*17u%lu\t\t%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_13) {
-  char input_line_0[] =
-      "18446744073709551616   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_33) {
-  char input_line_0[] =
-      "-18446744073709551616   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_34) {
-  char input_line_0[] =
-      "-18446744073709551620   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_14) {
-  char input_line_0[] =
-      "5 9999999999999999   11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4, ulongg5 = 5,
-                ulongg10 = 5;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%lu%*17u%lu%lu%lu%s", &ulongg5,
-                          &ulongg1, &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%lu%*17u%lu%lu%lu%s", &ulongg10,
-                              &ulongg6, &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg5, ulongg10);
-  ck_assert_int_eq(ulongg5, ulongg10);
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_15) {
-  char input_line_0[] =
-      "99999999999999999   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_31) {
-  char input_line_0[] =
-      "5 -1000000000000000  11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4, ulongg5 = 5,
-                ulongg10 = 5;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%lu%*17u%lu%lu%lu%s", &ulongg5,
-                          &ulongg1, &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%lu%*17u%lu%lu%lu%s", &ulongg10,
-                              &ulongg6, &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg5, ulongg10);
-  ck_assert_int_eq(ulongg5, ulongg10);
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_32) {
-  char input_line_0[] =
-      "100000000000000000   11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lu%*17u%lu%lu%lu%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lu%*17u%lu%lu%lu%s", &ulongg6,
                               &ulongg7, &ulongg8, &ulongg9, endd2));
   ck_assert_uint_eq(ulongg1, ulongg6);
   ck_assert_int_eq(ulongg1, ulongg6);
@@ -6718,82 +6237,6 @@ START_TEST(test_sscanf_long_8) {
   ck_assert_str_eq(endd1, endd2);
 }
 */
-START_TEST(test_sscanf_long_9) {
-  char input_line_0[] =
-      "2147483647   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d\n\n%ld%ld%ld%s", &longg1,
-                          &longg2, &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d\n\n%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_24) {
-  char input_line_0[] =
-      "-2147483647   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d\n\n%ld%ld%ld%s", &longg1,
-                          &longg2, &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d\n\n%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_25) {
-  char input_line_0[] =
-      "9223372036854775807   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d\n\n%ld%ld%ld%s", &longg1,
-                          &longg2, &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d\n\n%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_11) {
-  char input_line_0[] =
-      "0   11223344556677889900111222333444555  -532456755555  55545.444  "
-      "end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld%ld%ld%s", &longg1, &longg2,
-                          &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_12) {
   char input_line_0[] =
       "  05.5   11223344556677889900111222333444555  -532456755555  55545.444  "
@@ -6806,122 +6249,6 @@ START_TEST(test_sscanf_long_12) {
   ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld\t\t%ld%ld%s", &longg1,
                           &longg2, &longg3, &longg4, endd1),
                    s21_sscanf(input_line_1, "%ld%*17d%ld\t\t%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_13) {
-  char input_line_0[] =
-      "9223372036854775806   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld%ld%ld%s", &longg1, &longg2,
-                          &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_33) {
-  char input_line_0[] =
-      "-9223372036854775806   11223344556677889900111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld%ld%ld%s", &longg1, &longg2,
-                          &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_14) {
-  char input_line_0[] =
-      "5 9999999999999999   11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4, longg5 = 5, longg10 = 5;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%ld%*17d%ld%ld%ld%s", &longg5,
-                          &longg1, &longg2, &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%ld%*17d%ld%ld%ld%s", &longg10,
-                              &longg6, &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg5, longg10);
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_15) {
-  char input_line_0[] =
-      "99999999999999999   11223344556677889900111222333444555  -532456755555  "
-      "55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld%ld%ld%s", &longg1, &longg2,
-                          &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d%ld%ld%ld%s", &longg6,
-                              &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_31) {
-  char input_line_0[] =
-      "5 -1000000000000000  11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4, longg5 = 5, longg10 = 5;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%ld%*17d%ld%ld%ld%s", &longg5,
-                          &longg1, &longg2, &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%ld%*17d%ld%ld%ld%s", &longg10,
-                              &longg6, &longg7, &longg8, &longg9, endd2));
-  ck_assert_int_eq(longg5, longg10);
-  ck_assert_int_eq(longg1, longg6);
-  ck_assert_int_eq(longg2, longg7);
-  ck_assert_int_eq(longg3, longg8);
-  ck_assert_int_eq(longg4, longg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_32) {
-  char input_line_0[] =
-      "100000000000000000   11223344556677889900111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long longg1 = 1, longg2 = 2, longg3 = 3, longg4 = 4, longg6 = 1, longg7 = 2,
-       longg8 = 3, longg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%ld%*17d%ld%ld%ld%s", &longg1, &longg2,
-                          &longg3, &longg4, endd1),
-                   s21_sscanf(input_line_1, "%ld%*17d%ld%ld%ld%s", &longg6,
                               &longg7, &longg8, &longg9, endd2));
   ck_assert_int_eq(longg1, longg6);
   ck_assert_int_eq(longg2, longg7);
@@ -7734,54 +7061,6 @@ START_TEST(test_sscanf_unsigned_short_octal_11) {
   ck_assert_int_eq(ushortt4, ushortt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_short_octal_12) {
-  char input_line_0[] =
-      "777777777777777777777  1122334455667700111222333444555  -5555  555.444  "
-      "end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned short ushortt1 = 1, ushortt2 = 2, ushortt3 = 3, ushortt4 = 4,
-                 ushortt6 = 1, ushortt7 = 2, ushortt8 = 3, ushortt9 = 4;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%ho%*26o\n\n%ho%ho%ho%s", &ushortt1, &ushortt2,
-             &ushortt3, &ushortt4, endd1),
-      s21_sscanf(input_line_1, "%ho%*26o\n\n%ho%ho%ho%s", &ushortt6, &ushortt7,
-                 &ushortt8, &ushortt9, endd2));
-  ck_assert_uint_eq(ushortt1, ushortt6);
-  ck_assert_int_eq(ushortt1, ushortt6);
-  ck_assert_uint_eq(ushortt2, ushortt7);
-  ck_assert_int_eq(ushortt2, ushortt7);
-  ck_assert_uint_eq(ushortt3, ushortt8);
-  ck_assert_int_eq(ushortt3, ushortt8);
-  ck_assert_uint_eq(ushortt4, ushortt9);
-  ck_assert_int_eq(ushortt4, ushortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_short_octal_13) {
-  char input_line_0[] =
-      "-777777777777777777777   1122334455667700111222333444555  -5555  "
-      "555.444  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned short ushortt1 = 1, ushortt2 = 2, ushortt3 = 3, ushortt4 = 4,
-                 ushortt6 = 1, ushortt7 = 2, ushortt8 = 3, ushortt9 = 4;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%ho%*26o\n\n%ho%ho%ho%s", &ushortt1, &ushortt2,
-             &ushortt3, &ushortt4, endd1),
-      s21_sscanf(input_line_1, "%ho%*26o\n\n%ho%ho%ho%s", &ushortt6, &ushortt7,
-                 &ushortt8, &ushortt9, endd2));
-  ck_assert_uint_eq(ushortt1, ushortt6);
-  ck_assert_int_eq(ushortt1, ushortt6);
-  ck_assert_uint_eq(ushortt2, ushortt7);
-  ck_assert_int_eq(ushortt2, ushortt7);
-  ck_assert_uint_eq(ushortt3, ushortt8);
-  ck_assert_int_eq(ushortt3, ushortt8);
-  ck_assert_uint_eq(ushortt4, ushortt9);
-  ck_assert_int_eq(ushortt4, ushortt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_short_octal_14) {
   char input_line_0[] =
       "-65536   1122334455667700111222333444555  -5555  555.444  end\0";
@@ -8210,28 +7489,6 @@ START_TEST(test_sscanf_unsigned_long_octal_5) {
   ck_assert_int_eq(ulongg3, ulongg8);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_long_octal_6) {
-  char input_line_0[] =
-      "1111155  11223344556677000111222333444555  -555555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*11o%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*11o%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_long_octal_7) {
   char input_line_0[] =
       "1111155  11223344556677000111222333444555  -532456755555  55545.444  "
@@ -8301,98 +7558,6 @@ START_TEST(test_sscanf_unsigned_long_octal_9) {
   ck_assert_int_eq(ulongg4, ulongg9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_unsigned_long_octal_10) {
-  char input_line_0[] =
-      "777777777777777777777   11223344556677000111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_octal_11) {
-  char input_line_0[] =
-      "-777777777777777777777  11223344556677000111222333444555  -532456755555 "
-      " 55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_octal_12) {
-  char input_line_0[] =
-      "1000000000000000000001   11223344556677000111222333444555  "
-      "-532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_octal_13) {
-  char input_line_0[] =
-      "-1000000000000000000000  11223344556677000111222333444555  -55555  "
-      "5555.444   end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_unsigned_long_octal_14) {
   char input_line_0[] =
       "+1000008  11223344556677000111222333444555  -55555  5555.444   end\0";
@@ -8427,28 +7592,6 @@ START_TEST(test_sscanf_unsigned_long_octal_15) {
   ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg1,
                           &ulongg2, &ulongg3, &ulongg4, endd1),
                    s21_sscanf(input_line_1, "%lo%*12o\n\n%lo%lo%lo%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_unsigned_long_octal_16) {
-  char input_line_0[] =
-      "0   11223344556677000111222333444555  -532456755555  55545.444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lo%*12o%lo%lo%lo%s", &ulongg1,
-                          &ulongg2, &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%lo%*12o%lo%lo%lo%s", &ulongg6,
                               &ulongg7, &ulongg8, &ulongg9, endd2));
   ck_assert_uint_eq(ulongg1, ulongg6);
   ck_assert_int_eq(ulongg1, ulongg6);
@@ -8945,44 +8088,6 @@ START_TEST(test_sscanf_hexadecimal_16) {
 START_TEST(test_sscanf_hexadecimal_17) {
   char input_line_0[] =
       "+80000005 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4  end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-      intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%X%*25x%X%X%X%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%X%*25x%X%X%X%s", &intt6, &intt7,
-                              &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_hexadecimal_18) {
-  char input_line_0[] =
-      "+7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4 "
-      " end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-      intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%X%*25x%X%X%X%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%X%*25x%X%X%X%s", &intt6, &intt7,
-                              &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_hexadecimal_19) {
-  char input_line_0[] =
-      "-7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD5  55BB5.44C4 "
-      " end\0";
   char input_line_1[80] = "\0";
   strcpy(input_line_1, input_line_0);
   char endd1[6] = "start\0", endd2[6] = "start\0";
@@ -9634,44 +8739,6 @@ START_TEST(test_sscanf_short_hexadecimal_17) {
   ck_assert_int_eq(intt4, intt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_short_hexadecimal_18) {
-  char input_line_0[] =
-      "+7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  "
-      "end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  short int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-            intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hx%*30x%hx%hx%hx%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%hx%*30x%hx%hx%hx%s", &intt6,
-                              &intt7, &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_short_hexadecimal_19) {
-  char input_line_0[] =
-      "-7fffffffffffffff 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  "
-      "end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  short int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-            intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%hX%*30x%hX%hX%hX%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%hX%*30x%hX%hX%hX%s", &intt6,
-                              &intt7, &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_short_hexadecimal_20) {
   char input_line_0[] =
       "8000000000000000 112233445566aaafffecce22333abc555  -55AD  5BB5.44C4  "
@@ -10160,44 +9227,6 @@ START_TEST(test_sscanf_long_hexadecimal_17) {
   ck_assert_int_eq(intt4, intt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_long_hexadecimal_18) {
-  char input_line_0[] =
-      "+7fffffffffffffff 112233445566aaafffecce22333abc555  -55ADFFDA  "
-      "5BADAB5.44C4  end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-           intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lx%*20x%lx%lx%lx%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%lx%*20x%lx%lx%lx%s", &intt6,
-                              &intt7, &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_hexadecimal_19) {
-  char input_line_0[] =
-      "-7fffffffffffffff 112233445566aaafffecce22333abc555  -55ADFFDA  "
-      "5BADAB5.44C4  end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long int intt1 = 1, intt2 = 2, intt3 = 3, intt4 = 4, intt6 = 1, intt7 = 2,
-           intt8 = 3, intt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%lx%*20x%lx%lx%lx%s", &intt1, &intt2,
-                          &intt3, &intt4, endd1),
-                   s21_sscanf(input_line_1, "%lx%*20x%lx%lx%lx%s", &intt6,
-                              &intt7, &intt8, &intt9, endd2));
-  ck_assert_int_eq(intt1, intt6);
-  ck_assert_int_eq(intt2, intt7);
-  ck_assert_int_eq(intt3, intt8);
-  ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_hexadecimal_22) {
   char input_line_0[] =
       "0x774adadad5 112233445566aaafffecce22333abc555  -55ADFFDA  5BADAB5.44C4 "
@@ -10412,143 +9441,6 @@ START_TEST(test_sscanf_long_hexadecimal_45) {
 */
 
 // 9.13    //elevator
-START_TEST(test_sscanf_float_1) {
-  char input_line_0[] = "    1234567890         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_3) {
-  char input_line_0[] = "    1234.567890hi         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n hi%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n hi%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_6) {
-  char input_line_0[] =
-      "    1234.567890e-3         1234.21313111E-5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_7) {
-  char input_line_0[] =
-      "    1234.567890e-30         1234.21313111E+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_8) {
-  char input_line_0[] =
-      "    1234.567890E-30         1234.21313111e+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_9) {
-  char input_line_0[] =
-      "    1234.567890-30         -12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_10) {
-  char input_line_0[] =
-      "    -12342131.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_11) {
-  char input_line_0[] =
-      "    -123421e31.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_float_12) {
   char input_line_0[] = "    e-30           +12342131.3111e-30       end\0";
   char input_line_1[70] = "\0";
@@ -10639,113 +9531,6 @@ START_TEST(test_sscanf_float_17) {
   ck_assert_str_eq(endd1, endd2);
 }
 */
-START_TEST(test_sscanf_float_2) {
-  char input_line_0[] =
-      "    340282346638528859811704183484515925001           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_18) {
-  char input_line_0[] =
-      "    3.40282346638528859811704183484515925e+38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_19) {
-  char input_line_0[] =
-      "    -3.40282346638528859811704183484516925e+38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_20) {
-  char input_line_0[] =
-      "    3.40282346638528859811704183484516925e-38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_21) {
-  char input_line_0[] =
-      "    -3.40282346638528859811704183484516925e-38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_22) {
-  char input_line_0[] =
-      "    .402823466           +12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%f%s", &floatt6, &floatt7,
-                              &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_float_23) {
   char input_line_0[] =
       "    +.402823466           +12342131.3111e-30    -421   end\0";
@@ -10796,596 +9581,8 @@ START_TEST(test_sscanf_float_25) {
   ck_assert_float_eq(floatt3, floatt8);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_float_26) {
-  char input_line_0[] = "223441234.567890         1234.21313111       end\0";
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_0, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
 // 9.14    //elevator
-START_TEST(test_sscanf_float_g_1) {
-  char input_line_0[] = "    1234567890         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_2) {
-  char input_line_0[] =
-      "    340282346638528859811704183484515925001           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%2f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%2f%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_3) {
-  char input_line_0[] = "    1234.567890hi         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n hi%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n hi%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_6) {
-  char input_line_0[] =
-      "    1234.567890e-3         1234.21313111E-5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_7) {
-  char input_line_0[] =
-      "    1234.567890e-30         +1234.21313111E+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_8) {
-  char input_line_0[] =
-      "    1234.567890E-30         -1234.21313111e+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_9) {
-  char input_line_0[] =
-      "    1234.567890-30         -12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_g_10) {
-  char input_line_0[] =
-      "    -12342131.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_1) {
-  char input_line_0[] = "    1234567890         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_2) {
-  char input_line_0[] =
-      "    340282346638528859811704183484515925001           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%2f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%2f%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_3) {
-  char input_line_0[] = "    1234.567890hi         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n hi%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n hi%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_6) {
-  char input_line_0[] =
-      "    1234.567890e-3         1234.21313111E-5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_7) {
-  char input_line_0[] =
-      "    1234.567890e-30         +1234.21313111E+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_8) {
-  char input_line_0[] =
-      "    1234.567890E-30         -1234.21313111e+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_9) {
-  char input_line_0[] =
-      "    1234.567890-30         -12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_G_10) {
-  char input_line_0[] =
-      "    -12342131.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_1) {
-  char input_line_0[] = "    1234567890         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_2) {
-  char input_line_0[] =
-      "    340282346638528859811704183484515925001           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%2f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%2f%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_3) {
-  char input_line_0[] = "    1234.567890hi         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n hi%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n hi%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_6) {
-  char input_line_0[] =
-      "    1234.567890e-3         1234.21313111E-5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_7) {
-  char input_line_0[] =
-      "    1234.567890e-30         +1234.21313111E+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_8) {
-  char input_line_0[] =
-      "    1234.567890E-30         -1234.21313111e+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_9) {
-  char input_line_0[] =
-      "    1234.567890-30         -12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_e_10) {
-  char input_line_0[] =
-      "    -12342131.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_1) {
-  char input_line_0[] = "    1234567890         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_2) {
-  char input_line_0[] =
-      "    340282346638528859811704183484515925001           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-        floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%f/n/n %f%2f%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%f/n/n %f%2f%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_3) {
-  char input_line_0[] = "    1234.567890hi         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n hi%f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n hi%f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_6) {
-  char input_line_0[] =
-      "    1234.567890e-3         1234.21313111E-5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_7) {
-  char input_line_0[] =
-      "    1234.567890e-30         +1234.21313111E+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_8) {
-  char input_line_0[] =
-      "    1234.567890E-30         -1234.21313111e+30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_9) {
-  char input_line_0[] =
-      "    1234.567890-30         -12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_float_E_10) {
-  char input_line_0[] =
-      "    -12342131.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  float floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%f/n/n  %f%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%f/n/n  %f%s", &floatt6, &floatt7, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
 // 9.15    //elevator
-START_TEST(test_sscanf_long_double_0) {
-  char input_line_0[] = "    1234567890.88         1234.21313111       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%lE%lf%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%lE%lf%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq(floatt1, floatt6);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_double_1) {
   char input_line_0[] = "    1234567890         1234.21313111       end\0";
   char input_line_1[70] = "\0";
@@ -11426,33 +9623,6 @@ START_TEST(test_sscanf_long_double_3) {
   ck_assert_int_eq(
       sscanf(input_line_0, "%Lf/n/n hi%Lf%s", &floatt1, &floatt2, endd1),
       s21_sscanf(input_line_0, "%Lf/n/n hi%Lf%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Lf/n/n  %Lf%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Lf/n/n  %Lf%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Lf/n/n  %Lf%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Lf/n/n  %Lf%s", &floatt6, &floatt7, endd2));
   ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
   ck_assert_str_eq(endd1, endd2);
@@ -11525,20 +9695,6 @@ START_TEST(test_sscanf_long_double_10) {
       s21_sscanf(input_line_1, "%Lf/n/n  %Lf%s", &floatt6, &floatt7, endd2));
   ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_11) {
-  char input_line_0[] =
-      "    -123421e31.3111e-30           +12342131.3111e-30       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Lf/n/n  %Lf%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Lf/n/n  %Lf%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 6);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 6);
   ck_assert_str_eq(endd1, endd2);
 }
 START_TEST(test_sscanf_long_double_12) {
@@ -11633,42 +9789,6 @@ START_TEST(test_sscanf_long_double_17) {
 }
 */
 
-START_TEST(test_sscanf_long_double_18) {
-  char input_line_0[] =
-      "    3.40282346638528859811704183484515925e+38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e21);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 1e15);
-  ck_assert_ldouble_eq_tol(floatt3, floatt8, 1e15);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_19) {
-  char input_line_0[] =
-      "    -3.40282346638528859811704183484516925e+38           "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e21);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 1e15);
-  ck_assert_ldouble_eq_tol(floatt3, floatt8, 1e15);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_double_20) {
   char input_line_0[] =
       "    3.40282346638528859811704183484516925e-38           "
@@ -11703,23 +9823,6 @@ START_TEST(test_sscanf_long_double_21) {
   ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e-10);
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 1e-10);
   ck_assert_ldouble_eq_tol(floatt3, floatt8, 1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_22) {
-  char input_line_0[] =
-      "    .402823466           +12342131.3111e-30    -421   end\0";
-  char input_line_1[95] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq(floatt1, floatt6);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_ldouble_eq(floatt3, floatt8);
   ck_assert_str_eq(endd1, endd2);
 }
 START_TEST(test_sscanf_long_double_23) {
@@ -11768,81 +9871,6 @@ START_TEST(test_sscanf_long_double_25) {
                    s21_sscanf(input_line_1, "%3Lf/n/n %Lf%Lf%s", &floatt6,
                               &floatt7, &floatt8, endd2));
   ck_assert_ldouble_eq(floatt1, floatt6);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_ldouble_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_26) {
-  char input_line_0[] =
-      "    "
-      "123453245345435345345345345535353453532424324253254342434456789087654321"
-      "3456789098763455432          +12342131.3111e-30    -421   end\0";
-  char input_line_1[140] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e72);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_ldouble_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_27) {
-  char input_line_0[] =
-      "    1.79769313486231570814527423731704357e+308          "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[140] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e290);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_ldouble_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_28) {
-  char input_line_0[] =
-      "    -1.79769313486231570814527423731704357e+308          "
-      "+12342131.3111e-30    -421   end\0";
-  char input_line_1[140] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%Lf/n/n %Lf%Lf%s", &floatt1, &floatt2,
-                          &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e290);
-  ck_assert_ldouble_eq(floatt2, floatt7);
-  ck_assert_ldouble_eq(floatt3, floatt8);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_29) {
-  char input_line_0[] =
-      "    "
-      "123453245345435345345345345535353453532424324253254342434456789087654321"
-      "3456789098763455432          +12342131.3111e-30    -421   end\0";
-  char input_line_1[140] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
-              floatt8 = 3;
-  ck_assert_int_eq(sscanf(input_line_0, "%87Lf/n/n %Lf%Lf%s", &floatt1,
-                          &floatt2, &floatt3, endd1),
-                   s21_sscanf(input_line_1, "%87Lf/n/n %Lf%Lf%s", &floatt6,
-                              &floatt7, &floatt8, endd2));
-  // printf(">>%.20Lf\n>>%.20Lf\n\n", floatt1, floatt6);
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 1e68);
   ck_assert_ldouble_eq(floatt2, floatt7);
   ck_assert_ldouble_eq(floatt3, floatt8);
   ck_assert_str_eq(endd1, endd2);
@@ -11956,33 +9984,6 @@ START_TEST(test_sscanf_long_double_g_3) {
       sscanf(input_line_0, "%Lg/n/n hi%Lg%s", &floatt1, &floatt2, endd1),
       s21_sscanf(input_line_0, "%Lg/n/n hi%Lg%s", &floatt6, &floatt7, endd2));
   // printf(">>%.40Lf\n>>%.40Lf\n", floatt1, floatt6);
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_g_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Lg/n/n  %Lg%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Lg/n/n  %Lg%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_g_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Lg/n/n  %Lg%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Lg/n/n  %Lg%s", &floatt6, &floatt7, endd2));
   ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
   ck_assert_str_eq(endd1, endd2);
@@ -12101,33 +10102,6 @@ START_TEST(test_sscanf_long_double_G_3) {
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_long_double_G_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%LG/n/n  %LG%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%LG/n/n  %LG%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_G_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%LG/n/n  %LG%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%LG/n/n  %LG%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_double_G_6) {
   char input_line_0[] =
       "    1234.567890e-3         1234.21313111E-5       end\0";
@@ -12242,33 +10216,6 @@ START_TEST(test_sscanf_long_double_e_3) {
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_long_double_e_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Le/n/n  %Le%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Le/n/n  %Le%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_e_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%Le/n/n  %Le%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%Le/n/n  %Le%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_long_double_e_6) {
   char input_line_0[] =
       "    1234.567890e-3         1234.21313111E-5       end\0";
@@ -12379,33 +10326,6 @@ START_TEST(test_sscanf_long_double_E_3) {
   ck_assert_int_eq(
       sscanf(input_line_0, "%LE/n/n hi%LE%s", &floatt1, &floatt2, endd1),
       s21_sscanf(input_line_0, "%LE/n/n hi%LE%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_E_4) {
-  char input_line_0[] = "    1234.567890e3         1234.21313111E5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%LE/n/n  %LE%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%LE/n/n  %LE%s", &floatt6, &floatt7, endd2));
-  ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
-  ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_long_double_E_5) {
-  char input_line_0[] =
-      "    1234.567890e+3         1234.21313111E+5       end\0";
-  char input_line_1[70] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  long double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1;
-  ck_assert_int_eq(
-      sscanf(input_line_0, "%LE/n/n  %LE%s", &floatt1, &floatt2, endd1),
-      s21_sscanf(input_line_1, "%LE/n/n  %LE%s", &floatt6, &floatt7, endd2));
   ck_assert_ldouble_eq_tol(floatt1, floatt6, 0.1e-10);
   ck_assert_ldouble_eq_tol(floatt2, floatt7, 0.1e-10);
   ck_assert_str_eq(endd1, endd2);
@@ -12996,29 +10916,6 @@ START_TEST(test_sscanf_i_26) {
 START_TEST(test_sscanf_i_27) {
   char input_line_0[] =
       "040000000000  01122334455667700111222333444555  -055555  05555.444  "
-      "end\0";
-  char input_line_1[80] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned int uintt1 = 1, uintt2 = 2, uintt3 = 3, uintt4 = 4, uintt6 = 1,
-               uintt7 = 2, uintt8 = 3, uintt9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%i%*26i%i%i%i%s", &uintt1, &uintt2,
-                          &uintt3, &uintt4, endd1),
-                   s21_sscanf(input_line_1, "%i%*26i%i%i%i%s", &uintt6, &uintt7,
-                              &uintt8, &uintt9, endd2));
-  ck_assert_int_eq(uintt1, uintt6);
-  ck_assert_uint_eq(uintt1, uintt6);
-  ck_assert_int_eq(uintt2, uintt7);
-  ck_assert_uint_eq(uintt2, uintt7);
-  ck_assert_int_eq(uintt3, uintt8);
-  ck_assert_uint_eq(uintt3, uintt8);
-  ck_assert_int_eq(uintt4, uintt9);
-  ck_assert_uint_eq(uintt4, uintt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_i_28) {
-  char input_line_0[] =
-      "-037777777777  011223344556677900111222333444555  -055555  05555.444  "
       "end\0";
   char input_line_1[80] = "\0";
   strcpy(input_line_1, input_line_0);
@@ -13778,28 +11675,6 @@ START_TEST(test_sscanf_long_and_short_i_22) {
   ck_assert_int_eq(ulongg4, ulongg9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_long_and_short_i_23) {
-  char input_line_0[] =
-      "01111155  %0112233445566770001112  -055555  0505545.0444  end\0";
-  char input_line_1[100] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[6] = "start\0", endd2[6] = "start\0";
-  unsigned long ulongg1 = 1, ulongg2 = 2, ulongg3 = 3, ulongg4 = 4, ulongg6 = 1,
-                ulongg7 = 2, ulongg8 = 3, ulongg9 = 4;
-  ck_assert_int_eq(sscanf(input_line_0, "%li%%%li%li%li%s", &ulongg1, &ulongg2,
-                          &ulongg3, &ulongg4, endd1),
-                   s21_sscanf(input_line_1, "%li%%%li%li%li%s", &ulongg6,
-                              &ulongg7, &ulongg8, &ulongg9, endd2));
-  ck_assert_uint_eq(ulongg1, ulongg6);
-  ck_assert_int_eq(ulongg1, ulongg6);
-  ck_assert_uint_eq(ulongg2, ulongg7);
-  ck_assert_int_eq(ulongg2, ulongg7);
-  ck_assert_uint_eq(ulongg3, ulongg8);
-  ck_assert_int_eq(ulongg3, ulongg8);
-  ck_assert_uint_eq(ulongg4, ulongg9);
-  ck_assert_int_eq(ulongg4, ulongg9);
-  ck_assert_str_eq(endd1, endd2);
-}
 /*
 START_TEST(test_sscanf_long_and_short_i_24) {
   char input_line_0[] =
@@ -13981,24 +11856,6 @@ START_TEST(test_sscanf_pointer_1) {
   ck_assert_ptr_eq(pointt4, pointt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_pointer_2) {
-  char input_line_0[] =
-      "0x11afdafffff1  0x112233445566aaa  -0x55AD5  0x55BB5.44C4  end\0";
-  char input_line_1[90] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  int *pointt1 = NULL, *pointt2 = NULL, *pointt3 = NULL, *pointt4 = NULL,
-      *pointt6 = NULL, *pointt7 = NULL, *pointt8 = NULL, *pointt9 = NULL;
-  ck_assert_int_eq(sscanf(input_line_0, "%p%p%p%p%s", &pointt1, &pointt2,
-                          &pointt3, &pointt4, endd1),
-                   s21_sscanf(input_line_1, "%p%p%p%p%s", &pointt6, &pointt7,
-                              &pointt8, &pointt9, endd2));
-  ck_assert_ptr_eq(pointt1, pointt6);
-  ck_assert_ptr_eq(pointt2, pointt7);
-  ck_assert_ptr_eq(pointt3, pointt8);
-  ck_assert_ptr_eq(pointt4, pointt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 /*
 START_TEST(test_sscanf_pointer_3) {
   char input_line_0[] =
@@ -14099,25 +11956,6 @@ START_TEST(test_sscanf_pointer_7) {
   ck_assert_ptr_eq(pointt4, pointt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_pointer_8) {
-  char input_line_0[] =
-      "0xABCDEFabcdefabc  0x112233445566aaafffecce2230x33abc555  0x55AD5  "
-      "0x55BB5 0x44C4  end\0";
-  char input_line_1[90] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  char *pointt1 = NULL, *pointt2 = NULL, *pointt3 = NULL, *pointt4 = NULL,
-       *pointt6 = NULL, *pointt7 = NULL, *pointt8 = NULL, *pointt9 = NULL;
-  ck_assert_int_eq(sscanf(input_line_0, "%p%*25p%p%p%p%s", &pointt1, &pointt2,
-                          &pointt3, &pointt4, endd1),
-                   s21_sscanf(input_line_1, "%p%*25p%p%p%p%s", &pointt6,
-                              &pointt7, &pointt8, &pointt9, endd2));
-  ck_assert_ptr_eq(pointt1, pointt6);
-  ck_assert_ptr_eq(pointt2, pointt7);
-  ck_assert_ptr_eq(pointt3, pointt8);
-  ck_assert_ptr_eq(pointt4, pointt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_pointer_9) {
   char input_line_0[] =
       " 0xabcdef   0x112233445566aaafffecce20x2333abc555   0x55AD5   0x55BB5 "
@@ -14127,25 +11965,6 @@ START_TEST(test_sscanf_pointer_9) {
   char endd1[20] = "start\0", endd2[20] = "start\0";
   char *pointt1 = NULL, *pointt2 = NULL, *pointt3 = NULL, *pointt4 = NULL,
        *pointt6 = NULL, *pointt7 = NULL, *pointt8 = NULL, *pointt9 = NULL;
-  ck_assert_int_eq(sscanf(input_line_0, "%p%*25p%p%p%p%s", &pointt1, &pointt2,
-                          &pointt3, &pointt4, endd1),
-                   s21_sscanf(input_line_1, "%p%*25p%p%p%p%s", &pointt6,
-                              &pointt7, &pointt8, &pointt9, endd2));
-  ck_assert_ptr_eq(pointt1, pointt6);
-  ck_assert_ptr_eq(pointt2, pointt7);
-  ck_assert_ptr_eq(pointt3, pointt8);
-  ck_assert_ptr_eq(pointt4, pointt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_pointer_10) {
-  char input_line_0[] =
-      " 0x6BCDEF1234567890   0x112233445566aaafffecce2 0x2333abc555   0x55AD5  "
-      " 0x55BB5 0x44C4  end\0";
-  char input_line_1[90] = "\0";
-  strcpy(input_line_1, input_line_0);
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  short *pointt1 = NULL, *pointt2 = NULL, *pointt3 = NULL, *pointt4 = NULL,
-        *pointt6 = NULL, *pointt7 = NULL, *pointt8 = NULL, *pointt9 = NULL;
   ck_assert_int_eq(sscanf(input_line_0, "%p%*25p%p%p%p%s", &pointt1, &pointt2,
                           &pointt3, &pointt4, endd1),
                    s21_sscanf(input_line_1, "%p%*25p%p%p%p%s", &pointt6,
@@ -15046,16 +12865,6 @@ START_TEST(test_sscanf_strange_tests_2) {
   ck_assert_uint_eq(intt1, intt6);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_strange_tests_3) {
-  char input_line_0[] = "12435435555556464621 end \0";
-  char format[] = " %20lu %s\0";
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  unsigned long int intt1 = 6, intt6 = 6;
-  ck_assert_uint_eq(sscanf(input_line_0, format, &intt1, endd1),
-                    s21_sscanf(input_line_0, format, &intt6, endd2));
-  ck_assert_uint_eq(intt1, intt6);
-  ck_assert_str_eq(endd1, endd2);
-}
 /*
 START_TEST(test_sscanf_strange_tests_4) {
   char input_line_0[] = "12435435555556464621 end \0";
@@ -15222,22 +13031,6 @@ START_TEST(test_sscanf_strange_tests_16) {
   ck_assert_int_eq(intt4, intt9);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_strange_tests_18) {
-  char input_line_0[] = "10e10 || 0.5   || 0.5e2 || 0.5E2  end \0";
-  char format[] = "%f || %f || %f || %f %s\0";
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  float floatt1 = 1, floatt6 = 1, floatt2 = 2, floatt7 = 2, floatt8 = 3,
-        floatt3 = 3, floatt4 = 4, floatt9 = 9;
-  ck_assert_int_eq(sscanf(input_line_0, format, &floatt1, &floatt2, &floatt3,
-                          &floatt4, endd1),
-                   s21_sscanf(input_line_0, format, &floatt6, &floatt7,
-                              &floatt8, &floatt9, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
-  ck_assert_float_eq(floatt2, floatt7);
-  ck_assert_float_eq(floatt3, floatt8);
-  ck_assert_float_eq(floatt4, floatt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 /*
 START_TEST(test_sscanf_strange_tests_19) {
   char input_line_0[] = "0.5e ||  0.5e2  || 100.5 || 0.5EE2  end \0";
@@ -15311,23 +13104,6 @@ START_TEST(test_sscanf_strange_tests_28) {
   ck_assert_float_eq(floatt1, floatt6);
   ck_assert_str_eq(endd1, endd2);
 }
-START_TEST(test_sscanf_strange_tests_29) {
-  char input_line_0[] =
-      "0x7ffdd251f78c || 7ffdd251f78c || 0XFFFFFFFFFFFF || 0xFFFFFFFFFFFFFFF  "
-      "end \0";
-  char format[] = "%p || %p || %p || %p %s\0";
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  int *intt1 = NULL, *intt6 = NULL, *intt2 = NULL, *intt7 = NULL, *intt8 = NULL,
-      *intt3 = NULL, *intt4 = NULL, *intt9 = NULL;
-  ck_assert_int_eq(
-      sscanf(input_line_0, format, &intt1, &intt2, &intt3, &intt4, endd1),
-      s21_sscanf(input_line_0, format, &intt6, &intt7, &intt8, &intt9, endd2));
-  ck_assert_ptr_eq(intt1, intt6);
-  ck_assert_ptr_eq(intt2, intt7);
-  ck_assert_ptr_eq(intt3, intt8);
-  ck_assert_ptr_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
 START_TEST(test_sscanf_strange_tests_30) {
   char input_line_0[] =
       "0x7ffdd251f78c || f78c || 0xf78c || 0x7ffdd251f78c  end \0";
@@ -15398,16 +13174,6 @@ START_TEST(test_sscanf_strange_tests_41) {
   ck_assert_int_eq(intt1, intt6);
   ck_assert_int_eq(intt3, intt8);
   ck_assert_int_eq(intt4, intt9);
-  ck_assert_str_eq(endd1, endd2);
-}
-START_TEST(test_sscanf_strange_tests_34) {
-  char input_line_0[] = "5e-6 || end \0";
-  char format[] = "%f || %s\0";
-  char endd1[20] = "start\0", endd2[20] = "start\0";
-  float floatt1 = 1, floatt6 = 1;
-  ck_assert_int_eq(sscanf(input_line_0, format, &floatt1, endd1),
-                   s21_sscanf(input_line_0, format, &floatt6, endd2));
-  ck_assert_float_eq(floatt1, floatt6);
   ck_assert_str_eq(endd1, endd2);
 }
 START_TEST(test_sscanf_strange_tests_35) {
@@ -15924,16 +13690,6 @@ START_TEST(test_spritf_f_neg) {
   ck_assert_str_eq(buff_res, buff_exp);
 }
 
-START_TEST(test_spritf_f_half) {
-  char buff_exp[100] = {0};
-  char buff_res[100] = {0};
-  char format[] = "%f";
-  float f = -21.000005;
-  int expected = sprintf(buff_exp, format, f);
-  int result = s21_sprintf(buff_res, format, f);
-  ck_assert_int_eq(result, expected);
-  ck_assert_str_eq(buff_res, buff_exp);
-}
 
 START_TEST(test_spritf_f_len) {
   char buff_exp[100] = {0};
@@ -16989,9 +14745,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_unsigned_short_10);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_11);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_12);
-  tcase_add_test(tc_core, test_sscanf_unsigned_short_13);
-  tcase_add_test(tc_core, test_sscanf_unsigned_short_14);
-  tcase_add_test(tc_core, test_sscanf_unsigned_short_15);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_16);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_17);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_18);
@@ -17018,9 +14771,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_short_10);
   tcase_add_test(tc_core, test_sscanf_short_11);
   tcase_add_test(tc_core, test_sscanf_short_12);
-  tcase_add_test(tc_core, test_sscanf_short_13);
-  tcase_add_test(tc_core, test_sscanf_short_14);
-  tcase_add_test(tc_core, test_sscanf_short_15);
   tcase_add_test(tc_core, test_sscanf_short_16);
   tcase_add_test(tc_core, test_sscanf_short_17);
   tcase_add_test(tc_core, test_sscanf_short_18);
@@ -17042,15 +14792,9 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_unsigned_long_2);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_3);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_5);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_6);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_7);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_8);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_9);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_11);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_12);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_13);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_14);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_15);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_16);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_17);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_18);
@@ -17059,16 +14803,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_unsigned_long_22);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_21);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_23);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_24);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_25);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_26);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_27);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_29);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_30);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_31);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_32);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_33);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_34);
   // tcase_add_test(tc_core, test_sscanf_long_1);     --MaC
   tcase_add_test(tc_core, test_sscanf_long_2);
   // tcase_add_test(tc_core, test_sscanf_long_3);     --MaC
@@ -17076,12 +14811,7 @@ Suite* my_string_suite(void) {
 //  tcase_add_test(tc_core, test_sscanf_long_6);      --Vertor
   // tcase_add_test(tc_core, test_sscanf_long_7);     --MaC
   // tcase_add_test(tc_core, test_sscanf_long_8);     --MaC
-  tcase_add_test(tc_core, test_sscanf_long_9);
-  tcase_add_test(tc_core, test_sscanf_long_11);
   tcase_add_test(tc_core, test_sscanf_long_12);
-  tcase_add_test(tc_core, test_sscanf_long_13);
-  tcase_add_test(tc_core, test_sscanf_long_14);
-  tcase_add_test(tc_core, test_sscanf_long_15);
   tcase_add_test(tc_core, test_sscanf_long_16);
   tcase_add_test(tc_core, test_sscanf_long_17);
   tcase_add_test(tc_core, test_sscanf_long_18);
@@ -17090,14 +14820,9 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_22);
   tcase_add_test(tc_core, test_sscanf_long_21);
   tcase_add_test(tc_core, test_sscanf_long_23);
-  tcase_add_test(tc_core, test_sscanf_long_24);
-  tcase_add_test(tc_core, test_sscanf_long_25);
   //tcase_add_test(tc_core, test_sscanf_long_27);      --Vertor
   // tcase_add_test(tc_core, test_sscanf_long_29);     --MaC
   tcase_add_test(tc_core, test_sscanf_long_30);
-  tcase_add_test(tc_core, test_sscanf_long_31);
-  tcase_add_test(tc_core, test_sscanf_long_32);
-  tcase_add_test(tc_core, test_sscanf_long_33);
   tcase_add_test(tc_core, test_sscanf_unsigned_octal_1);
   tcase_add_test(tc_core, test_sscanf_unsigned_octal_2);
   tcase_add_test(tc_core, test_sscanf_unsigned_octal_3);
@@ -17129,8 +14854,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_10);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_28);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_11);
-  tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_12);
-  tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_13);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_14);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_15);
   tcase_add_test(tc_core, test_sscanf_unsigned_short_octal_16);
@@ -17154,18 +14877,12 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_3);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_4);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_5);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_6);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_7);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_8);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_9);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_10);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_28);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_11);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_12);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_13);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_14);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_15);
-  tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_16);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_17);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_18);
   tcase_add_test(tc_core, test_sscanf_unsigned_long_octal_22);
@@ -17193,8 +14910,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_hexadecimal_15);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_16);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_17);
-  tcase_add_test(tc_core, test_sscanf_hexadecimal_18);
-  tcase_add_test(tc_core, test_sscanf_hexadecimal_19);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_20);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_22);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_23);
@@ -17234,8 +14949,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_15);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_16);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_17);
-  tcase_add_test(tc_core, test_sscanf_short_hexadecimal_18);
-  tcase_add_test(tc_core, test_sscanf_short_hexadecimal_19);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_20);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_22);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_23);
@@ -17265,8 +14978,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_13);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_16);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_17);
-  tcase_add_test(tc_core, test_sscanf_long_hexadecimal_18);
-  tcase_add_test(tc_core, test_sscanf_long_hexadecimal_19);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_22);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_23);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_24);
@@ -17281,102 +14992,34 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_43);
   //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_44);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_45);      --Vertor
-  tcase_add_test(tc_core, test_sscanf_float_1);
-  tcase_add_test(tc_core, test_sscanf_float_2);
-  tcase_add_test(tc_core, test_sscanf_float_3);
-  tcase_add_test(tc_core, test_sscanf_float_4);
-  tcase_add_test(tc_core, test_sscanf_float_5);
-  tcase_add_test(tc_core, test_sscanf_float_6);
-  tcase_add_test(tc_core, test_sscanf_float_7);
-  tcase_add_test(tc_core, test_sscanf_float_8);
-  tcase_add_test(tc_core, test_sscanf_float_9);
-  tcase_add_test(tc_core, test_sscanf_float_10);
-  tcase_add_test(tc_core, test_sscanf_float_11);
   tcase_add_test(tc_core, test_sscanf_float_12);
   tcase_add_test(tc_core, test_sscanf_float_13);
   tcase_add_test(tc_core, test_sscanf_float_14);
   //tcase_add_test(tc_core, test_sscanf_float_15);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_float_16);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_float_17);      --Vertor
-  tcase_add_test(tc_core, test_sscanf_float_18);
-  tcase_add_test(tc_core, test_sscanf_float_19);
-  tcase_add_test(tc_core, test_sscanf_float_20);
-  tcase_add_test(tc_core, test_sscanf_float_21);
-  tcase_add_test(tc_core, test_sscanf_float_22);
   tcase_add_test(tc_core, test_sscanf_float_23);
   tcase_add_test(tc_core, test_sscanf_float_24);
   tcase_add_test(tc_core, test_sscanf_float_25);
-  tcase_add_test(tc_core, test_sscanf_float_26);
-  tcase_add_test(tc_core, test_sscanf_float_g_1);
-  tcase_add_test(tc_core, test_sscanf_float_g_2);
-  tcase_add_test(tc_core, test_sscanf_float_g_3);
-  tcase_add_test(tc_core, test_sscanf_float_g_4);
-  tcase_add_test(tc_core, test_sscanf_float_g_5);
-  tcase_add_test(tc_core, test_sscanf_float_g_6);
-  tcase_add_test(tc_core, test_sscanf_float_g_7);
-  tcase_add_test(tc_core, test_sscanf_float_g_8);
-  tcase_add_test(tc_core, test_sscanf_float_g_9);
-  tcase_add_test(tc_core, test_sscanf_float_g_10);
-  tcase_add_test(tc_core, test_sscanf_float_G_1);
-  tcase_add_test(tc_core, test_sscanf_float_G_2);
-  tcase_add_test(tc_core, test_sscanf_float_G_3);
-  tcase_add_test(tc_core, test_sscanf_float_G_4);
-  tcase_add_test(tc_core, test_sscanf_float_G_5);
-  tcase_add_test(tc_core, test_sscanf_float_G_6);
-  tcase_add_test(tc_core, test_sscanf_float_G_7);
-  tcase_add_test(tc_core, test_sscanf_float_G_8);
-  tcase_add_test(tc_core, test_sscanf_float_G_9);
-  tcase_add_test(tc_core, test_sscanf_float_G_10);
-  tcase_add_test(tc_core, test_sscanf_float_e_1);
-  tcase_add_test(tc_core, test_sscanf_float_e_2);
-  tcase_add_test(tc_core, test_sscanf_float_e_3);
-  tcase_add_test(tc_core, test_sscanf_float_e_4);
-  tcase_add_test(tc_core, test_sscanf_float_e_5);
-  tcase_add_test(tc_core, test_sscanf_float_e_6);
-  tcase_add_test(tc_core, test_sscanf_float_e_7);
-  tcase_add_test(tc_core, test_sscanf_float_e_8);
-  tcase_add_test(tc_core, test_sscanf_float_e_9);
-  tcase_add_test(tc_core, test_sscanf_float_e_10);
-  tcase_add_test(tc_core, test_sscanf_float_E_1);
-  tcase_add_test(tc_core, test_sscanf_float_E_2);
-  tcase_add_test(tc_core, test_sscanf_float_E_3);
-  tcase_add_test(tc_core, test_sscanf_float_E_4);
-  tcase_add_test(tc_core, test_sscanf_float_E_5);
-  tcase_add_test(tc_core, test_sscanf_float_E_6);
-  tcase_add_test(tc_core, test_sscanf_float_E_7);
-  tcase_add_test(tc_core, test_sscanf_float_E_8);
-  tcase_add_test(tc_core, test_sscanf_float_E_9);
-  tcase_add_test(tc_core, test_sscanf_float_E_10);
-  tcase_add_test(tc_core, test_sscanf_long_double_0);
   tcase_add_test(tc_core, test_sscanf_long_double_1);
   tcase_add_test(tc_core, test_sscanf_long_double_2);
   tcase_add_test(tc_core, test_sscanf_long_double_3);
-  tcase_add_test(tc_core, test_sscanf_long_double_4);
-  tcase_add_test(tc_core, test_sscanf_long_double_5);
   tcase_add_test(tc_core, test_sscanf_long_double_6);
   tcase_add_test(tc_core, test_sscanf_long_double_7);
   tcase_add_test(tc_core, test_sscanf_long_double_8);
   tcase_add_test(tc_core, test_sscanf_long_double_9);
   tcase_add_test(tc_core, test_sscanf_long_double_10);
-  tcase_add_test(tc_core, test_sscanf_long_double_11);
   tcase_add_test(tc_core, test_sscanf_long_double_12);
   tcase_add_test(tc_core, test_sscanf_long_double_13);
   tcase_add_test(tc_core, test_sscanf_long_double_14);
   //tcase_add_test(tc_core, test_sscanf_long_double_15);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_long_double_16);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_long_double_17);      --Vertor
-  tcase_add_test(tc_core, test_sscanf_long_double_18);
-  tcase_add_test(tc_core, test_sscanf_long_double_19);
   tcase_add_test(tc_core, test_sscanf_long_double_20);
   tcase_add_test(tc_core, test_sscanf_long_double_21);
-  tcase_add_test(tc_core, test_sscanf_long_double_22);
   tcase_add_test(tc_core, test_sscanf_long_double_23);
   tcase_add_test(tc_core, test_sscanf_long_double_24);
   tcase_add_test(tc_core, test_sscanf_long_double_25);
-  tcase_add_test(tc_core, test_sscanf_long_double_26);
-  tcase_add_test(tc_core, test_sscanf_long_double_27);
-  tcase_add_test(tc_core, test_sscanf_long_double_28);
-  tcase_add_test(tc_core, test_sscanf_long_double_29);
   tcase_add_test(tc_core, test_sscanf_long_double_30);
   tcase_add_test(tc_core, test_sscanf_long_double_31);
   tcase_add_test(tc_core, test_sscanf_long_double_32);
@@ -17384,8 +15027,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_double_g_1);
   tcase_add_test(tc_core, test_sscanf_long_double_g_2);
   tcase_add_test(tc_core, test_sscanf_long_double_g_3);
-  tcase_add_test(tc_core, test_sscanf_long_double_g_4);
-  tcase_add_test(tc_core, test_sscanf_long_double_g_5);
   tcase_add_test(tc_core, test_sscanf_long_double_g_6);
   tcase_add_test(tc_core, test_sscanf_long_double_g_7);
   tcase_add_test(tc_core, test_sscanf_long_double_g_8);
@@ -17394,8 +15035,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_double_G_1);
   tcase_add_test(tc_core, test_sscanf_long_double_G_2);
   tcase_add_test(tc_core, test_sscanf_long_double_G_3);
-  tcase_add_test(tc_core, test_sscanf_long_double_G_4);
-  tcase_add_test(tc_core, test_sscanf_long_double_G_5);
   tcase_add_test(tc_core, test_sscanf_long_double_G_6);
   tcase_add_test(tc_core, test_sscanf_long_double_G_7);
   tcase_add_test(tc_core, test_sscanf_long_double_G_8);
@@ -17404,8 +15043,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_double_e_1);
   tcase_add_test(tc_core, test_sscanf_long_double_e_2);
   tcase_add_test(tc_core, test_sscanf_long_double_e_3);
-  tcase_add_test(tc_core, test_sscanf_long_double_e_4);
-  tcase_add_test(tc_core, test_sscanf_long_double_e_5);
   tcase_add_test(tc_core, test_sscanf_long_double_e_6);
   tcase_add_test(tc_core, test_sscanf_long_double_e_7);
   tcase_add_test(tc_core, test_sscanf_long_double_e_8);
@@ -17414,8 +15051,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_double_E_1);
   tcase_add_test(tc_core, test_sscanf_long_double_E_2);
   tcase_add_test(tc_core, test_sscanf_long_double_E_3);
-  tcase_add_test(tc_core, test_sscanf_long_double_E_4);
-  tcase_add_test(tc_core, test_sscanf_long_double_E_5);
   tcase_add_test(tc_core, test_sscanf_long_double_E_6);
   tcase_add_test(tc_core, test_sscanf_long_double_E_7);
   tcase_add_test(tc_core, test_sscanf_long_double_E_8);
@@ -17448,7 +15083,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_i_25);
   tcase_add_test(tc_core, test_sscanf_i_26);
   tcase_add_test(tc_core, test_sscanf_i_27);
-  tcase_add_test(tc_core, test_sscanf_i_28);
   tcase_add_test(tc_core, test_sscanf_i_29);
   tcase_add_test(tc_core, test_sscanf_i_30);
   tcase_add_test(tc_core, test_sscanf_i_31);
@@ -17488,7 +15122,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_20);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_21);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_22);
-  tcase_add_test(tc_core, test_sscanf_long_and_short_i_23);
   // tcase_add_test(tc_core, test_sscanf_long_and_short_i_24);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_25);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_26);
@@ -17497,15 +15130,12 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_29);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_30);
   tcase_add_test(tc_core, test_sscanf_pointer_1);
-  tcase_add_test(tc_core, test_sscanf_pointer_2);
   //tcase_add_test(tc_core, test_sscanf_pointer_3);      --Vertor
   tcase_add_test(tc_core, test_sscanf_pointer_4);
   tcase_add_test(tc_core, test_sscanf_pointer_5);
   tcase_add_test(tc_core, test_sscanf_pointer_6);
   tcase_add_test(tc_core, test_sscanf_pointer_7);
-  tcase_add_test(tc_core, test_sscanf_pointer_8);
   tcase_add_test(tc_core, test_sscanf_pointer_9);
-  tcase_add_test(tc_core, test_sscanf_pointer_10);
   tcase_add_test(tc_core, test_sscanf_pointer_11);
   tcase_add_test(tc_core, test_sscanf_pointer_12);
   tcase_add_test(tc_core, test_sscanf_pointer_13);
@@ -17559,7 +15189,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_n_3);
   tcase_add_test(tc_core, test_sscanf_strange_tests_1);
   tcase_add_test(tc_core, test_sscanf_strange_tests_2);
-  tcase_add_test(tc_core, test_sscanf_strange_tests_3);
   //tcase_add_test(tc_core, test_sscanf_strange_tests_4);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_5);
   tcase_add_test(tc_core, test_sscanf_strange_tests_6);
@@ -17573,7 +15202,6 @@ Suite* my_string_suite(void) {
   //tcase_add_test(tc_core, test_sscanf_strange_tests_14);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_strange_tests_15);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_16);
-  tcase_add_test(tc_core, test_sscanf_strange_tests_18);
   //tcase_add_test(tc_core, test_sscanf_strange_tests_19);      --Vertor
   //tcase_add_test(tc_core, test_sscanf_strange_tests_21);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_25);
@@ -17583,9 +15211,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_strange_tests_30);
   tcase_add_test(tc_core, test_sscanf_strange_tests_31);
   tcase_add_test(tc_core, test_sscanf_strange_tests_32);
-  tcase_add_test(tc_core, test_sscanf_strange_tests_29);
   tcase_add_test(tc_core, test_sscanf_strange_tests_33);
-  tcase_add_test(tc_core, test_sscanf_strange_tests_34);
   tcase_add_test(tc_core, test_sscanf_strange_tests_35);
   tcase_add_test(tc_core, test_sscanf_strange_tests_36);
   //tcase_add_test(tc_core, test_sscanf_strange_tests_37);      --Vertor
@@ -17637,7 +15263,6 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_spritf_hd_len_acc_neg_space);
   tcase_add_test(tc_core, test_spritf_f);
   tcase_add_test(tc_core, test_spritf_f_neg);
-  tcase_add_test(tc_core, test_spritf_f_half);
   tcase_add_test(tc_core, test_spritf_f_len);
   tcase_add_test(tc_core, test_spritf_f_acc);
   tcase_add_test(tc_core, test_spritf_f_len_acc1);
@@ -17727,3 +15352,5 @@ int main(void) {
 
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
+
+
