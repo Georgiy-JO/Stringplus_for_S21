@@ -103,6 +103,8 @@ clang_all:
 	rm -f .clang-format
 
 #Service stages------------------------------------------------------------------------------------------------------------------------------------
+clean: clear
+
 clear:
 	rm -f $(TEST_COV) $(TESTS) *.a *.gc* *.html *.css *.o RESULT_VALGRIND.txt RESULT_CPPCHECK.txt
 clear_o:

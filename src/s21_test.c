@@ -14703,8 +14703,8 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_strtok_nullline_3);
   tcase_add_test(tc_core, test_strtok_nullline_4);
   tcase_add_test(tc_core, test_strtok_nullline_5);
-//  tcase_add_test(tc_core, test_strtok_longline_1);
-//  tcase_add_test(tc_core, test_strtok_longline_2);
+  //  tcase_add_test(tc_core, test_strtok_longline_1);
+  //  tcase_add_test(tc_core, test_strtok_longline_2);
   // tcase_add_test(tc_core, test_strtok_longline_3);      //too much time!
   tcase_add_test(tc_core, test_strtok_longline_4);
   tcase_add_test(tc_core, test_strtok_longline_5);
