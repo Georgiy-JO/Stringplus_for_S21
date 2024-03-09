@@ -5609,7 +5609,6 @@ START_TEST(test_sscanf_short_12) {
   ck_assert_str_eq(endd1, endd2);
 }
 
-
 START_TEST(test_sscanf_short_31) {
   char input_line_0[] =
       "5 -1000000000000000  11223344556677889900111222333444555  -5555  "
@@ -9582,6 +9581,23 @@ START_TEST(test_sscanf_float_25) {
   ck_assert_str_eq(endd1, endd2);
 }
 // 9.14    //elevator
+START_TEST(test_sscanf_double_1) {
+  char input_line_0[] =
+      "    0.5e4           +12342131.3111e-3    -421   end\\0";
+  char input_line_1[70] = "\0";
+  strcpy(input_line_1, input_line_0);
+  char endd1[6] = "start\0", endd2[6] = "start\0";
+  double floatt1 = 1, floatt2 = 2, floatt7 = 2, floatt6 = 1, floatt3 = 3,
+         floatt8 = 3;
+  ck_assert_int_eq(sscanf(input_line_0, "%lf/n/n %lf%lf%s", &floatt1, &floatt2,
+                          &floatt3, endd1),
+                   s21_sscanf(input_line_1, "%lf/n/n %lf%lf%s", &floatt6,
+                              &floatt7, &floatt8, endd2));
+  ck_assert_double_eq(floatt1, floatt6);
+  ck_assert_double_eq(floatt2, floatt7);
+  ck_assert_double_eq(floatt3, floatt8);
+  ck_assert_str_eq(endd1, endd2);
+}
 // 9.15    //elevator
 START_TEST(test_sscanf_long_double_1) {
   char input_line_0[] = "    1234567890         1234.21313111       end\0";
@@ -13286,9 +13302,9 @@ START_TEST(test_sscanf_cov_test_3) {
   char format[] = "%hf  %s\0";
   char endd1[20] = "start\0", endd2[20] = "start\0";
   float floatt1 = 1, floatt6 = 1;
-  //ck_assert_int_eq(sscanf(input_line_0, format, &floatt1, endd1), s21_sscanf(input_line_0, format, &floatt6, endd2));
-  sscanf(input_line_0, format, &floatt1, endd1);
-   s21_sscanf(input_line_0, format, &floatt6, endd2);
+  //ck_assert_int_eq(sscanf(input_line_0, format, &floatt1, endd1),
+s21_sscanf(input_line_0, format, &floatt6, endd2)); sscanf(input_line_0, format,
+&floatt1, endd1); s21_sscanf(input_line_0, format, &floatt6, endd2);
   ck_assert_float_eq(floatt1, floatt6);
   ck_assert_str_eq(endd1, endd2);
 }
@@ -13323,7 +13339,6 @@ START_TEST(test_sscanf_cov_test_6) {
   ck_assert_float_eq(floatt1, floatt6);
   ck_assert_str_eq(endd1, endd2);
 }
-
 
 // elevator
 
@@ -13689,7 +13704,6 @@ START_TEST(test_spritf_f_neg) {
   ck_assert_int_eq(result, expected);
   ck_assert_str_eq(buff_res, buff_exp);
 }
-
 
 START_TEST(test_spritf_f_len) {
   char buff_exp[100] = {0};
@@ -14162,7 +14176,7 @@ START_TEST(test_spritf_per) {
   char buff_exp[100] = {0};
   char buff_res[100] = {0};
   char format[] = "%% %d";
-  int d=21;
+  int d = 21;
   int expected = sprintf(buff_exp, format, d);
   int result = s21_sprintf(buff_res, format, d);
   ck_assert_int_eq(result, expected);
@@ -14808,7 +14822,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_2);
   // tcase_add_test(tc_core, test_sscanf_long_3);     --MaC
   tcase_add_test(tc_core, test_sscanf_long_5);
-//  tcase_add_test(tc_core, test_sscanf_long_6);      --Vertor
+  //  tcase_add_test(tc_core, test_sscanf_long_6);      --Vertor
   // tcase_add_test(tc_core, test_sscanf_long_7);     --MaC
   // tcase_add_test(tc_core, test_sscanf_long_8);     --MaC
   tcase_add_test(tc_core, test_sscanf_long_12);
@@ -14820,8 +14834,8 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_22);
   tcase_add_test(tc_core, test_sscanf_long_21);
   tcase_add_test(tc_core, test_sscanf_long_23);
-  //tcase_add_test(tc_core, test_sscanf_long_27);      --Vertor
-  // tcase_add_test(tc_core, test_sscanf_long_29);     --MaC
+  // tcase_add_test(tc_core, test_sscanf_long_27);      --Vertor
+  //  tcase_add_test(tc_core, test_sscanf_long_29);     --MaC
   tcase_add_test(tc_core, test_sscanf_long_30);
   tcase_add_test(tc_core, test_sscanf_unsigned_octal_1);
   tcase_add_test(tc_core, test_sscanf_unsigned_octal_2);
@@ -14918,7 +14932,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_hexadecimal_26);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_27);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_28);
-//  tcase_add_test(tc_core, test_sscanf_hexadecimal_29);      --Vertor
+  //  tcase_add_test(tc_core, test_sscanf_hexadecimal_29);      --Vertor
   tcase_add_test(tc_core, test_sscanf_hexadecimal_30);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_31);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_32);
@@ -14929,12 +14943,12 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_hexadecimal_37);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_38);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_39);
- // tcase_add_test(tc_core, test_sscanf_hexadecimal_40);      --Vertor
- // tcase_add_test(tc_core, test_sscanf_hexadecimal_41);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_hexadecimal_40);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_hexadecimal_41);      --Vertor
   tcase_add_test(tc_core, test_sscanf_hexadecimal_42);
   tcase_add_test(tc_core, test_sscanf_hexadecimal_43);
-  //tcase_add_test(tc_core, test_sscanf_hexadecimal_44);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_hexadecimal_45);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_hexadecimal_44);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_hexadecimal_45);      --Vertor
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_1);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_5);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_6);
@@ -14957,17 +14971,17 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_26);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_27);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_28);
-//  tcase_add_test(tc_core, test_sscanf_short_hexadecimal_29);      --Vertor
+  //  tcase_add_test(tc_core, test_sscanf_short_hexadecimal_29);      --Vertor
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_32);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_33);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_34);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_35);
- // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_40);      --Vertor
- // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_41);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_40);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_41);      --Vertor
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_42);
   tcase_add_test(tc_core, test_sscanf_short_hexadecimal_43);
-  //tcase_add_test(tc_core, test_sscanf_short_hexadecimal_44);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_short_hexadecimal_45);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_44);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_short_hexadecimal_45);      --Vertor
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_1);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_5);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_6);
@@ -14986,21 +15000,22 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_33);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_34);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_35);
-  //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_40);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_41);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_hexadecimal_40);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_hexadecimal_41);      --Vertor
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_42);
   tcase_add_test(tc_core, test_sscanf_long_hexadecimal_43);
-  //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_44);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_long_hexadecimal_45);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_hexadecimal_44);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_hexadecimal_45);      --Vertor
   tcase_add_test(tc_core, test_sscanf_float_12);
   tcase_add_test(tc_core, test_sscanf_float_13);
   tcase_add_test(tc_core, test_sscanf_float_14);
-  //tcase_add_test(tc_core, test_sscanf_float_15);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_float_16);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_float_17);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_float_15);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_float_16);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_float_17);      --Vertor
   tcase_add_test(tc_core, test_sscanf_float_23);
   tcase_add_test(tc_core, test_sscanf_float_24);
   tcase_add_test(tc_core, test_sscanf_float_25);
+  tcase_add_test(tc_core, test_sscanf_double_1);
   tcase_add_test(tc_core, test_sscanf_long_double_1);
   tcase_add_test(tc_core, test_sscanf_long_double_2);
   tcase_add_test(tc_core, test_sscanf_long_double_3);
@@ -15012,9 +15027,9 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_double_12);
   tcase_add_test(tc_core, test_sscanf_long_double_13);
   tcase_add_test(tc_core, test_sscanf_long_double_14);
-  //tcase_add_test(tc_core, test_sscanf_long_double_15);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_long_double_16);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_long_double_17);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_double_15);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_double_16);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_long_double_17);      --Vertor
   tcase_add_test(tc_core, test_sscanf_long_double_20);
   tcase_add_test(tc_core, test_sscanf_long_double_21);
   tcase_add_test(tc_core, test_sscanf_long_double_23);
@@ -15130,7 +15145,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_29);
   tcase_add_test(tc_core, test_sscanf_long_and_short_i_30);
   tcase_add_test(tc_core, test_sscanf_pointer_1);
-  //tcase_add_test(tc_core, test_sscanf_pointer_3);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_pointer_3);      --Vertor
   tcase_add_test(tc_core, test_sscanf_pointer_4);
   tcase_add_test(tc_core, test_sscanf_pointer_5);
   tcase_add_test(tc_core, test_sscanf_pointer_6);
@@ -15189,7 +15204,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_n_3);
   tcase_add_test(tc_core, test_sscanf_strange_tests_1);
   tcase_add_test(tc_core, test_sscanf_strange_tests_2);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_4);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_4);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_5);
   tcase_add_test(tc_core, test_sscanf_strange_tests_6);
   tcase_add_test(tc_core, test_sscanf_strange_tests_7);
@@ -15197,33 +15212,33 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_sscanf_strange_tests_9);
   tcase_add_test(tc_core, test_sscanf_strange_tests_10);
   tcase_add_test(tc_core, test_sscanf_strange_tests_11);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_12);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_12);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_13);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_14);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_15);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_14);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_15);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_16);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_19);      --Vertor
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_21);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_19);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_21);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_25);
   tcase_add_test(tc_core, test_sscanf_strange_tests_26);
   tcase_add_test(tc_core, test_sscanf_strange_tests_28);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_24);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_24);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_30);
   tcase_add_test(tc_core, test_sscanf_strange_tests_31);
   tcase_add_test(tc_core, test_sscanf_strange_tests_32);
   tcase_add_test(tc_core, test_sscanf_strange_tests_33);
   tcase_add_test(tc_core, test_sscanf_strange_tests_35);
   tcase_add_test(tc_core, test_sscanf_strange_tests_36);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_37);      --Vertor
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_37);      --Vertor
   tcase_add_test(tc_core, test_sscanf_strange_tests_38);
   tcase_add_test(tc_core, test_sscanf_strange_tests_39);
   tcase_add_test(tc_core, test_sscanf_strange_tests_41);
   tcase_add_test(tc_core, test_sscanf_strange_tests_40);
   tcase_add_test(tc_core, test_sscanf_strange_tests_42);
-  //tcase_add_test(tc_core, test_sscanf_strange_tests_0);      --Vertor
-  // interesting fact: in original sscanf(str,"%xhello",&sf1);     -->>Error!!
+  // tcase_add_test(tc_core, test_sscanf_strange_tests_0);      --Vertor
+  //  interesting fact: in original sscanf(str,"%xhello",&sf1);     -->>Error!!
   tcase_add_test(tc_core, test_sscanf_cov_test_1);
- // tcase_add_test(tc_core, test_sscanf_cov_test_2);      --verter+MaC
+  // tcase_add_test(tc_core, test_sscanf_cov_test_2);      --verter+MaC
   // tcase_add_test(tc_core, test_sscanf_cov_test_3);       --%hf
   // tcase_add_test(tc_core, test_sscanf_cov_test_4);       --%hc
   tcase_add_test(tc_core, test_sscanf_cov_test_5);
@@ -15352,5 +15367,3 @@ int main(void) {
 
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
-
-

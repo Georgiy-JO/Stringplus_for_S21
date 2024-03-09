@@ -129,8 +129,9 @@ char can_read_spec_double(const char* str_coursor, size_t length) {
   else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) && length != 1 &&
            char_is_num(*(str_coursor + 1)))
     return 1;
-  else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) && (length > 2 || length==0)&& 
-           (*(str_coursor + 1)) == '.' && char_is_num(*(str_coursor + 2)))
+  else if (s21_isinstr(*str_coursor, S21_SSCANF_ZERO_SYMBOLS) &&
+           (length > 2 || length == 0) && (*(str_coursor + 1)) == '.' &&
+           char_is_num(*(str_coursor + 2)))
     return 1;
   else if ((*str_coursor) == '.' && length != 1 &&
            char_is_num(*(str_coursor + 1)))
@@ -232,7 +233,8 @@ long double ultimate_hex_from_line(const char* line, size_t* move) {
     local_move++;
   if (*(line + local_move) == '0' &&
       (*(line + local_move + 1) == 'x' || *(line + local_move + 1) == 'X') &&
-      (char_is_whitespace(*(line + local_move + 2)) || char_is_hex(*(line + local_move + 2))))
+      (char_is_whitespace(*(line + local_move + 2)) ||
+       char_is_hex(*(line + local_move + 2))))
     local_move += 2;
   for (; char_is_hex(*(line + local_move)) &&
          (local_move < (*move) || (*move) == 0);
@@ -313,7 +315,7 @@ int int_from_line(const char* line, size_t* move) {
 long int long_from_line(const char* line, size_t* move) {
   char overfflow = 1;
   long int tmp = (long int)ultimate_int_from_line(line, move, &overfflow);
-  return (overfflow) ? (long int)/*__LONG_MAX__*/-1 : tmp;
+  return (overfflow) ? (long int)/*__LONG_MAX__*/ -1 : tmp;
 }
 short int short_from_line(const char* line, size_t* move) {
   char overfflow = 0;
