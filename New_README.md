@@ -1,7 +1,7 @@
 
 # String.h
 
-![The String](../misc/Fates.png?raw=true "String")
+![The String](misc/Fates.png?raw=true "String")
 
 ## Description
 
