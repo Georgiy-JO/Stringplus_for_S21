@@ -25,6 +25,18 @@ The only support for strings in the programming language proper is that the comp
 | Riderkri(Georgy-JO) | strlen, memcpy, memset, strncpy, strncat, strcspn, strpbrk, strtok |  
 | shadowmm(t1m0f3y) | memchr, memcmp, strncmp, strchr, strstr, strrchr, strerror |    
 
+### First run fails:
+
+s21_strchr: FAIL
+s21_strncmp: FAIL
+s21_strrchr: FAIL
+s21_strstr: FAIL
+s21_sprintf: OK    ===>   Memory test: FAIL 
+
+ s21_insert: FAIL     ====>    Memory test: FAIL 
+s21_trim: FAIL              ====>>          Memory test: FAIL
+
+
 ### string.h Functions
 
 | No. | Done | Checked | Function | Description |
