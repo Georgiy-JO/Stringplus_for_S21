@@ -220,6 +220,14 @@ START_TEST(test_strchr_4) {
   ck_assert_ptr_eq(result, expected);
 }
 
+START_TEST(test_strchr_5) {
+  char* str1 = "hellobye";
+  int c = '\0';
+  char* result = s21_strchr(str1, c);
+  char* expected = strchr(str1, c);
+  ck_assert_ptr_eq(result, expected);
+}
+
 // s21_strrchr   //elevator
 START_TEST(test_strrchr) {
   char* str1 = "hello";
@@ -14421,6 +14429,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_strchr_2);
   tcase_add_test(tc_core, test_strchr_3);
   tcase_add_test(tc_core, test_strchr_4);
+  tcase_add_test(tc_core, test_strchr_5);
 
   // s21_strrchr
   tcase_add_test(tc_core, test_strrchr);
