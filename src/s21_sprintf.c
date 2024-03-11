@@ -134,12 +134,10 @@ int add_sign_to_str(char* str, int sign, opts opt) {
 
 int convert_digit_int_to_str(long int integer, char* str) {
   int digit_len = get_digit_int_len(integer);
-  int single_digit = 0;
-  char single_digit_char = 0;
   for (int i = 0; i < digit_len; i++) {
-    single_digit = integer % 10;
+    int single_digit = integer % 10;
     integer /= 10;
-    single_digit_char = convert_digit_int_to_char(single_digit);
+    char single_digit_char = convert_digit_int_to_char(single_digit);
     str[digit_len - i - 1] = single_digit_char;
   }
   return 0;
@@ -147,27 +145,22 @@ int convert_digit_int_to_str(long int integer, char* str) {
 
 int convert_digit_uint_to_str(unsigned long int integer, char* str) {
   int digit_len = get_digit_uint_len(integer);
-  int single_digit = 0;
-  char single_digit_char = 0;
   for (int i = 0; i < digit_len; i++) {
-    single_digit = integer % 10;
+    int single_digit = integer % 10;
     integer /= 10;
-    single_digit_char = convert_digit_int_to_char(single_digit);
+    char single_digit_char = convert_digit_int_to_char(single_digit);
     str[digit_len - i - 1] = single_digit_char;
   }
   return 0;
 }
 
 int convert_digit_frational_part_to_str(double frac, int len, char* str) {
-  int single_digit = 0;
-  char single_digit_char = 0;
-  double temp = 0;
   for (int i = 0; i < len; i++) {
-    temp = frac * 10;
-    single_digit = (int)temp;
+    double temp = frac * 10;
+    int single_digit = (int)temp;
     frac = temp - single_digit;
     if (i == len - 1 && frac >= 0.5) single_digit++;
-    single_digit_char = convert_digit_int_to_char(single_digit);
+    char single_digit_char = convert_digit_int_to_char(single_digit);
     str[i] = single_digit_char;
   }
   return 0;
@@ -249,9 +242,8 @@ int accuracy_digit_to_struct(opts* optarg, int digit) {
 int get_full_number(const char* format, int* number) {
   int offset = 0;
   int localnumber = 0;
-  int digit = 0;
   while (is_digit(format[offset])) {
-    digit = convert_digit_char_to_int(format[offset]);
+    int digit = convert_digit_char_to_int(format[offset]);
     localnumber = localnumber * 10 + digit;
     offset++;
   }
@@ -313,7 +305,8 @@ int print_char(char argchar, char* str) {
 int print_str(char* argchar, char* str) {
   int str_len = 0;
   str_len = s21_strlen(argchar);
-  s21_strncpy(str, argchar, str_len);
+  str = s21_memset(str, 0, str_len + 1);
+  s21_strncpy(str, argchar, str_len + 1);
   return str_len;
 }
 
@@ -355,7 +348,8 @@ int print_digit(long int argint, char* str, opts opt) {
   }
 
   int copied_len = s21_strlen(integer_buffer);
-  s21_strncpy(str, integer_buffer, copied_len);
+  str = s21_memset(str, 0, copied_len + 1);
+  s21_strncpy(str, integer_buffer, copied_len + 1);
   return copied_len;
 }
 
@@ -383,7 +377,8 @@ int print_udigit(unsigned long int arguint, char* str, opts opt) {
   }
 
   int copied_len = s21_strlen(integer_buffer);
-  s21_strncpy(str, integer_buffer, copied_len);
+  str = s21_memset(str, 0, copied_len + 1);
+  s21_strncpy(str, integer_buffer, copied_len + 1);
   return copied_len;
 }
 
@@ -395,7 +390,6 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   add_width_int(final_buffer, opt);
   int width = opt.width_digit;
   int floor_len = get_digit_int_len((int)argfloat);
-  int dot_char_offset = 1;
   int has_sign = 0;
   has_sign =
       add_sign_to_str(&(float_buffer[0]), fget_digit_sign(argfloat), opt);
@@ -410,7 +404,7 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
 
   if (!opt.flag_minus) {
     if (width > floor_len + fractional_part_len) {
-      offset = width - (floor_len + fractional_part_len) - dot_char_offset;
+      offset = width - (floor_len + fractional_part_len) - 1;
     }
   }
 
@@ -419,7 +413,8 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   s21_strncpy(&(final_buffer[offset + floor_len + 1]), float_fractional_buffer,
               fractional_part_len);
   int copied_len = s21_strlen(final_buffer);
-  s21_strncpy(str, final_buffer, copied_len);
+  str = s21_memset(str, 0, copied_len + 1);
+  s21_strncpy(str, final_buffer, copied_len + 1);
   return copied_len;
 }
 
