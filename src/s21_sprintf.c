@@ -523,6 +523,7 @@ int s21_sprintf(char* str, const char* format, ...) {
       str_index++;
     }
   }
+  str[str_index] = '\0';
   count = str_index;
   va_end(args);
   return count;
