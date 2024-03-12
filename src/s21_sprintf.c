@@ -454,7 +454,7 @@ int print(va_list args, opts opt, char* str) {
       offset += print_digit((int)argint, str, opt);
     }
   } else if (opt.spec_f) {
-    double argfloat = va_arg(args, double);
+    float argfloat = va_arg(args, double);
     int accuracy = S21_SPRINTF_DEFAULT_ACCURACY;
     if (opt.accuracy_digit != -1) accuracy = opt.accuracy_digit;
     offset += print_float(argfloat, accuracy, str, opt);
