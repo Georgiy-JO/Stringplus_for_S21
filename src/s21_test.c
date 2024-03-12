@@ -13925,6 +13925,17 @@ START_TEST(test_spritf_s) {
   ck_assert_str_eq(buff_res, buff_exp);
 }
 
+START_TEST(test_spritf_s_width_big) {
+  char buff_exp[10000]; 
+  char buff_res[10000]; 
+  char format[] = "%9000s";
+  char s[] = "SCHOOL21!:)";
+  int expected = sprintf(buff_exp, format, s);
+  int result = s21_sprintf(buff_res, format, s);
+  ck_assert_int_eq(result, expected);
+  ck_assert_str_eq(buff_res, buff_exp);
+}
+
 START_TEST(test_spritf_s_neg) {
   char buff_exp[100]; 
   char buff_res[100]; 
@@ -15532,6 +15543,7 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_spritf_f_len_acc_neg_plus);
   tcase_add_test(tc_core, test_spritf_f_len_acc_neg_space);
   tcase_add_test(tc_core, test_spritf_s);
+  tcase_add_test(tc_core, test_spritf_s_width_big);
   tcase_add_test(tc_core, test_spritf_s_neg);
   tcase_add_test(tc_core, test_spritf_s_width);
   tcase_add_test(tc_core, test_spritf_s_acc);
