@@ -298,9 +298,21 @@ int get_opts(opts* optarg, const char* format) {
   return offset;
 }
 
-int print_char(char argchar, char* str) {
-  *str = argchar;
-  return 1;
+int print_char(char argchar, char* str, opts opt) {
+  char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  int width = opt.width_digit;
+	if (width == 0) width = 1;
+
+	s21_memset(str_buffer, ' ', width);
+	if (!opt.flag_minus){
+		str_buffer[width - 1] = argchar;
+	}else {
+		str_buffer[0] = argchar;
+	}
+  int copied_len = s21_strlen(str_buffer);
+  str = s21_memset(str, 0, copied_len + 1);
+  s21_strncpy(str, str_buffer, copied_len + 1);
+  return copied_len;
 }
 
 int add_width_int(char* str, opts opt) {
@@ -416,9 +428,13 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   int digit_start_pos = 0;
   if (has_sign) digit_start_pos = 1;
   floor_len += digit_start_pos;
+  double fract = s21_fabs(argfloat) - (int)s21_fabs(argfloat);
+  if (fractional_part_len == 0 &&  fract > 0.5) {
+	  if (argfloat < 0) argfloat-=1;
+	  if (argfloat > 0) argfloat+=1;
+  }
   convert_digit_int_to_str((int)s21_fabs(argfloat),
                            &(float_buffer[digit_start_pos]));
-  double fract = s21_fabs(argfloat) - (int)s21_fabs(argfloat);
   convert_digit_frational_part_to_str(fract, fractional_part_len,
                                       float_fractional_buffer);
 
@@ -444,7 +460,7 @@ int print(va_list args, opts opt, char* str) {
   int offset = 0;
   if (opt.spec_c) {
     char argchar = (char)va_arg(args, int);
-    offset += print_char(argchar, str);
+    offset += print_char(argchar, str, opt);
   } else if (opt.spec_d) {
     long int argint = va_arg(args, long int);
     if (opt.length_h) {
