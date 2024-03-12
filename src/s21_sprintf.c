@@ -368,7 +368,8 @@ int print_digit(long int argint, char* str, opts opt) {
 
   int copied_len = s21_strlen(integer_buffer);
   str = s21_memset(str, 0, copied_len + 1);
-  s21_strncpy(str, integer_buffer, copied_len + 1);
+  if (argint != 0 || opt.accuracy_digit != 0) s21_strncpy(str, integer_buffer, copied_len + 1);
+  else copied_len = 0;
   return copied_len;
 }
 
@@ -397,7 +398,7 @@ int print_udigit(unsigned long int arguint, char* str, opts opt) {
 
   int copied_len = s21_strlen(integer_buffer);
   str = s21_memset(str, 0, copied_len + 1);
-  s21_strncpy(str, integer_buffer, copied_len + 1);
+  if (arguint != 0 || opt.accuracy_digit != 0) s21_strncpy(str, integer_buffer, copied_len + 1);
   return copied_len;
 }
 
