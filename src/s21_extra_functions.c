@@ -15,7 +15,7 @@ void *s21_to_upper(const char *str) {
       out_str[i] = str[i];
   }
   out_str[n] = C_ZERO;
-  return out_str;
+  return (void *)out_str;
 }
 
 // Returns a copy of string (str) converted to lowercase. In case of any error,
@@ -31,7 +31,7 @@ void *s21_to_lower(const char *str) {
       out_str[i] = str[i];
   }
   out_str[n] = C_ZERO;
-  return out_str;
+  return (void *)out_str;
 }
 
 // Returns a new string in which a specified string (str) is inserted at a
@@ -39,20 +39,20 @@ void *s21_to_lower(const char *str) {
 //   position (start_index) in the given string (src). In case of any error,
 //   return NULL
 void *s21_insert(const char *src, const char *str, size_t start_index) {
-  size_t src_len = s21_strlen(src);
-  size_t str_len = s21_strlen(str);
-  // char* flag = NULL;
   char *out_str = NULL;
-
-  if (src_len >= start_index)
-    out_str = (char *)calloc(src_len + str_len + 1, sizeof(char));
-  if (out_str != NULL) {
-    s21_strncpy(out_str, src, start_index);
-    s21_strncat(out_str, str, str_len);
-    src_len = s21_strlen(src + start_index);
-    s21_strncat(out_str, src + start_index, src_len);
+  if (src!=NULL && str!=NULL){
+    size_t src_len = s21_strlen(src);
+    size_t str_len = s21_strlen(str);
+    if (src_len >= start_index)
+      out_str = (char *)calloc(src_len + str_len + 1, sizeof(char));
+    if (out_str != NULL) {
+      s21_strncpy(out_str, src, start_index);
+      out_str[start_index]=C_ZERO;
+      s21_strncat(out_str, str, str_len);
+      s21_strncat(out_str, src + start_index, src_len-start_index);
+    }
   }
-  return out_str;
+  return (void *)out_str;
 }
 
 // Returns a new string in which all leading and trailing occurrences of a set
@@ -61,14 +61,20 @@ void *s21_insert(const char *src, const char *str, size_t start_index) {
 //   return NULL
 void *s21_trim(const char *src, const char *trim_chars) {
   char *out_str = NULL;
-  size_t begining = 0, length = 0;
-  length = head_tail_delta_finder(src, trim_chars, &begining);
-  out_str = (char *)calloc(length + 1, sizeof(char));
-  for (size_t i = 0; i < length; i++, begining++) {
-    out_str[i] = src[begining];
+  if(src!=NULL){
+    size_t begining = 0, length = 0;
+    char *loc_trim_ch = (char *) trim_chars, *whitespace_chars=" \t\n\r\v\f\0";
+    if(!trim_chars || !s21_strlen(trim_chars))   loc_trim_ch = whitespace_chars;
+    length = head_tail_delta_finder(src, loc_trim_ch, &begining);
+    out_str = (char *)calloc(length + 1, sizeof(char));
+    if(out_str!=NULL){
+      for (size_t i = 0; i < length; i++, begining++) {
+        out_str[i] = src[begining];
+      }
+      out_str[length] = C_ZERO;
+    }
   }
-  out_str[length] = C_ZERO;
-  return out_str;
+  return (void *)out_str;
 }
 
 size_t head_tail_delta_finder(const char *src, const char *trim_chars,

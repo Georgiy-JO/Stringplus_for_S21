@@ -33,7 +33,7 @@ s21_strrchr: FAIL
 s21_strstr: FAIL
 s21_sprintf: OK    ===>   Memory test: FAIL 
 
- s21_insert: FAIL     ====>    Memory test: FAIL 
+ss21_insert: FAIL     ====>    Memory test: FAIL 
 s21_trim: FAIL              ====>>          Memory test: FAIL
 
 

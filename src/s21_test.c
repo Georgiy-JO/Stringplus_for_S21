@@ -14628,7 +14628,359 @@ START_TEST(test_strerror3) {
   ck_assert_str_eq(result, expected);
 }
 // elevator
+START_TEST(test_fixing_insert_1) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=3;
+  char* result = s21_insert(src, str, position);
+  char* expected = "helasslo\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_2) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=6;
+  char* result = s21_insert(src, str, position);
+  char* expected = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_3) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=5;
+  char* result = s21_insert(src, str, position);
+  char* expected = "helloass\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_4) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=0;
+  char* result = s21_insert(src, str, position);
+  char* expected = "asshello\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_5) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=-5;
+  char* result = s21_insert(src, str, position);
+  char* expected  = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_6) {
+  const char* src = "hello\0";
+  char str[] = "\0";
+  int position=4;
+  char* result = s21_insert(src, str, position);
+  char* expected = "hello\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_7) {
+  const char* src = "\0";
+  char str[] = "ass\0";
+  int position=2;
+  //printf("here\n");
+  char* result = s21_insert(src, str, position);
+  char* expected = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  //printf("here\n");
+}
+START_TEST(test_fixing_insert_8) {
+  const char* src = NULL;
+  char str[] = "ass\0";
+  int position=2;
+  char* result = s21_insert(src, str, position);
+  char* expected = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_9) {
+  const char* src = "hi\0";
+  char* str = NULL;
+  int position=2;
+  char* result = s21_insert(src, str, position);
+  char* expected = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_10) {
+  const char* src = "hello\0";
+  char str[] = "ass\0";
+  int position=4;
+  char* result = s21_insert(src, str, position);
+  char* expected = "hellasso\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_insert_11) {
+  const char* src = "\0";
+  char str[] = "ass\0";
+  int position=0;
+  char* result = s21_insert(src, str, position);
+  char* expected = "ass\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+  // printf("here\n");
+}
+START_TEST(test_fixing_trim_1) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "!Heu\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "ll to yo\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_2) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "Heltoyu!\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = " to \0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_3) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "Heltoyu! \0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_4) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "Helto yu! \0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_5) {
+  char* str1 = "\0";
+  char* str2 = "Helto yu! \0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_6) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "Hell to you!\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_7) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "u\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "Hell to you!\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_8) {
+  char* str1 = NULL;
+  char* str2 = "u\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = NULL;
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_9) {
+  char* str1 = "u\0";
+  char* str2 = NULL;
+  char* result = s21_trim(str1, str2);
+  char* expected = "u\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_10) {
+  char* str1 = "a\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_11) {
+  char* str1 = "\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_12) {
+  char* str1 = "b\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_13) {
+  char* str1 = "aa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_14) {
+  char* str1 = "ab\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_15) {
+  char* str1 = "aaa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_16) {
+  char* str1 = "aba\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_17) {
+  char* str1 = "baa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_18) {
+  char* str1 = "aab\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_19) {
+  char* str1 = "abba\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "bb\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_20) {
+  char* str1 = "aabb\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "bb\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_21) {
+  char* str1 = "baaa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_22) {
+  char* str1 = "aaabaaa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "b\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_23) {
+  char* str1 = "aaaaaa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_24) {
+  char* str1 = "Hell to you!\0";
+  char* str2 = "H";
+  char* result = s21_trim(str1, str2);
+  char* expected = "ell to you!\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_25) {
+  char* str1 = "aaabbbaaa\0";
+  char* str2 = "a\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "bbb\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_26) {
+  char* str1 = "aaabbbaaa    \n\n  \0";
+  char* str2 = "a \0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "bbbaaa    \n\n\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_27) {
+  char* str1 = "     aaabbbaaa    \n\n  \0";
+  char* str2 = "\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "aaabbbaaa\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_28) {
+  char* str1 = "     aaabbbaaa    \n\n  \0";
+  char* str2 = NULL;
+  char* result = s21_trim(str1, str2);
+  char* expected = "aaabbbaaa\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_29) {
+  char* str1 = "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f  \n\n  \0";
+  char* str2 = NULL;
+  char* result = s21_trim(str1, str2);
+  char* expected = "aaabbbaaa\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
+START_TEST(test_fixing_trim_30) {
+  char* str1 = "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f  \n\n  \0";
+  char* str2 = "\0";
+  char* result = s21_trim(str1, str2);
+  char* expected = "aaabbbaaa\0";
+  ck_assert_pstr_eq(result, expected);
+  free(result);
+}
 
+// elevator
 Suite* my_string_suite(void) {
   Suite* s;
   TCase* tc_core;
@@ -15615,6 +15967,49 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_strerror);
   tcase_add_test(tc_core, test_strerror2);
   tcase_add_test(tc_core, test_strerror3);
+
+  tcase_add_test(tc_core,test_fixing_insert_1);
+  tcase_add_test(tc_core,test_fixing_insert_2);
+  tcase_add_test(tc_core,test_fixing_insert_3);
+  tcase_add_test(tc_core,test_fixing_insert_4);
+  tcase_add_test(tc_core,test_fixing_insert_5);
+  tcase_add_test(tc_core,test_fixing_insert_6);
+  tcase_add_test(tc_core,test_fixing_insert_7);
+  tcase_add_test(tc_core,test_fixing_insert_8);
+  tcase_add_test(tc_core,test_fixing_insert_9);
+  tcase_add_test(tc_core,test_fixing_insert_10);
+  tcase_add_test(tc_core,test_fixing_insert_11);
+  tcase_add_test(tc_core,test_fixing_trim_1);
+  tcase_add_test(tc_core,test_fixing_trim_2);
+  tcase_add_test(tc_core,test_fixing_trim_3);
+  tcase_add_test(tc_core,test_fixing_trim_4);
+  tcase_add_test(tc_core,test_fixing_trim_5);
+  tcase_add_test(tc_core,test_fixing_trim_6);
+  tcase_add_test(tc_core,test_fixing_trim_7);
+  tcase_add_test(tc_core,test_fixing_trim_8);
+  tcase_add_test(tc_core,test_fixing_trim_9);
+  tcase_add_test(tc_core,test_fixing_trim_10);
+  tcase_add_test(tc_core,test_fixing_trim_11);
+  tcase_add_test(tc_core,test_fixing_trim_12);
+  tcase_add_test(tc_core,test_fixing_trim_13);
+  tcase_add_test(tc_core,test_fixing_trim_14);
+  tcase_add_test(tc_core,test_fixing_trim_15);
+  tcase_add_test(tc_core,test_fixing_trim_16);
+  tcase_add_test(tc_core,test_fixing_trim_17);
+  tcase_add_test(tc_core,test_fixing_trim_18);
+  tcase_add_test(tc_core,test_fixing_trim_19);
+  tcase_add_test(tc_core,test_fixing_trim_10);
+  tcase_add_test(tc_core,test_fixing_trim_20);
+  tcase_add_test(tc_core,test_fixing_trim_21);
+  tcase_add_test(tc_core,test_fixing_trim_22);
+  tcase_add_test(tc_core,test_fixing_trim_23);
+  tcase_add_test(tc_core,test_fixing_trim_24);
+  tcase_add_test(tc_core,test_fixing_trim_25);
+  tcase_add_test(tc_core,test_fixing_trim_26);
+  tcase_add_test(tc_core,test_fixing_trim_27);
+  tcase_add_test(tc_core,test_fixing_trim_28);
+  tcase_add_test(tc_core,test_fixing_trim_29);
+  tcase_add_test(tc_core,test_fixing_trim_30);
 
   suite_add_tcase(s, tc_core);
   return s;
