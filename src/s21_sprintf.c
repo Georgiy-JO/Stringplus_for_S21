@@ -272,7 +272,7 @@ int get_opts(opts* optarg, const char* format) {
   // accuracy
   if (is_accuracy_dot(format[offset])) {
     offset++;
-	accuracy_digit_to_struct(&localoptarg, 0);
+    accuracy_digit_to_struct(&localoptarg, 0);
     if (is_accuracy(format[offset])) {
       if (is_digit(format[offset])) {
         offset += get_full_number(&(format[offset]), &number);
@@ -301,14 +301,14 @@ int get_opts(opts* optarg, const char* format) {
 int print_char(char argchar, char* str, opts opt) {
   char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
   int width = opt.width_digit;
-	if (width == 0) width = 1;
+  if (width == 0) width = 1;
 
-	s21_memset(str_buffer, ' ', width);
-	if (!opt.flag_minus){
-		str_buffer[width - 1] = argchar;
-	}else {
-		str_buffer[0] = argchar;
-	}
+  s21_memset(str_buffer, ' ', width);
+  if (!opt.flag_minus) {
+    str_buffer[width - 1] = argchar;
+  } else {
+    str_buffer[0] = argchar;
+  }
   int copied_len = s21_strlen(str_buffer);
   str = s21_memset(str, 0, copied_len + 1);
   s21_strncpy(str, str_buffer, copied_len + 1);
@@ -324,20 +324,23 @@ int add_width_int(char* str, opts opt) {
 }
 
 int print_str(char* argchar, char* str, opts opt) {
-  //char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
-  //char full_str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  // char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  // char full_str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
   int width = opt.width_digit;
   int str_len = s21_strlen(argchar);
 
   int buff_size = 0;
-  if (width > str_len) buff_size = width + 1;
-  else buff_size = str_len + 1;
+  if (width > str_len)
+    buff_size = width + 1;
+  else
+    buff_size = str_len + 1;
 
   char* str_buffer = (char*)calloc(buff_size, sizeof(char));
   char* full_str_buffer = (char*)calloc(buff_size, sizeof(char));
   int accuracy = opt.accuracy_digit;
-  if(accuracy != -1) if (accuracy < str_len) str_len = accuracy;
-	s21_strncpy(full_str_buffer, argchar, str_len);
+  if (accuracy != -1)
+    if (accuracy < str_len) str_len = accuracy;
+  s21_strncpy(full_str_buffer, argchar, str_len);
 
   int full_str_len = str_len;
   if (!opt.flag_minus) {
@@ -391,8 +394,10 @@ int print_digit(long int argint, char* str, opts opt) {
 
   int copied_len = s21_strlen(integer_buffer);
   str = s21_memset(str, 0, copied_len + 1);
-  if (argint != 0 || opt.accuracy_digit != 0) s21_strncpy(str, integer_buffer, copied_len + 1);
-  else copied_len = 0;
+  if (argint != 0 || opt.accuracy_digit != 0)
+    s21_strncpy(str, integer_buffer, copied_len + 1);
+  else
+    copied_len = 0;
   return copied_len;
 }
 
@@ -421,8 +426,10 @@ int print_udigit(unsigned long int arguint, char* str, opts opt) {
 
   int copied_len = s21_strlen(integer_buffer);
   str = s21_memset(str, 0, copied_len + 1);
-  if (arguint != 0 || opt.accuracy_digit != 0) s21_strncpy(str, integer_buffer, copied_len + 1);
-  else copied_len = 0;
+  if (arguint != 0 || opt.accuracy_digit != 0)
+    s21_strncpy(str, integer_buffer, copied_len + 1);
+  else
+    copied_len = 0;
   return copied_len;
 }
 
@@ -441,9 +448,9 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   if (has_sign) digit_start_pos = 1;
   floor_len += digit_start_pos;
   double fract = s21_fabs(argfloat) - (int)s21_fabs(argfloat);
-  if (fractional_part_len == 0 &&  fract > 0.5) {
-	  if (argfloat < 0) argfloat-=1;
-	  if (argfloat > 0) argfloat+=1;
+  if (fractional_part_len == 0 && fract > 0.5) {
+    if (argfloat < 0) argfloat -= 1;
+    if (argfloat > 0) argfloat += 1;
   }
   convert_digit_int_to_str((int)s21_fabs(argfloat),
                            &(float_buffer[digit_start_pos]));
@@ -457,10 +464,10 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   }
 
   s21_strncpy(&(final_buffer[offset]), float_buffer, floor_len);
-  if (fractional_part_len != 0){
-	  s21_strncpy(&(final_buffer[offset + floor_len]), ".", 1);
-	  s21_strncpy(&(final_buffer[offset + floor_len + 1]), float_fractional_buffer,
-			  fractional_part_len);
+  if (fractional_part_len != 0) {
+    s21_strncpy(&(final_buffer[offset + floor_len]), ".", 1);
+    s21_strncpy(&(final_buffer[offset + floor_len + 1]),
+                float_fractional_buffer, fractional_part_len);
   }
   int copied_len = s21_strlen(final_buffer);
   str = s21_memset(str, 0, copied_len + 1);
@@ -518,7 +525,7 @@ int s21_sprintf(char* str, const char* format, ...) {
   int str_index = 0;
   for (int format_index = 0; format_index < len;) {
     opts opt = {0};
-	opt.accuracy_digit = -1;
+    opt.accuracy_digit = -1;
     if (is_start(format[format_index])) {
       format_index++;
       if (is_start(format[format_index])) {

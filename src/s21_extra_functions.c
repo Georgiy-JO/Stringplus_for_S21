@@ -40,16 +40,16 @@ void *s21_to_lower(const char *str) {
 //   return NULL
 void *s21_insert(const char *src, const char *str, size_t start_index) {
   char *out_str = NULL;
-  if (src!=NULL && str!=NULL){
+  if (src != NULL && str != NULL) {
     size_t src_len = s21_strlen(src);
     size_t str_len = s21_strlen(str);
     if (src_len >= start_index)
       out_str = (char *)calloc(src_len + str_len + 1, sizeof(char));
     if (out_str != NULL) {
       s21_strncpy(out_str, src, start_index);
-      out_str[start_index]=C_ZERO;
+      out_str[start_index] = C_ZERO;
       s21_strncat(out_str, str, str_len);
-      s21_strncat(out_str, src + start_index, src_len-start_index);
+      s21_strncat(out_str, src + start_index, src_len - start_index);
     }
   }
   return (void *)out_str;
@@ -61,13 +61,13 @@ void *s21_insert(const char *src, const char *str, size_t start_index) {
 //   return NULL
 void *s21_trim(const char *src, const char *trim_chars) {
   char *out_str = NULL;
-  if(src!=NULL){
+  if (src != NULL) {
     size_t begining = 0, length = 0;
-    char *loc_trim_ch = (char *) trim_chars, *whitespace_chars=" \t\n\r\v\f\0";
-    if(!trim_chars || !s21_strlen(trim_chars))   loc_trim_ch = whitespace_chars;
+    char *loc_trim_ch = (char *)trim_chars, *whitespace_chars = " \t\n\r\v\f\0";
+    if (!trim_chars || !s21_strlen(trim_chars)) loc_trim_ch = whitespace_chars;
     length = head_tail_delta_finder(src, loc_trim_ch, &begining);
     out_str = (char *)calloc(length + 1, sizeof(char));
-    if(out_str!=NULL){
+    if (out_str != NULL) {
       for (size_t i = 0; i < length; i++, begining++) {
         out_str[i] = src[begining];
       }

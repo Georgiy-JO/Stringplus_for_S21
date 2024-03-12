@@ -13353,8 +13353,8 @@ START_TEST(test_sscanf_cov_test_6) {
 // elevator
 
 START_TEST(test_spritf_c) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%c";
   char c = 'c';
   int expected = sprintf(buff_exp, format, c);
@@ -13364,8 +13364,8 @@ START_TEST(test_spritf_c) {
 }
 
 START_TEST(test_spritf_c_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-10c";
   char c = 'c';
   int expected = sprintf(buff_exp, format, c);
@@ -13375,8 +13375,8 @@ START_TEST(test_spritf_c_neg) {
 }
 
 START_TEST(test_spritf_c_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0c";
   char c = 'c';
   int expected = sprintf(buff_exp, format, c);
@@ -13386,8 +13386,8 @@ START_TEST(test_spritf_c_width_zero) {
 }
 
 START_TEST(test_spritf_d) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13397,8 +13397,8 @@ START_TEST(test_spritf_d) {
 }
 
 START_TEST(test_spritf_d_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%d";
   int d = 0;
   int expected = sprintf(buff_exp, format, d);
@@ -13408,8 +13408,8 @@ START_TEST(test_spritf_d_zero) {
 }
 
 START_TEST(test_spritf_d_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13419,8 +13419,8 @@ START_TEST(test_spritf_d_width_zero) {
 }
 
 START_TEST(test_spritf_d_zero_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0d";
   int d = 0;
   int expected = sprintf(buff_exp, format, d);
@@ -13429,10 +13429,9 @@ START_TEST(test_spritf_d_zero_width_zero) {
   ck_assert_str_eq(buff_res, buff_exp);
 }
 
-
 START_TEST(test_spritf_d_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13442,8 +13441,8 @@ START_TEST(test_spritf_d_len) {
 }
 
 START_TEST(test_spritf_d_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13453,8 +13452,8 @@ START_TEST(test_spritf_d_acc) {
 }
 
 START_TEST(test_spritf_d_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13464,8 +13463,8 @@ START_TEST(test_spritf_d_len_acc1) {
 }
 
 START_TEST(test_spritf_d_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13475,8 +13474,8 @@ START_TEST(test_spritf_d_len_acc2) {
 }
 
 START_TEST(test_spritf_d_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13486,8 +13485,8 @@ START_TEST(test_spritf_d_len_acc_neg) {
 }
 
 START_TEST(test_spritf_d_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13497,8 +13496,8 @@ START_TEST(test_spritf_d_len_acc_plus) {
 }
 
 START_TEST(test_spritf_d_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13508,8 +13507,8 @@ START_TEST(test_spritf_d_len_acc_space) {
 }
 
 START_TEST(test_spritf_d_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13519,8 +13518,8 @@ START_TEST(test_spritf_d_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_d_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13530,8 +13529,8 @@ START_TEST(test_spritf_d_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_ld) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13541,8 +13540,8 @@ START_TEST(test_spritf_ld) {
 }
 
 START_TEST(test_spritf_ld_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13552,8 +13551,8 @@ START_TEST(test_spritf_ld_len) {
 }
 
 START_TEST(test_spritf_ld_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13563,8 +13562,8 @@ START_TEST(test_spritf_ld_acc) {
 }
 
 START_TEST(test_spritf_ld_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13574,8 +13573,8 @@ START_TEST(test_spritf_ld_len_acc1) {
 }
 
 START_TEST(test_spritf_ld_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13585,8 +13584,8 @@ START_TEST(test_spritf_ld_len_acc2) {
 }
 
 START_TEST(test_spritf_ld_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13596,8 +13595,8 @@ START_TEST(test_spritf_ld_len_acc_neg) {
 }
 
 START_TEST(test_spritf_ld_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13607,8 +13606,8 @@ START_TEST(test_spritf_ld_len_acc_plus) {
 }
 
 START_TEST(test_spritf_ld_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13618,8 +13617,8 @@ START_TEST(test_spritf_ld_len_acc_space) {
 }
 
 START_TEST(test_spritf_ld_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13629,8 +13628,8 @@ START_TEST(test_spritf_ld_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_ld_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10ld";
   long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13640,8 +13639,8 @@ START_TEST(test_spritf_ld_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_hd) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13651,8 +13650,8 @@ START_TEST(test_spritf_hd) {
 }
 
 START_TEST(test_spritf_hd_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13662,8 +13661,8 @@ START_TEST(test_spritf_hd_len) {
 }
 
 START_TEST(test_spritf_hd_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13673,8 +13672,8 @@ START_TEST(test_spritf_hd_acc) {
 }
 
 START_TEST(test_spritf_hd_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13684,8 +13683,8 @@ START_TEST(test_spritf_hd_len_acc1) {
 }
 
 START_TEST(test_spritf_hd_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13695,8 +13694,8 @@ START_TEST(test_spritf_hd_len_acc2) {
 }
 
 START_TEST(test_spritf_hd_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13706,8 +13705,8 @@ START_TEST(test_spritf_hd_len_acc_neg) {
 }
 
 START_TEST(test_spritf_hd_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13717,8 +13716,8 @@ START_TEST(test_spritf_hd_len_acc_plus) {
 }
 
 START_TEST(test_spritf_hd_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13728,8 +13727,8 @@ START_TEST(test_spritf_hd_len_acc_space) {
 }
 
 START_TEST(test_spritf_hd_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13739,8 +13738,8 @@ START_TEST(test_spritf_hd_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_hd_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10hd";
   short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -13750,8 +13749,8 @@ START_TEST(test_spritf_hd_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_f) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13761,8 +13760,8 @@ START_TEST(test_spritf_f) {
 }
 
 START_TEST(test_spritf_f_half) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%f";
   float f = 0.5;
   int expected = sprintf(buff_exp, format, f);
@@ -13772,8 +13771,8 @@ START_TEST(test_spritf_f_half) {
 }
 
 START_TEST(test_spritf_f_half_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0f";
   float f = 0.5;
   int expected = sprintf(buff_exp, format, f);
@@ -13783,8 +13782,8 @@ START_TEST(test_spritf_f_half_width_zero) {
 }
 
 START_TEST(test_spritf_f_more_then_half) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%f";
   float f = 0.6;
   int expected = sprintf(buff_exp, format, f);
@@ -13794,8 +13793,8 @@ START_TEST(test_spritf_f_more_then_half) {
 }
 
 START_TEST(test_spritf_f_more_then_half_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0f";
   float f = 0.6;
   int expected = sprintf(buff_exp, format, f);
@@ -13805,8 +13804,8 @@ START_TEST(test_spritf_f_more_then_half_width_zero) {
 }
 
 START_TEST(test_spritf_f_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%f";
   float f = -21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13816,8 +13815,8 @@ START_TEST(test_spritf_f_neg) {
 }
 
 START_TEST(test_spritf_f_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13827,8 +13826,8 @@ START_TEST(test_spritf_f_len) {
 }
 
 START_TEST(test_spritf_f_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13838,8 +13837,8 @@ START_TEST(test_spritf_f_acc) {
 }
 
 START_TEST(test_spritf_f_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13849,8 +13848,8 @@ START_TEST(test_spritf_f_len_acc1) {
 }
 
 START_TEST(test_spritf_f_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13860,8 +13859,8 @@ START_TEST(test_spritf_f_len_acc2) {
 }
 
 START_TEST(test_spritf_f_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13871,8 +13870,8 @@ START_TEST(test_spritf_f_len_acc_neg) {
 }
 
 START_TEST(test_spritf_f_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13882,8 +13881,8 @@ START_TEST(test_spritf_f_len_acc_plus) {
 }
 
 START_TEST(test_spritf_f_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13893,8 +13892,8 @@ START_TEST(test_spritf_f_len_acc_space) {
 }
 
 START_TEST(test_spritf_f_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13904,8 +13903,8 @@ START_TEST(test_spritf_f_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_f_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10f";
   float f = 21.123123123123;
   int expected = sprintf(buff_exp, format, f);
@@ -13915,8 +13914,8 @@ START_TEST(test_spritf_f_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_s) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13926,8 +13925,8 @@ START_TEST(test_spritf_s) {
 }
 
 START_TEST(test_spritf_s_width_big) {
-  char buff_exp[10000]; 
-  char buff_res[10000]; 
+  char buff_exp[10000];
+  char buff_res[10000];
   char format[] = "%9000s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13937,8 +13936,8 @@ START_TEST(test_spritf_s_width_big) {
 }
 
 START_TEST(test_spritf_s_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13948,8 +13947,8 @@ START_TEST(test_spritf_s_neg) {
 }
 
 START_TEST(test_spritf_s_width) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13959,8 +13958,8 @@ START_TEST(test_spritf_s_width) {
 }
 
 START_TEST(test_spritf_s_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.5s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13970,8 +13969,8 @@ START_TEST(test_spritf_s_acc) {
 }
 
 START_TEST(test_spritf_s_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13981,8 +13980,8 @@ START_TEST(test_spritf_s_acc2) {
 }
 
 START_TEST(test_spritf_s_acc_width1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.5s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -13992,8 +13991,8 @@ START_TEST(test_spritf_s_acc_width1) {
 }
 
 START_TEST(test_spritf_s_acc_width2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%5.10s";
   char s[] = "SCHOOL21!:)";
   int expected = sprintf(buff_exp, format, s);
@@ -14003,8 +14002,8 @@ START_TEST(test_spritf_s_acc_width2) {
 }
 
 START_TEST(test_spritf_u) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14014,8 +14013,8 @@ START_TEST(test_spritf_u) {
 }
 
 START_TEST(test_spritf_u_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%u";
   unsigned int u = 0;
   int expected = sprintf(buff_exp, format, u);
@@ -14025,8 +14024,8 @@ START_TEST(test_spritf_u_zero) {
 }
 
 START_TEST(test_spritf_u_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0u";
   unsigned int u = 21;
   int expected = sprintf(buff_exp, format, u);
@@ -14036,8 +14035,8 @@ START_TEST(test_spritf_u_width_zero) {
 }
 
 START_TEST(test_spritf_u_zero_width_zero) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.0u";
   unsigned int u = 0;
   int expected = sprintf(buff_exp, format, u);
@@ -14047,8 +14046,8 @@ START_TEST(test_spritf_u_zero_width_zero) {
 }
 
 START_TEST(test_spritf_u_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14058,8 +14057,8 @@ START_TEST(test_spritf_u_len) {
 }
 
 START_TEST(test_spritf_u_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14069,8 +14068,8 @@ START_TEST(test_spritf_u_acc) {
 }
 
 START_TEST(test_spritf_u_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14080,8 +14079,8 @@ START_TEST(test_spritf_u_len_acc1) {
 }
 
 START_TEST(test_spritf_u_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14091,8 +14090,8 @@ START_TEST(test_spritf_u_len_acc2) {
 }
 
 START_TEST(test_spritf_u_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14102,8 +14101,8 @@ START_TEST(test_spritf_u_len_acc_neg) {
 }
 
 START_TEST(test_spritf_u_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14113,8 +14112,8 @@ START_TEST(test_spritf_u_len_acc_plus) {
 }
 
 START_TEST(test_spritf_u_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14124,8 +14123,8 @@ START_TEST(test_spritf_u_len_acc_space) {
 }
 
 START_TEST(test_spritf_u_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14135,8 +14134,8 @@ START_TEST(test_spritf_u_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_u_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10u";
   unsigned int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14146,8 +14145,8 @@ START_TEST(test_spritf_u_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_lu) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14157,8 +14156,8 @@ START_TEST(test_spritf_lu) {
 }
 
 START_TEST(test_spritf_lu_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14168,8 +14167,8 @@ START_TEST(test_spritf_lu_len) {
 }
 
 START_TEST(test_spritf_lu_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14179,8 +14178,8 @@ START_TEST(test_spritf_lu_acc) {
 }
 
 START_TEST(test_spritf_lu_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14190,8 +14189,8 @@ START_TEST(test_spritf_lu_len_acc1) {
 }
 
 START_TEST(test_spritf_lu_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14201,8 +14200,8 @@ START_TEST(test_spritf_lu_len_acc2) {
 }
 
 START_TEST(test_spritf_lu_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14212,8 +14211,8 @@ START_TEST(test_spritf_lu_len_acc_neg) {
 }
 
 START_TEST(test_spritf_lu_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14223,8 +14222,8 @@ START_TEST(test_spritf_lu_len_acc_plus) {
 }
 
 START_TEST(test_spritf_lu_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14234,8 +14233,8 @@ START_TEST(test_spritf_lu_len_acc_space) {
 }
 
 START_TEST(test_spritf_lu_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14245,8 +14244,8 @@ START_TEST(test_spritf_lu_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_lu_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10lu";
   unsigned long int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14256,8 +14255,8 @@ START_TEST(test_spritf_lu_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_hu) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14267,8 +14266,8 @@ START_TEST(test_spritf_hu) {
 }
 
 START_TEST(test_spritf_hu_len) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14278,8 +14277,8 @@ START_TEST(test_spritf_hu_len) {
 }
 
 START_TEST(test_spritf_hu_acc) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14289,8 +14288,8 @@ START_TEST(test_spritf_hu_acc) {
 }
 
 START_TEST(test_spritf_hu_len_acc1) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14300,8 +14299,8 @@ START_TEST(test_spritf_hu_len_acc1) {
 }
 
 START_TEST(test_spritf_hu_len_acc2) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%10.20hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14311,8 +14310,8 @@ START_TEST(test_spritf_hu_len_acc2) {
 }
 
 START_TEST(test_spritf_hu_len_acc_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14322,8 +14321,8 @@ START_TEST(test_spritf_hu_len_acc_neg) {
 }
 
 START_TEST(test_spritf_hu_len_acc_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%+20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14333,8 +14332,8 @@ START_TEST(test_spritf_hu_len_acc_plus) {
 }
 
 START_TEST(test_spritf_hu_len_acc_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "% 20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14344,8 +14343,8 @@ START_TEST(test_spritf_hu_len_acc_space) {
 }
 
 START_TEST(test_spritf_hu_len_acc_neg_plus) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%-+20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14355,8 +14354,8 @@ START_TEST(test_spritf_hu_len_acc_neg_plus) {
 }
 
 START_TEST(test_spritf_hu_len_acc_neg_space) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%- 20.10hu";
   unsigned short int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14366,8 +14365,8 @@ START_TEST(test_spritf_hu_len_acc_neg_space) {
 }
 
 START_TEST(test_spritf_multi) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%c %d %f %u %s";
   char c = 'c';
   int d = 123;
@@ -14380,8 +14379,8 @@ START_TEST(test_spritf_multi) {
   ck_assert_str_eq(buff_res, buff_exp);
 }
 START_TEST(test_spritf_d_neg) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%d";
   int d = -21;
   int expected = sprintf(buff_exp, format, d);
@@ -14391,8 +14390,8 @@ START_TEST(test_spritf_d_neg) {
 }
 
 START_TEST(test_spritf_per) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "%% %d";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14401,10 +14400,9 @@ START_TEST(test_spritf_per) {
   ck_assert_str_eq(buff_res, buff_exp);
 }
 
-
 START_TEST(test_spritf_empty_format) {
-  char buff_exp[100]; 
-  char buff_res[100]; 
+  char buff_exp[100];
+  char buff_res[100];
   char format[] = "";
   int d = 21;
   int expected = sprintf(buff_exp, format, d);
@@ -14631,7 +14629,7 @@ START_TEST(test_strerror3) {
 START_TEST(test_fixing_insert_1) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=3;
+  int position = 3;
   char* result = s21_insert(src, str, position);
   char* expected = "helasslo\0";
   ck_assert_pstr_eq(result, expected);
@@ -14641,7 +14639,7 @@ START_TEST(test_fixing_insert_1) {
 START_TEST(test_fixing_insert_2) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=6;
+  int position = 6;
   char* result = s21_insert(src, str, position);
   char* expected = NULL;
   ck_assert_pstr_eq(result, expected);
@@ -14651,7 +14649,7 @@ START_TEST(test_fixing_insert_2) {
 START_TEST(test_fixing_insert_3) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=5;
+  int position = 5;
   char* result = s21_insert(src, str, position);
   char* expected = "helloass\0";
   ck_assert_pstr_eq(result, expected);
@@ -14661,7 +14659,7 @@ START_TEST(test_fixing_insert_3) {
 START_TEST(test_fixing_insert_4) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=0;
+  int position = 0;
   char* result = s21_insert(src, str, position);
   char* expected = "asshello\0";
   ck_assert_pstr_eq(result, expected);
@@ -14671,9 +14669,9 @@ START_TEST(test_fixing_insert_4) {
 START_TEST(test_fixing_insert_5) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=-5;
+  int position = -5;
   char* result = s21_insert(src, str, position);
-  char* expected  = NULL;
+  char* expected = NULL;
   ck_assert_pstr_eq(result, expected);
   free(result);
   // printf("here\n");
@@ -14681,7 +14679,7 @@ START_TEST(test_fixing_insert_5) {
 START_TEST(test_fixing_insert_6) {
   const char* src = "hello\0";
   char str[] = "\0";
-  int position=4;
+  int position = 4;
   char* result = s21_insert(src, str, position);
   char* expected = "hello\0";
   ck_assert_pstr_eq(result, expected);
@@ -14691,18 +14689,18 @@ START_TEST(test_fixing_insert_6) {
 START_TEST(test_fixing_insert_7) {
   const char* src = "\0";
   char str[] = "ass\0";
-  int position=2;
-  //printf("here\n");
+  int position = 2;
+  // printf("here\n");
   char* result = s21_insert(src, str, position);
   char* expected = NULL;
   ck_assert_pstr_eq(result, expected);
   free(result);
-  //printf("here\n");
+  // printf("here\n");
 }
 START_TEST(test_fixing_insert_8) {
   const char* src = NULL;
   char str[] = "ass\0";
-  int position=2;
+  int position = 2;
   char* result = s21_insert(src, str, position);
   char* expected = NULL;
   ck_assert_pstr_eq(result, expected);
@@ -14712,7 +14710,7 @@ START_TEST(test_fixing_insert_8) {
 START_TEST(test_fixing_insert_9) {
   const char* src = "hi\0";
   char* str = NULL;
-  int position=2;
+  int position = 2;
   char* result = s21_insert(src, str, position);
   char* expected = NULL;
   ck_assert_pstr_eq(result, expected);
@@ -14722,7 +14720,7 @@ START_TEST(test_fixing_insert_9) {
 START_TEST(test_fixing_insert_10) {
   const char* src = "hello\0";
   char str[] = "ass\0";
-  int position=4;
+  int position = 4;
   char* result = s21_insert(src, str, position);
   char* expected = "hellasso\0";
   ck_assert_pstr_eq(result, expected);
@@ -14732,7 +14730,7 @@ START_TEST(test_fixing_insert_10) {
 START_TEST(test_fixing_insert_11) {
   const char* src = "\0";
   char str[] = "ass\0";
-  int position=0;
+  int position = 0;
   char* result = s21_insert(src, str, position);
   char* expected = "ass\0";
   ck_assert_pstr_eq(result, expected);
@@ -14964,7 +14962,9 @@ START_TEST(test_fixing_trim_28) {
   free(result);
 }
 START_TEST(test_fixing_trim_29) {
-  char* str1 = "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f  \n\n  \0";
+  char* str1 =
+      "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f "
+      " \n\n  \0";
   char* str2 = NULL;
   char* result = s21_trim(str1, str2);
   char* expected = "aaabbbaaa\0";
@@ -14972,7 +14972,9 @@ START_TEST(test_fixing_trim_29) {
   free(result);
 }
 START_TEST(test_fixing_trim_30) {
-  char* str1 = "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f  \n\n  \0";
+  char* str1 =
+      "  \t\n\r\v\f \t\n\r\v\f \t\n\r\v\f    aaabbbaaa   \t\n\r\v\f \t\n\r\v\f "
+      " \n\n  \0";
   char* str2 = "\0";
   char* result = s21_trim(str1, str2);
   char* expected = "aaabbbaaa\0";
@@ -15968,48 +15970,48 @@ Suite* my_string_suite(void) {
   tcase_add_test(tc_core, test_strerror2);
   tcase_add_test(tc_core, test_strerror3);
 
-  tcase_add_test(tc_core,test_fixing_insert_1);
-  tcase_add_test(tc_core,test_fixing_insert_2);
-  tcase_add_test(tc_core,test_fixing_insert_3);
-  tcase_add_test(tc_core,test_fixing_insert_4);
-  tcase_add_test(tc_core,test_fixing_insert_5);
-  tcase_add_test(tc_core,test_fixing_insert_6);
-  tcase_add_test(tc_core,test_fixing_insert_7);
-  tcase_add_test(tc_core,test_fixing_insert_8);
-  tcase_add_test(tc_core,test_fixing_insert_9);
-  tcase_add_test(tc_core,test_fixing_insert_10);
-  tcase_add_test(tc_core,test_fixing_insert_11);
-  tcase_add_test(tc_core,test_fixing_trim_1);
-  tcase_add_test(tc_core,test_fixing_trim_2);
-  tcase_add_test(tc_core,test_fixing_trim_3);
-  tcase_add_test(tc_core,test_fixing_trim_4);
-  tcase_add_test(tc_core,test_fixing_trim_5);
-  tcase_add_test(tc_core,test_fixing_trim_6);
-  tcase_add_test(tc_core,test_fixing_trim_7);
-  tcase_add_test(tc_core,test_fixing_trim_8);
-  tcase_add_test(tc_core,test_fixing_trim_9);
-  tcase_add_test(tc_core,test_fixing_trim_10);
-  tcase_add_test(tc_core,test_fixing_trim_11);
-  tcase_add_test(tc_core,test_fixing_trim_12);
-  tcase_add_test(tc_core,test_fixing_trim_13);
-  tcase_add_test(tc_core,test_fixing_trim_14);
-  tcase_add_test(tc_core,test_fixing_trim_15);
-  tcase_add_test(tc_core,test_fixing_trim_16);
-  tcase_add_test(tc_core,test_fixing_trim_17);
-  tcase_add_test(tc_core,test_fixing_trim_18);
-  tcase_add_test(tc_core,test_fixing_trim_19);
-  tcase_add_test(tc_core,test_fixing_trim_10);
-  tcase_add_test(tc_core,test_fixing_trim_20);
-  tcase_add_test(tc_core,test_fixing_trim_21);
-  tcase_add_test(tc_core,test_fixing_trim_22);
-  tcase_add_test(tc_core,test_fixing_trim_23);
-  tcase_add_test(tc_core,test_fixing_trim_24);
-  tcase_add_test(tc_core,test_fixing_trim_25);
-  tcase_add_test(tc_core,test_fixing_trim_26);
-  tcase_add_test(tc_core,test_fixing_trim_27);
-  tcase_add_test(tc_core,test_fixing_trim_28);
-  tcase_add_test(tc_core,test_fixing_trim_29);
-  tcase_add_test(tc_core,test_fixing_trim_30);
+  tcase_add_test(tc_core, test_fixing_insert_1);
+  tcase_add_test(tc_core, test_fixing_insert_2);
+  tcase_add_test(tc_core, test_fixing_insert_3);
+  tcase_add_test(tc_core, test_fixing_insert_4);
+  tcase_add_test(tc_core, test_fixing_insert_5);
+  tcase_add_test(tc_core, test_fixing_insert_6);
+  tcase_add_test(tc_core, test_fixing_insert_7);
+  tcase_add_test(tc_core, test_fixing_insert_8);
+  tcase_add_test(tc_core, test_fixing_insert_9);
+  tcase_add_test(tc_core, test_fixing_insert_10);
+  tcase_add_test(tc_core, test_fixing_insert_11);
+  tcase_add_test(tc_core, test_fixing_trim_1);
+  tcase_add_test(tc_core, test_fixing_trim_2);
+  tcase_add_test(tc_core, test_fixing_trim_3);
+  tcase_add_test(tc_core, test_fixing_trim_4);
+  tcase_add_test(tc_core, test_fixing_trim_5);
+  tcase_add_test(tc_core, test_fixing_trim_6);
+  tcase_add_test(tc_core, test_fixing_trim_7);
+  tcase_add_test(tc_core, test_fixing_trim_8);
+  tcase_add_test(tc_core, test_fixing_trim_9);
+  tcase_add_test(tc_core, test_fixing_trim_10);
+  tcase_add_test(tc_core, test_fixing_trim_11);
+  tcase_add_test(tc_core, test_fixing_trim_12);
+  tcase_add_test(tc_core, test_fixing_trim_13);
+  tcase_add_test(tc_core, test_fixing_trim_14);
+  tcase_add_test(tc_core, test_fixing_trim_15);
+  tcase_add_test(tc_core, test_fixing_trim_16);
+  tcase_add_test(tc_core, test_fixing_trim_17);
+  tcase_add_test(tc_core, test_fixing_trim_18);
+  tcase_add_test(tc_core, test_fixing_trim_19);
+  tcase_add_test(tc_core, test_fixing_trim_10);
+  tcase_add_test(tc_core, test_fixing_trim_20);
+  tcase_add_test(tc_core, test_fixing_trim_21);
+  tcase_add_test(tc_core, test_fixing_trim_22);
+  tcase_add_test(tc_core, test_fixing_trim_23);
+  tcase_add_test(tc_core, test_fixing_trim_24);
+  tcase_add_test(tc_core, test_fixing_trim_25);
+  tcase_add_test(tc_core, test_fixing_trim_26);
+  tcase_add_test(tc_core, test_fixing_trim_27);
+  tcase_add_test(tc_core, test_fixing_trim_28);
+  tcase_add_test(tc_core, test_fixing_trim_29);
+  tcase_add_test(tc_core, test_fixing_trim_30);
 
   suite_add_tcase(s, tc_core);
   return s;
