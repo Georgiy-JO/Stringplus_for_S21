@@ -272,6 +272,7 @@ int get_opts(opts* optarg, const char* format) {
   // accuracy
   if (is_accuracy_dot(format[offset])) {
     offset++;
+	accuracy_digit_to_struct(&localoptarg, 0);
     if (is_accuracy(format[offset])) {
       if (is_digit(format[offset])) {
         offset += get_full_number(&(format[offset]), &number);
@@ -302,20 +303,38 @@ int print_char(char argchar, char* str) {
   return 1;
 }
 
-int print_str(char* argchar, char* str) {
-  int str_len = 0;
-  str_len = s21_strlen(argchar);
-  str = s21_memset(str, 0, str_len + 1);
-  s21_strncpy(str, argchar, str_len + 1);
-  return str_len;
-}
-
 int add_width_int(char* str, opts opt) {
   int width = opt.width_digit;
   for (int i = 0; i < width; i++) {
     str[i] = ' ';
   }
   return 0;
+}
+
+int print_str(char* argchar, char* str, opts opt) {
+  char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  char full_str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  int width = opt.width_digit;
+  int str_len = s21_strlen(argchar);
+  int accuracy = opt.accuracy_digit;
+  if(accuracy != -1) if (accuracy < str_len) str_len = accuracy;
+	s21_strncpy(full_str_buffer, argchar, str_len);
+
+  int full_str_len = str_len;
+  if (!opt.flag_minus) {
+    add_width_int(str_buffer, opt);
+    if (full_str_len > width) width = full_str_len;
+    s21_strncpy(&(str_buffer[width - full_str_len]), full_str_buffer,
+                full_str_len);
+  } else {
+    add_width_int(str_buffer, opt);
+    s21_strncpy(str_buffer, full_str_buffer, full_str_len);
+  }
+
+  int copied_len = s21_strlen(str_buffer);
+  str = s21_memset(str, 0, copied_len + 1);
+  s21_strncpy(str, str_buffer, copied_len + 1);
+  return copied_len;
 }
 
 int print_digit(long int argint, char* str, opts opt) {
@@ -435,11 +454,11 @@ int print(va_list args, opts opt, char* str) {
   } else if (opt.spec_f) {
     double argfloat = va_arg(args, double);
     int accuracy = S21_SPRINTF_DEFAULT_ACCURACY;
-    if (opt.accuracy_digit != 0) accuracy = opt.accuracy_digit;
+    if (opt.accuracy_digit != -1) accuracy = opt.accuracy_digit;
     offset += print_float(argfloat, accuracy, str, opt);
   } else if (opt.spec_s) {
     char* argstr = va_arg(args, char*);
-    offset += print_str(argstr, str);
+    offset += print_str(argstr, str, opt);
   } else if (opt.spec_u) {
     unsigned long int arguint = (unsigned long int)va_arg(args, long int);
     if (opt.length_h) {
@@ -468,6 +487,7 @@ int s21_sprintf(char* str, const char* format, ...) {
   int str_index = 0;
   for (int format_index = 0; format_index < len;) {
     opts opt = {0};
+	opt.accuracy_digit = -1;
     if (is_start(format[format_index])) {
       format_index++;
       if (is_start(format[format_index])) {
