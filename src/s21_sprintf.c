@@ -324,10 +324,17 @@ int add_width_int(char* str, opts opt) {
 }
 
 int print_str(char* argchar, char* str, opts opt) {
-  char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
-  char full_str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  //char str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
+  //char full_str_buffer[S21_SPRINTF_DEFAULT_BUFFER_SIZE] = {'\0'};
   int width = opt.width_digit;
   int str_len = s21_strlen(argchar);
+
+  int buff_size = 0;
+  if (width > str_len) buff_size = width + 1;
+  else buff_size = str_len + 1;
+
+  char* str_buffer = (char*)calloc(buff_size, sizeof(char));
+  char* full_str_buffer = (char*)calloc(buff_size, sizeof(char));
   int accuracy = opt.accuracy_digit;
   if(accuracy != -1) if (accuracy < str_len) str_len = accuracy;
 	s21_strncpy(full_str_buffer, argchar, str_len);
@@ -346,6 +353,10 @@ int print_str(char* argchar, char* str, opts opt) {
   int copied_len = s21_strlen(str_buffer);
   str = s21_memset(str, 0, copied_len + 1);
   s21_strncpy(str, str_buffer, copied_len + 1);
+
+  free(str_buffer);
+  free(full_str_buffer);
+
   return copied_len;
 }
 
