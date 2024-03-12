@@ -428,9 +428,11 @@ int print_float(double argfloat, int fractional_part_len, char* str, opts opt) {
   }
 
   s21_strncpy(&(final_buffer[offset]), float_buffer, floor_len);
-  s21_strncpy(&(final_buffer[offset + floor_len]), ".", 1);
-  s21_strncpy(&(final_buffer[offset + floor_len + 1]), float_fractional_buffer,
-              fractional_part_len);
+  if (fractional_part_len != 0){
+	  s21_strncpy(&(final_buffer[offset + floor_len]), ".", 1);
+	  s21_strncpy(&(final_buffer[offset + floor_len + 1]), float_fractional_buffer,
+			  fractional_part_len);
+  }
   int copied_len = s21_strlen(final_buffer);
   str = s21_memset(str, 0, copied_len + 1);
   s21_strncpy(str, final_buffer, copied_len + 1);
